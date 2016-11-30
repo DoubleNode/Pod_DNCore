@@ -22,9 +22,9 @@ import Foundation
 import UIKit
 import AddressBook
 
-@objc public class YZNameFormatter : NSObject {
+@objc open class YZNameFormatter : NSObject {
     
-    @objc public func nameFrom(_ string:String, error:AutoreleasingUnsafeMutablePointer<NSError?>? = nil) throws -> YZName {
+    @objc open func nameFrom(_ string:String, error:AutoreleasingUnsafeMutablePointer<NSError?>? = nil) throws -> YZName {
         let name = YZName()
         
         let fullName = string.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) as NSString
@@ -120,8 +120,8 @@ import AddressBook
     }
 }
 
-@objc public class YZName : NSObject {
-    @objc public var prefix = ""
-    @objc public var firstName = ""
-    @objc public var lastName = ""
+@objc open class YZName : NSObject {
+    @objc open var prefix = ""
+    @objc open var firstName = ""
+    @objc open var lastName = ""
 }
