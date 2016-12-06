@@ -30,6 +30,8 @@
 		6ACFB6501DC9A69900CC388F /* UIAlertController+DNCSupportedInterfaceOrientations.m in Sources */ = {isa = PBXBuildFile; fileRef = 6ACFB64F1DC9A69900CC388F /* UIAlertController+DNCSupportedInterfaceOrientations.m */; };
 		6ACFB6531DC9A85900CC388F /* NSDate+DNCPrettyDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6ACFB6521DC9A85900CC388F /* NSDate+DNCPrettyDate.m */; };
 		6AD380771DD024E100FFF836 /* DNCGravatar.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AD380761DD024E000FFF836 /* DNCGravatar.m */; };
+		6AE0CF821DF6356A009727C1 /* DNCAppConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AE0CF811DF6356A009727C1 /* DNCAppConstants.m */; };
+		6AE0CF871DF6382F009727C1 /* GGMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AE0CF861DF6382F009727C1 /* GGMutableDictionary.m */; };
 		7E8F08D88FDB84E17995E8DB /* Pods_DNCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B04CED1F06CBA1BCC7339D9A /* Pods_DNCore.framework */; };
 /* End PBXBuildFile section */
 
@@ -94,6 +96,10 @@
 		6ACFB6521DC9A85900CC388F /* NSDate+DNCPrettyDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+DNCPrettyDate.m"; path = "Classes/Categories/NSDate+DNCPrettyDate.m"; sourceTree = "<group>"; };
 		6AD380751DD024E000FFF836 /* DNCGravatar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DNCGravatar.h; path = Classes/DNCGravatar.h; sourceTree = "<group>"; };
 		6AD380761DD024E000FFF836 /* DNCGravatar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DNCGravatar.m; path = Classes/DNCGravatar.m; sourceTree = "<group>"; };
+		6AE0CF801DF6356A009727C1 /* DNCAppConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DNCAppConstants.h; path = Classes/DNCAppConstants.h; sourceTree = "<group>"; };
+		6AE0CF811DF6356A009727C1 /* DNCAppConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DNCAppConstants.m; path = Classes/DNCAppConstants.m; sourceTree = "<group>"; };
+		6AE0CF851DF6382F009727C1 /* GGMutableDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GGMutableDictionary.h; path = Classes/Vendors/GGMutableDictionary/GGMutableDictionary.h; sourceTree = "<group>"; };
+		6AE0CF861DF6382F009727C1 /* GGMutableDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GGMutableDictionary.m; path = Classes/Vendors/GGMutableDictionary/GGMutableDictionary.m; sourceTree = "<group>"; };
 		B04CED1F06CBA1BCC7339D9A /* Pods_DNCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DNCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -194,7 +200,10 @@
 			children = (
 				6A3F02EB1DBD8805008849B5 /* Categories */,
 				6A1844651DEA736700D3D254 /* Misc */,
+				6AE0CF831DF637DE009727C1 /* Vendors */,
 				6A3F02E71DBD8490008849B5 /* DNCApplicationProtocol.h */,
+				6AE0CF801DF6356A009727C1 /* DNCAppConstants.h */,
+				6AE0CF811DF6356A009727C1 /* DNCAppConstants.m */,
 				6A3F02E81DBD8684008849B5 /* DNCDate.h */,
 				6A3F02E91DBD8684008849B5 /* DNCDate.m */,
 				6AB2ED9A1DD813BD004439E6 /* DNCGradientView.h */,
@@ -232,6 +241,23 @@
 				6AB2ED9E1DD81E2F004439E6 /* UIView+DNCDropShadow.m */,
 			);
 			name = Categories;
+			sourceTree = "<group>";
+		};
+		6AE0CF831DF637DE009727C1 /* Vendors */ = {
+			isa = PBXGroup;
+			children = (
+				6AE0CF841DF63818009727C1 /* GGMutableDictionary */,
+			);
+			name = Vendors;
+			sourceTree = "<group>";
+		};
+		6AE0CF841DF63818009727C1 /* GGMutableDictionary */ = {
+			isa = PBXGroup;
+			children = (
+				6AE0CF851DF6382F009727C1 /* GGMutableDictionary.h */,
+				6AE0CF861DF6382F009727C1 /* GGMutableDictionary.m */,
+			);
+			name = GGMutableDictionary;
 			sourceTree = "<group>";
 		};
 		78FF419289D7B6F14047C7BC /* Pods */ = {
@@ -461,6 +487,7 @@
 			files = (
 				6A3F02E51DBD8295008849B5 /* DNCUrlSessionManager.m in Sources */,
 				6A3F02F01DBD880F008849B5 /* NSDate+DNCUtils.m in Sources */,
+				6AE0CF871DF6382F009727C1 /* GGMutableDictionary.m in Sources */,
 				6ACFB6501DC9A69900CC388F /* UIAlertController+DNCSupportedInterfaceOrientations.m in Sources */,
 				6A19E0D91DE8F62D00946455 /* UIFont+DNCCustom.m in Sources */,
 				6AB2ED9F1DD81E2F004439E6 /* UIView+DNCDropShadow.m in Sources */,
@@ -476,6 +503,7 @@
 				6A19E0D71DE8F62D00946455 /* NSString+DNCContains.m in Sources */,
 				6A3F02E61DBD8295008849B5 /* DNCUtilities.m in Sources */,
 				6A19E0D81DE8F62D00946455 /* NSTimer+DNCBlocks.m in Sources */,
+				6AE0CF821DF6356A009727C1 /* DNCAppConstants.m in Sources */,
 				6A3F02BA1DBD8228008849B5 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -615,6 +643,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2E97210F25175F423897C931 /* Pods-DNCore.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = T864D3RXRZ;
@@ -632,6 +661,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3FE59EFB80FBCEE167540D7D /* Pods-DNCore.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = T864D3RXRZ;
@@ -648,7 +678,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2F6103F65BF8AF95392477FD /* Pods-DNCoreTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = T864D3RXRZ;
 				INFOPLIST_FILE = DNCoreTests/Info.plist;
@@ -664,7 +694,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1455BC317CC197CE94B64FEF /* Pods-DNCoreTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = T864D3RXRZ;
 				INFOPLIST_FILE = DNCoreTests/Info.plist;

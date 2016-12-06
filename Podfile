@@ -7,12 +7,13 @@ inhibit_all_warnings!
 
 platform :ios, '9.0'
 
-target ‘DNCore’ do
+target 'DNCore' do
   # Pods for DNCore
   pod 'AFNetworking', '~> 3.0'
+  pod 'ColorUtils'
   pod 'NSLogger'
 
-  target 'DNCoreTests’ do
+  target 'DNCoreTests' do
     inherit! :search_paths
 
     # Pods for testing
