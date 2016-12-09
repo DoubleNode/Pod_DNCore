@@ -16,9 +16,6 @@
 
 #pragma mark - Constant plist to object functions
 
-+ (NSString*)oAuthCredentialIdentifier;
-+ (NSString*)apiHostname;
-
 /**
  *  Creates and returns a NSDate object, initialized with the NSDate loaded from the Constants plist file for the specified key.
  *

@@ -15,16 +15,6 @@
 
 @implementation DNCAppConstants
 
-+ (NSString*)oAuthCredentialIdentifier
-{
-    return [[self class] constantValue:@"oAuthCredentialIdentifier"];
-}
-
-+ (NSString*)apiHostname
-{
-    return [[self class] constantValue:@"apiHostname"];
-}
-
 + (NSDate*)dateConstant:(NSString*)key
 {
     return [[self class] dateConstant:key filter:nil];

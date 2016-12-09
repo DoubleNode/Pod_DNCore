@@ -24,6 +24,7 @@
 		6A3F02EA1DBD8684008849B5 /* DNCDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A3F02E91DBD8684008849B5 /* DNCDate.m */; };
 		6A3F02F01DBD880F008849B5 /* NSDate+DNCUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A3F02ED1DBD880F008849B5 /* NSDate+DNCUtils.m */; };
 		6A3F02F11DBD880F008849B5 /* NSString+DNCHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A3F02EF1DBD880F008849B5 /* NSString+DNCHTML.m */; };
+		6AACAC0E1DFA59D200E510CF /* DNCNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AACAC0D1DFA59D200E510CF /* DNCNavigationController.m */; };
 		6AB2ED9C1DD813BD004439E6 /* DNCGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AB2ED9B1DD813BD004439E6 /* DNCGradientView.m */; };
 		6AB2ED9F1DD81E2F004439E6 /* UIView+DNCDropShadow.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AB2ED9E1DD81E2F004439E6 /* UIView+DNCDropShadow.m */; };
 		6ACFB64D1DC9A49500CC388F /* UIView+DNCPending.m in Sources */ = {isa = PBXBuildFile; fileRef = 6ACFB64C1DC9A49500CC388F /* UIView+DNCPending.m */; };
@@ -84,6 +85,8 @@
 		6A3F02ED1DBD880F008849B5 /* NSDate+DNCUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+DNCUtils.m"; path = "Classes/Categories/NSDate+DNCUtils.m"; sourceTree = "<group>"; };
 		6A3F02EE1DBD880F008849B5 /* NSString+DNCHTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+DNCHTML.h"; path = "Classes/Categories/NSString+DNCHTML.h"; sourceTree = "<group>"; };
 		6A3F02EF1DBD880F008849B5 /* NSString+DNCHTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+DNCHTML.m"; path = "Classes/Categories/NSString+DNCHTML.m"; sourceTree = "<group>"; };
+		6AACAC0C1DFA59D200E510CF /* DNCNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DNCNavigationController.h; path = Classes/DNCNavigationController.h; sourceTree = "<group>"; };
+		6AACAC0D1DFA59D200E510CF /* DNCNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DNCNavigationController.m; path = Classes/DNCNavigationController.m; sourceTree = "<group>"; };
 		6AB2ED9A1DD813BD004439E6 /* DNCGradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DNCGradientView.h; path = Classes/DNCGradientView.h; sourceTree = "<group>"; };
 		6AB2ED9B1DD813BD004439E6 /* DNCGradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DNCGradientView.m; path = Classes/DNCGradientView.m; sourceTree = "<group>"; };
 		6AB2ED9D1DD81E2F004439E6 /* UIView+DNCDropShadow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+DNCDropShadow.h"; path = "Classes/Categories/UIView+DNCDropShadow.h"; sourceTree = "<group>"; };
@@ -210,6 +213,8 @@
 				6AB2ED9B1DD813BD004439E6 /* DNCGradientView.m */,
 				6AD380751DD024E000FFF836 /* DNCGravatar.h */,
 				6AD380761DD024E000FFF836 /* DNCGravatar.m */,
+				6AACAC0C1DFA59D200E510CF /* DNCNavigationController.h */,
+				6AACAC0D1DFA59D200E510CF /* DNCNavigationController.m */,
 				6A3F02E11DBD8295008849B5 /* DNCUrlSessionManager.h */,
 				6A3F02E21DBD8295008849B5 /* DNCUrlSessionManager.m */,
 				6A3F02E31DBD8295008849B5 /* DNCUtilities.h */,
@@ -495,6 +500,7 @@
 				6A3F02F11DBD880F008849B5 /* NSString+DNCHTML.m in Sources */,
 				6AD380771DD024E100FFF836 /* DNCGravatar.m in Sources */,
 				6A3F02C01DBD8228008849B5 /* ViewController.m in Sources */,
+				6AACAC0E1DFA59D200E510CF /* DNCNavigationController.m in Sources */,
 				6A3F02BD1DBD8228008849B5 /* AppDelegate.m in Sources */,
 				6A3F02EA1DBD8684008849B5 /* DNCDate.m in Sources */,
 				6AB2ED9C1DD813BD004439E6 /* DNCGradientView.m in Sources */,
