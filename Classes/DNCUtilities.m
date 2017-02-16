@@ -63,12 +63,12 @@
 {
     static dispatch_once_t  once;
     static NSDateFormatter* instance = nil;
-
+    
     dispatch_once(&once, ^{
         instance = [[NSDateFormatter alloc] init];
         [instance setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     });
-
+    
     return instance;
 }
 
@@ -76,12 +76,12 @@
 {
     static dispatch_once_t      once;
     static NSNumberFormatter*   instance = nil;
-
+    
     dispatch_once(&once, ^{
         instance = [[NSNumberFormatter alloc] init];
         [instance setAllowsFloats:NO];
     });
-
+    
     return instance;
 }
 
@@ -125,7 +125,7 @@
     CGRect  bounds  = [[UIScreen mainScreen] bounds];
     CGFloat width   = bounds.size.width;
     CGFloat scale   = [[UIScreen mainScreen] scale];
-
+    
     return (width * scale);
 }
 
@@ -171,7 +171,7 @@
     {
         nibNameOrNil    = defaultNib;
     }
-
+    
     return [DNCUtilities appendNibSuffix:nibNameOrNil];
 }
 
@@ -182,7 +182,7 @@
     //NSString*   bundlePath      = [[NSBundle mainBundle] pathForResource:[[[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"] objectAtIndex:0] ofType:@"lproj"];
     NSString*   bundlePath      = [[NSBundle mainBundle] pathForResource:@"Base" ofType:@"lproj"];
     NSBundle*   languageBundle  = [NSBundle bundleWithPath:bundlePath];
-
+    
     if ([DNCUtilities isDeviceIPad])
     {
         NSString*   tempNibName = [NSString stringWithFormat:@"%@~ipad", retval];
@@ -384,7 +384,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
             orientation2Str = @"-Portrait";
             break;
         }
-
+            
         case UIInterfaceOrientationPortraitUpsideDown:
         {
             orientationStr  = @"-Portrait";
@@ -406,7 +406,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
             break;
         }
     }
-
+    
     if ([DNCUtilities isDeviceIPad])
     {
         deviceStr   = @"~ipad";
@@ -422,7 +422,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
             deviceStr   = @"~iphone";
         }
     }
-
+    
     NSString*   tempName;
     
     tempName = [fileName stringByAppendingFormat:@"%@%@", deviceStr, orientation2Str];
@@ -469,15 +469,15 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
 + (void)runAfterDelayBlock:(NSArray*)arrayBlock
 {
     CGFloat delay = 0;
-
+    
     id  delayD = arrayBlock[0];
     if (delayD && [delayD isKindOfClass:[NSNumber class]])
     {
         delay = [delayD floatValue];
     }
-
+    
     [NSThread sleepForTimeInterval:delay];
-
+    
     [DNCUtilities runBlock:arrayBlock[1]];
 }
 
@@ -498,7 +498,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
     if ([NSThread isMainThread])
     {
         [DNCUtilities runOnMainThreadAfterDelay:0.01f
-                                         block:
+                                          block:
          ^()
          {
              block();
@@ -582,7 +582,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
 + (NSTimer*)repeatRunAfterDelay:(CGFloat)delay block:(void (^)())block
 {
     void (^block_)() = [block copy];
-
+    
     return [NSTimer scheduledTimerWithTimeInterval:delay target:[DNCUtilities sharedInstance] selector:@selector(instanceRunBlock:) userInfo:block_ repeats:YES];
 }
 
@@ -609,7 +609,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
      ^()
      {
          dispatch_group_t group = dispatch_group_create();
-
+         
          block ? block(group) : nil;
          
          dispatch_group_wait(group, timeout);
@@ -631,7 +631,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
 + (bool)canDevicePlaceAPhoneCall
 {
     /*
-        Returns YES if the device can place a phone call
+     Returns YES if the device can place a phone call
      */
     
     // Check if the device can place a phone call
@@ -648,7 +648,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
             return YES;
         }
     }
-
+    
     // Device does not support phone calls
     return  NO;
 }
@@ -669,7 +669,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
         @catch (NSException *exception)
         {
         }
-
+        
         [avSound prepareToPlay];
     }
     else
@@ -695,7 +695,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
         avSound_tada    = [DNCUtilities createSound:@"tada_Reward" ofType:@"mp3"];
         avSound_beep    = [DNCUtilities createSound:@"beep_Scanner" ofType:@"mp3"];
     });
-
+    
     if ([name isEqualToString:@"buzz"] == YES)
     {
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
@@ -736,12 +736,12 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
     CCHmac(kCCHmacAlgSHA1, cKey, strlen(cKey), cData, strlen(cData), cHMAC);
     
     NSString*   hexStr = [NSString  stringWithFormat:@"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
-                        cHMAC[0], cHMAC[1], cHMAC[2], cHMAC[3], cHMAC[4],
-                        cHMAC[5], cHMAC[6], cHMAC[7],
-                        cHMAC[8], cHMAC[9], cHMAC[10], cHMAC[11], cHMAC[12],
-                        cHMAC[13], cHMAC[14], cHMAC[15],
-                        cHMAC[16], cHMAC[17], cHMAC[18], cHMAC[19]
-                     ];
+                          cHMAC[0], cHMAC[1], cHMAC[2], cHMAC[3], cHMAC[4],
+                          cHMAC[5], cHMAC[6], cHMAC[7],
+                          cHMAC[8], cHMAC[9], cHMAC[10], cHMAC[11], cHMAC[12],
+                          cHMAC[13], cHMAC[14], cHMAC[15],
+                          cHMAC[16], cHMAC[17], cHMAC[18], cHMAC[19]
+                          ];
     
     return hexStr;
 }
@@ -750,7 +750,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
 {
     // [UIImage imageWithCGImage:[newImage CGImage] scale:2.0 orientation:UIImageOrientationUp];
     // [newImage scaleProportionalToSize:CGSizeMake(32, 32)];
-
+    
     double  scale   = [[UIScreen mainScreen] scale];
     //NSLog(@"scale=%.2f", scale);
     
@@ -848,14 +848,14 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
 + (NSNumber*)dictionaryBoolean:(NSDictionary*)dictionary dirty:(BOOL*)dirtyFlag withItem:(NSString*)key andDefault:(NSNumber*)defaultValue
 {
     NSNumber*   retval  = defaultValue;
-
+    
     id  object = dictionary[key];
     if (object != nil)
     {
         if (object != (NSNumber*)[NSNull null])
         {
             NSNumber*   newval  = [NSNumber numberWithInt:[object boolValue]];
-
+            
             if ((retval == nil) || ([newval isEqualToNumber:retval] == NO))
             {
                 if (dirtyFlag != nil)   {   *dirtyFlag = YES;   }
@@ -867,7 +867,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
     {
         if (dirtyFlag != nil)   {   *dirtyFlag = YES;   }
     }
-
+    
     return retval;
 }
 
@@ -879,14 +879,14 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
 + (NSNumber*)dictionaryNumber:(NSDictionary*)dictionary dirty:(BOOL*)dirtyFlag withItem:(NSString*)key andDefault:(NSNumber*)defaultValue
 {
     NSNumber*   retval  = defaultValue;
-
+    
     id  object = dictionary[key];
     if (object != nil)
     {
         if (object != (NSNumber*)[NSNull null])
         {
             NSNumber*   newval  = [NSNumber numberWithInt:[object intValue]];
-
+            
             if ((retval == nil) || ([newval isEqualToNumber:retval] == NO))
             {
                 if (dirtyFlag != nil)   {   *dirtyFlag = YES;   }
@@ -898,7 +898,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
     {
         if (dirtyFlag != nil)   {   *dirtyFlag = YES;   }
     }
-
+    
     return retval;
 }
 
@@ -910,14 +910,14 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
 + (NSDecimalNumber*)dictionaryDecimalNumber:(NSDictionary*)dictionary dirty:(BOOL*)dirtyFlag withItem:(NSString*)key andDefault:(NSDecimalNumber*)defaultValue
 {
     NSDecimalNumber*   retval  = defaultValue;
-
+    
     id  object = [dictionary objectForKey:key];
     if (object != nil)
     {
         if (object != (NSDecimalNumber*)[NSNull null])
         {
             NSDecimalNumber*   newval  = [NSDecimalNumber decimalNumberWithDecimal:[object decimalValue]];
-
+            
             if ((retval == nil) || ([newval compare:retval] != NSOrderedSame))
             {
                 if (dirtyFlag != nil)   {   *dirtyFlag = YES;   }
@@ -929,7 +929,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
     {
         if (dirtyFlag != nil)   {   *dirtyFlag = YES;   }
     }
-
+    
     return retval;
 }
 
@@ -941,14 +941,14 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
 + (NSNumber*)dictionaryDouble:(NSDictionary*)dictionary dirty:(BOOL*)dirtyFlag withItem:(NSString*)key andDefault:(NSNumber*)defaultValue
 {
     NSNumber*   retval  = defaultValue;
-
+    
     id  object = [dictionary objectForKey:key];
     if (object != nil)
     {
         if (object != (NSString*)[NSNull null])
         {
             NSNumber*   newval  = @([object doubleValue]);
-
+            
             if ((retval == nil) || ([newval isEqualToNumber:retval] == NO))
             {
                 if (dirtyFlag != nil)   {   *dirtyFlag = YES;   }
@@ -960,7 +960,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
     {
         if (dirtyFlag != nil)   {   *dirtyFlag = YES;   }
     }
-
+    
     return retval;
 }
 
@@ -972,7 +972,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
 + (NSString*)dictionaryString:(NSDictionary*)dictionary dirty:(BOOL*)dirtyFlag withItem:(NSString*)key andDefault:(NSString*)defaultValue
 {
     NSString*   retval  = defaultValue;
-
+    
     id  object = [dictionary objectForKey:key];
     if (object != nil)
     {
@@ -983,7 +983,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
                 if ([object count] > 0)
                 {
                     NSString*   newval  = object[0];
-
+                    
                     if ((retval == nil) || ([newval isEqualToString:retval] == NO))
                     {
                         if (dirtyFlag != nil)   {   *dirtyFlag = YES;   }
@@ -1012,7 +1012,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
             if (object != (NSString*)[NSNull null])
             {
                 NSString*   newval  = object;
-
+                
                 if ((retval == nil) || ([newval isEqualToString:retval] == NO))
                 {
                     if (dirtyFlag != nil)   {   *dirtyFlag = YES;   }
@@ -1025,7 +1025,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
     {
         if (dirtyFlag != nil)   {   *dirtyFlag = YES;   }
     }
-
+    
     return [retval dncStringByDecodingXMLEntities];
 }
 
@@ -1037,7 +1037,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
 + (NSArray*)dictionaryArray:(NSDictionary*)dictionary dirty:(BOOL*)dirtyFlag withItem:(NSString*)key andDefault:(NSArray*)defaultValue
 {
     NSArray*    retval  = defaultValue;
-
+    
     id  object = [dictionary objectForKey:key];
     if (object != nil)
     {
@@ -1046,7 +1046,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
             if ([object isKindOfClass:[NSArray class]] == YES)
             {
                 NSArray*   newval  = object;
-
+                
                 if ((retval == nil) || ([newval isEqualToArray:retval] == NO))
                 {
                     if (dirtyFlag != nil)   {   *dirtyFlag = YES;   }
@@ -1059,7 +1059,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
     {
         if (dirtyFlag != nil)   {   *dirtyFlag = YES;   }
     }
-
+    
     return retval;
 }
 
@@ -1071,7 +1071,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
 + (NSDictionary*)dictionaryDictionary:(NSDictionary*)dictionary dirty:(BOOL*)dirtyFlag withItem:(NSString*)key andDefault:(NSDictionary*)defaultValue
 {
     NSDictionary*    retval  = defaultValue;
-
+    
     id  object = dictionary[key];
     if (object != nil)
     {
@@ -1080,7 +1080,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
             if ([object isKindOfClass:[NSDictionary class]] == YES)
             {
                 NSDictionary*   newval  = object;
-
+                
                 if ((retval == nil) || ([newval isEqualToDictionary:retval] == NO))
                 {
                     if (dirtyFlag != nil)   {   *dirtyFlag = YES;   }
@@ -1093,7 +1093,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
     {
         if (dirtyFlag != nil)   {   *dirtyFlag = YES;   }
     }
-
+    
     return retval;
 }
 
@@ -1109,7 +1109,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
     {
         retval = nil;
     }
-
+    
     id  object = [dictionary objectForKey:key];
     if (object != nil)
     {
@@ -1118,7 +1118,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
             if (object != (NSNumber*)[NSNull null])
             {
                 NSDate*   newval  = [NSDate dateWithTimeIntervalSince1970:[object intValue]];
-
+                
                 if ((retval == nil) || ([newval isEqualToDate:retval] == NO))
                 {
                     if (dirtyFlag != nil)   {   *dirtyFlag = YES;   }
@@ -1157,7 +1157,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
             if (object != (NSDate*)[NSNull null])
             {
                 NSDate*   newval  = object;
-
+                
                 if ((retval == nil) || ([newval isEqualToDate:retval] == NO))
                 {
                     if (dirtyFlag != nil)   {   *dirtyFlag = YES;   }
@@ -1170,7 +1170,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
     {
         if (dirtyFlag != nil)   {   *dirtyFlag = YES;   }
     }
-
+    
     return retval;
 }
 
@@ -1270,13 +1270,13 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
 + (id)dictionaryObject:(NSDictionary*)dictionary dirty:(BOOL*)dirtyFlag withItem:(NSString*)key andDefault:(id)defaultValue
 {
     id  retval  = defaultValue;
-
+    
     if (dictionary[key] != nil)
     {
         if (dictionary[key] != (id)[NSNull null])
         {
             id  newval  = dictionary[key];
-
+            
             if ((retval == nil) || ([newval isEqual:retval] == NO))
             {
                 if (dirtyFlag != nil)   {   *dirtyFlag = YES;   }
@@ -1288,7 +1288,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
     {
         if (dirtyFlag != nil)   {   *dirtyFlag = YES;   }
     }
-
+    
     return retval;
 }
 
@@ -1324,8 +1324,8 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
         self.xcodeColorsReset   = @"";
         
         // Force XcodeColors on for now.  Env Variable isn't working right
-        setenv("XcodeColors", "YES", 0); // Enables XcodeColors (you obviously have to install it too)
-
+        //setenv("XcodeColors", "YES", 0); // Enables XcodeColors (you obviously have to install it too)
+        
         char*   xcode_colors = getenv("XcodeColors");
         if (xcode_colors && (strcmp(xcode_colors, "YES") == 0))
         {
@@ -1336,13 +1336,13 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
         
         logDebugLevel   = DNCLL_Everything;
         logDebugDomains = [NSMutableDictionary dictionary];
-
+        
         [DNCUtilities runOnBackgroundThread:^
          {
              [self logResetLogState];
          }];
     }
-
+    
     return self;
 }
 
@@ -1461,9 +1461,9 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
     {
         return NO;
     }
-
+    
     __block BOOL    retval = YES;
-
+    
     @synchronized(logDebugDomains)
     {
         [logDebugDomains enumerateKeysAndObjectsUsingBlock:^(NSString* key, NSNumber* obj, BOOL* stop)
@@ -1475,7 +1475,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
              }
          }];
     }
-
+    
     return retval;
 }
 
@@ -1492,14 +1492,30 @@ CGFloat DNCTimeBlock (void (^block)(void))
     {
         return -1.0;
     }
-
+    
     uint64_t    start   = mach_absolute_time ();
     block ();
     uint64_t    end     = mach_absolute_time ();
     uint64_t    elapsed = end - start;
-
+    
     uint64_t    nanos   = (elapsed * info.numer) / info.denom;
     return (CGFloat)nanos / NSEC_PER_SEC;
+}
+
+NSString*
+levelString(int level)
+{
+    switch (level)
+    {
+        case DNCLL_Critical:    {   return @"🆘🆘🆘";   }
+        case DNCLL_Error:       {   return @"🚫🚫🚫";   }
+        case DNCLL_Warning:     {   return @"⚠️⚠️⚠️";   }
+        case DNCLL_Debug:       {   return @"🐞🐞🐞";   }
+        case DNCLL_Info:        {   return @"✳️✳️✳️";   }
+        case DNCLL_Everything:  {   return @"👀👀👀";   }
+    }
+    
+    return @"";
 }
 
 void DNCLogMessageF(const char *filename, int lineNumber, const char *functionName, NSString *domain, int level, NSString *format, ...)
@@ -1520,36 +1536,6 @@ void DNCLogMessageF(const char *filename, int lineNumber, const char *functionNa
     
     va_end(args);
     
-    Class   bfClass = NSClassFromString(@"Bugfender");
-    
-    if (bfClass)
-    {
-        int bfLevel = 0;
-        
-        if (level <= DNCLL_Error)
-        {
-            bfLevel = 2;
-        }
-        else if (level <= DNCLL_Warning)
-        {
-            bfLevel = 1;
-        }
-        
-        //SEL bfSelector = NSSelectorFromString(@"logLineNumber:method:file:level:tag:format:");
-        
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        /*
-         [bgClass performSelector logLineNumber:lineNumber
-         method:functionName
-         file:[NSString stringWithUTF8String:filename].lastPathComponent
-         level:bfLevel
-         tag:domain
-         format:formattedStr];
-         */
-#pragma clang diagnostic pop
-    }
-    
-    NSLog(@"%@[%@] %@{%@} %@[%@:%d] %@%@%@", otherColor, ([NSThread isMainThread] ? @"MT" : @"BT"), domainColor, domain, otherColor, [NSString stringWithUTF8String:filename].lastPathComponent, lineNumber, mainColor, formattedStr, DNCUtilities.xcodeColorsReset);
+    NSLog(@"%@ %@[%@] %@{%@} %@[%@:%d] %@%@%@", levelString(level), otherColor, ([NSThread isMainThread] ? @"MT" : @"BT"), domainColor, domain, otherColor, [NSString stringWithUTF8String:filename].lastPathComponent, lineNumber, mainColor, formattedStr, DNCUtilities.xcodeColorsReset);
 }
 
