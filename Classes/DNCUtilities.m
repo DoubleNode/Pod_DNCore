@@ -610,11 +610,26 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
      {
          dispatch_group_t group = dispatch_group_create();
          
-         block ? block(group) : nil;
+         block ? block(group) : (void)nil;
          
-         dispatch_group_wait(group, timeout);
-         
-         completionBlock ? completionBlock() : nil;
+         //dispatch_group_wait(group, timeout);
+         dispatch_group_notify(group, dispatch_get_main_queue(),
+                               ^()
+                               {
+                                   completionBlock ? completionBlock() : (void)nil;
+                               });
+     }];
+}
+
++ (void)enterGroup:(dispatch_group_t)group
+onBackgroundThread:(void (^)(dispatch_group_t group))block
+{
+    [DNCUtilities enterGroup:group];
+    
+    [DNCUtilities runOnBackgroundThread:
+     ^()
+     {
+         block ? block(group) : (void)nil;
      }];
 }
 
@@ -1508,11 +1523,11 @@ levelString(int level)
     switch (level)
     {
         case DNCLL_Critical:    {   return @"🆘🆘🆘";   }
-        case DNCLL_Error:       {   return @"🚫🚫🚫";   }
+        case DNCLL_Error:       {   return @"❤️❤️❤️";   }
         case DNCLL_Warning:     {   return @"⚠️⚠️⚠️";   }
-        case DNCLL_Debug:       {   return @"🐞🐞🐞";   }
+        case DNCLL_Debug:       {   return @"🍺🍺🍺";   }
         case DNCLL_Info:        {   return @"✳️✳️✳️";   }
-        case DNCLL_Everything:  {   return @"👀👀👀";   }
+        case DNCLL_Everything:  {   return @"🚻🚻🚻";   }
     }
     
     return @"";

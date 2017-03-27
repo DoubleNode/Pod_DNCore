@@ -1,9 +1,10 @@
 //
 //  GGMutableDictionary.h
-//  High performance thread-safe NSMutableDictionary
+//  Thread-safe NSMutableDictionary
 //
-//  Created by Guan Gui on 6/01/2015.
-//  Copyright (c) 2015 Guan Gui. All rights reserved.
+//  Written by Guan Gui
+//  Acquired from blog at:
+//  https://www.guiguan.net/ggmutabledictionary-thread-safe-nsmutabledictionary/
 //
 
 #import <Foundation/Foundation.h>

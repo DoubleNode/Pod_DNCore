@@ -1,4 +1,5 @@
 source 'git@github.com:DoubleNode/SpecsPrivateRepo.git'
+source 'git@github.com:DoubleNodeOpen/CocoapodsSpecsRepo.git'
 source 'https://github.com/CocoaPods/Specs.git'
 
 use_frameworks!

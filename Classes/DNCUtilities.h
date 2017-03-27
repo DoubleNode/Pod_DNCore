@@ -66,10 +66,10 @@ typedef NS_ENUM(NSInteger, DNCLogLevel)
 #define DNCLogTimeBlock(level,domain,title,block) DNCLogMessageF(__FILE__,__LINE__,__PRETTY_FUNCTION__,domain,level,@"%@: blockTime: %f",title,DNCTimeBlock(block)); LogMessageF(__FILE__,__LINE__,__PRETTY_FUNCTION__,domain,level,@"%@: blockTime: %f",title,DNCTimeBlock(block))
 #define DNCAssertIsMainThread                     if (![NSThread isMainThread])                                                                         \
 {                                                                                                                                                       \
-    NSException* exception = [NSException exceptionWithName:@"DNCUtilities Exception"                                                                   \
-                                                     reason:[NSString stringWithFormat:@"Not in Main Thread"]                                           \
-                                                   userInfo:@{ @"FILE" : @(__FILE__), @"LINE" : @(__LINE__), @"FUNCTION" : @(__PRETTY_FUNCTION__) }];   \
-    @throw exception;                                                                                                                                   \
+NSException* exception = [NSException exceptionWithName:@"DNCUtilities Exception"                                                                   \
+reason:[NSString stringWithFormat:@"Not in Main Thread"]                                           \
+userInfo:@{ @"FILE" : @(__FILE__), @"LINE" : @(__LINE__), @"FUNCTION" : @(__PRETTY_FUNCTION__) }];   \
+@throw exception;                                                                                                                                   \
 }
 
 extern void LogImageDataF(const char *filename, int lineNumber, const char *functionName, NSString *domain, int level, int width, int height, NSData *data);
@@ -161,6 +161,9 @@ extern void LogImageDataF(const char *filename, int lineNumber, const char *func
 + (void)runGroupWithTimeout:(dispatch_time_t)timeout
          onBackgroundThread:(void (^)(dispatch_group_t group))block
              withCompletion:(void (^)())completionBlock;
+
++ (void)enterGroup:(dispatch_group_t)group
+onBackgroundThread:(void (^)(dispatch_group_t group))block;
 
 + (void)enterGroup:(dispatch_group_t)group;
 + (void)leaveGroup:(dispatch_group_t)group;
