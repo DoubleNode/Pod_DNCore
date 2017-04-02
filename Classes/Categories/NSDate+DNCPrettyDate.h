@@ -46,4 +46,11 @@
  */
 - (NSString*)localizedDate;
 
+/**
+ *  Creates an returns a new NSString object initialized with a localized version of the source time.
+ *
+ *  @return A new NSString object, configured with a localized version of the source time.
+ */
+- (NSString*)localizedTime;
+
 @end

@@ -118,13 +118,25 @@
 
 - (NSString*)simpleDateRange:(NSDate*)end
 {
+    if ([end isEqualToDate:self])
+    {
+        NSString*    dateFormat = [NSDateFormatter dateFormatFromTemplate:@"MMM d, yyyy"
+                                                                      options:0
+                                                                       locale:NSLocale.currentLocale];
+        
+        NSDateFormatter*    dateFormatter = NSDateFormatter.alloc.init;
+        [dateFormatter setDateFormat:dateFormat];
+        
+        return [dateFormatter stringFromDate:self];
+    }
+    
     NSString*    startFormat    = [NSDateFormatter dateFormatFromTemplate:@"MMM d"
                                                                   options:0
-                                                                   locale:[NSLocale currentLocale]];
+                                                                   locale:NSLocale.currentLocale];
     
     NSString*    endFormat      = [NSDateFormatter dateFormatFromTemplate:@"d, yyyy"
                                                                   options:0
-                                                                   locale:[NSLocale currentLocale]];
+                                                                   locale:NSLocale.currentLocale];
 
     NSDateFormatter*    startFormatter = [[NSDateFormatter alloc] init];
     [startFormatter setDateFormat:startFormat];
@@ -149,7 +161,20 @@
         return @"";
     }
     
-    return [NSString stringWithFormat:@"%@", datestr];
+    return datestr;
+}
+
+- (NSString*)localizedTime
+{
+    NSString*   timestr = [NSDateFormatter localizedStringFromDate:self
+                                                         dateStyle:NSDateFormatterNoStyle
+                                                         timeStyle:NSDateFormatterMediumStyle];
+    if ([timestr isEqualToString:@"(null)"] == YES)
+    {
+        return @"";
+    }
+    
+    return timestr;
 }
 
 @end
