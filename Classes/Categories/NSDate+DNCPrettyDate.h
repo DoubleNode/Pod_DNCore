@@ -53,4 +53,46 @@
  */
 - (NSString*)localizedTime;
 
+/**
+ *  Creates an returns a new NSString object initialized with a localized full version of the source date.
+ *
+ *  @return A new NSString object, configured with a localized version of the source date.
+ */
+- (NSString*)localizedFullDate;
+
+/**
+ *  Creates an returns a new NSString object initialized with a localized full version of the source time.
+ *
+ *  @return A new NSString object, configured with a localized version of the source time.
+ */
+- (NSString*)localizedFullTime;
+
+/**
+ *  Creates an returns a new NSString object initialized with a localized long version of the source date.
+ *
+ *  @return A new NSString object, configured with a localized version of the source date.
+ */
+- (NSString*)localizedLongDate;
+
+/**
+ *  Creates an returns a new NSString object initialized with a localized long version of the source time.
+ *
+ *  @return A new NSString object, configured with a localized version of the source time.
+ */
+- (NSString*)localizedLongTime;
+
+/**
+ *  Creates an returns a new NSString object initialized with a localized short version of the source date.
+ *
+ *  @return A new NSString object, configured with a localized version of the source date.
+ */
+- (NSString*)localizedShortDate;
+
+/**
+ *  Creates an returns a new NSString object initialized with a localized short version of the source time.
+ *
+ *  @return A new NSString object, configured with a localized version of the source time.
+ */
+- (NSString*)localizedShortTime;
+
 @end

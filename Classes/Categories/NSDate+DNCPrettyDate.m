@@ -177,4 +177,82 @@
     return timestr;
 }
 
+- (NSString*)localizedFullDate
+{
+    NSString*   datestr = [NSDateFormatter localizedStringFromDate:self
+                                                         dateStyle:NSDateFormatterFullStyle
+                                                         timeStyle:NSDateFormatterNoStyle];
+    if ([datestr isEqualToString:@"(null)"] == YES)
+    {
+        return @"";
+    }
+    
+    return datestr;
+}
+
+- (NSString*)localizedFullTime
+{
+    NSString*   timestr = [NSDateFormatter localizedStringFromDate:self
+                                                         dateStyle:NSDateFormatterNoStyle
+                                                         timeStyle:NSDateFormatterFullStyle];
+    if ([timestr isEqualToString:@"(null)"] == YES)
+    {
+        return @"";
+    }
+    
+    return timestr;
+}
+
+- (NSString*)localizedLongDate
+{
+    NSString*   datestr = [NSDateFormatter localizedStringFromDate:self
+                                                         dateStyle:NSDateFormatterLongStyle
+                                                         timeStyle:NSDateFormatterNoStyle];
+    if ([datestr isEqualToString:@"(null)"] == YES)
+    {
+        return @"";
+    }
+    
+    return datestr;
+}
+
+- (NSString*)localizedLongTime
+{
+    NSString*   timestr = [NSDateFormatter localizedStringFromDate:self
+                                                         dateStyle:NSDateFormatterNoStyle
+                                                         timeStyle:NSDateFormatterLongStyle];
+    if ([timestr isEqualToString:@"(null)"] == YES)
+    {
+        return @"";
+    }
+    
+    return timestr;
+}
+
+- (NSString*)localizedShortDate
+{
+    NSString*   datestr = [NSDateFormatter localizedStringFromDate:self
+                                                         dateStyle:NSDateFormatterShortStyle
+                                                         timeStyle:NSDateFormatterNoStyle];
+    if ([datestr isEqualToString:@"(null)"] == YES)
+    {
+        return @"";
+    }
+    
+    return datestr;
+}
+
+- (NSString*)localizedShortTime
+{
+    NSString*   timestr = [NSDateFormatter localizedStringFromDate:self
+                                                         dateStyle:NSDateFormatterNoStyle
+                                                         timeStyle:NSDateFormatterShortStyle];
+    if ([timestr isEqualToString:@"(null)"] == YES)
+    {
+        return @"";
+    }
+    
+    return timestr;
+}
+
 @end
