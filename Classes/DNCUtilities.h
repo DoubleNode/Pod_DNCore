@@ -93,6 +93,13 @@ extern void LogImageDataF(const char *filename, int lineNumber, const char *func
 + (id<DNCApplicationProtocol>)appDelegate;
 + (DNCUtilities*)sharedInstance;
 
++ (NSString*)osVersion;
++ (NSString*)deviceNameString;
++ (NSString*)deviceVersionName;
++ (NSString*)buildString;
++ (NSString*)versionString;
++ (NSString*)bundleName;
+
 + (CGSize)screenSizeUnits;
 + (CGFloat)screenHeightUnits;
 + (CGFloat)screenWidthUnits;

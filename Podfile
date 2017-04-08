@@ -13,6 +13,7 @@ target 'DNCore' do
   pod 'AFNetworking', '~> 3.0'
   pod 'ColorUtils'
   pod 'NSLogger'
+  pod 'SDVersion'
 
   target 'DNCoreTests' do
     inherit! :search_paths

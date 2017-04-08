@@ -6,6 +6,8 @@
 //  Copyright © 2016 Darren Ehlers and DoubleNode, LLC. All rights reserved.
 //
 
+@import SDVersion;
+
 #define DEBUGLOGGING
 #import "DNCUtilities.h"
 
@@ -57,6 +59,36 @@
     });
     
     return instance;
+}
+
++ (NSString*)osVersion
+{
+    return [UIDevice currentDevice].systemVersion;
+}
+
++ (NSString*)deviceNameString
+{
+    return SDVersion.deviceNameString;
+}
+
++ (NSString*)deviceVersionName
+{
+    return [SDVersion deviceNameForVersion:SDVersion.deviceVersion];
+}
+
++ (NSString*)buildString
+{
+    return self.appDelegate.buildString;
+}
+
++ (NSString*)versionString
+{
+    return self.appDelegate.versionString;
+}
+
++ (NSString*)bundleName
+{
+    return self.appDelegate.bundleName;
 }
 
 + (NSDateFormatter*)dictionaryDateDateFormatter

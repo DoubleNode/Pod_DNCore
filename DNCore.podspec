@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "DNCore"
-  s.version      = "0.0.10"
+  s.version      = "0.0.11"
   s.summary      = "A base collection of DNCore headers and utilities."
 
   s.description  = <<-DESC
@@ -27,5 +27,6 @@ s.requires_arc = true
   s.dependency "AFNetworking", "~> 3.0"
   s.dependency "ColorUtils"
   s.dependency "NSLogger"
+  s.dependency "SDVersion"
 
 end
