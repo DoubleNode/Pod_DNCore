@@ -70,6 +70,14 @@
                         return;
                     }
                     
+                    NSData*    errorData   = dataError.userInfo[@"com.alamofire.serialization.response.error.data"];
+                    if (errorData.length)
+                    {
+                        NSString*  errorString = [[NSString alloc] initWithData:errorData
+                                                                       encoding:NSASCIIStringEncoding];
+                        DNCLog(DNCLL_Debug, DNCLD_General, @"data=%@", errorString);
+                    }
+                    
                     if ([response isKindOfClass:[NSHTTPURLResponse class]])
                     {
                         NSHTTPURLResponse*    httpResponse    = (NSHTTPURLResponse*)response;
@@ -85,11 +93,6 @@
                             return;
                         }
                     }
-                    
-                    NSData*    errorData   = dataError.userInfo[@"com.alamofire.serialization.response.error.data"];
-                    NSString*  errorString = [[NSString alloc] initWithData:errorData
-                                                                   encoding:NSASCIIStringEncoding];
-                    DNCLog(DNCLL_Debug, DNCLD_General, @"data=%@", errorString);
                     
                     if (errorData)
                     {
