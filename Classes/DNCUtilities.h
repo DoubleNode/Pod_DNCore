@@ -36,18 +36,19 @@ typedef NS_ENUM(NSInteger, DNCLogLevel)
     DNCLL_Everything
 };
 
-#define DNCLD_UnitTests     @"UNITTESTS"
-#define DNCLD_General       @"GENERAL"
-#define DNCLD_Framework     @"FRAMEWORK"
+#define DNCLD_API           @"API"
 #define DNCLD_CoreData      @"COREDATA"
 #define DNCLD_CoreDataIS    @"COREDATAIS"
-#define DNCLD_Realm         @"REALM"
-#define DNCLD_ViewState     @"VIEWSTATE"
-#define DNCLD_Theming       @"THEMING"
+#define DNCLD_DAO           @"DAO"
+#define DNCLD_Framework     @"FRAMEWORK"
+#define DNCLD_General       @"GENERAL"
 #define DNCLD_Location      @"LOCATION"
 #define DNCLD_Networking    @"NETWORKING"
-#define DNCLD_API           @"API"
-#define DNCLD_DAO           @"DAO"
+#define DNCLD_Realm         @"REALM"
+#define DNCLD_Theming       @"THEMING"
+#define DNCLD_UnitTests     @"UNITTESTS"
+#define DNCLD_ViewState     @"VIEWSTATE"
+#define DNCLD_Workers       @"WORKERS"
 
 #if !defined(DEBUG)
 #define DNCAssert(condition,domain,...)           NSAssert(condition, __VA_ARGS__);
