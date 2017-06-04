@@ -116,11 +116,18 @@
     return prettyTimestamp;
 }
 
-- (NSString*)simpleDateRange:(NSDate*)end
+- (NSString*)dateRange:(NSDate*)end
+       withMonthFormat:(NSString*)monthFormatStr
+          andDayFormat:(NSString*)dayFormatStr
+         andYearFormat:(NSString*)yearFormatStr
 {
+    NSString*   dyFormatStr     = [NSString stringWithFormat:@"%@%@%@", dayFormatStr, ((dayFormatStr.length && yearFormatStr.length) ? @", " : @""), yearFormatStr];
+    NSString*   mdFormatStr     = [NSString stringWithFormat:@"%@%@%@", monthFormatStr, ((monthFormatStr.length && dayFormatStr.length) ? @" " : @""), dayFormatStr];
+    NSString*   mdyFormatStr    = [NSString stringWithFormat:@"%@%@%@%@%@", monthFormatStr, ((monthFormatStr.length && (dayFormatStr.length || yearFormatStr.length)) ? @" " : @""), dayFormatStr, ((dayFormatStr.length && yearFormatStr.length) ? @", " : @""), yearFormatStr];
+
     if ([end isEqualToDate:self])
     {
-        NSString*    dateFormat = [NSDateFormatter dateFormatFromTemplate:@"MMM d, yyyy"
+        NSString*   dateFormat      = [NSDateFormatter dateFormatFromTemplate:mdyFormatStr
                                                                       options:0
                                                                        locale:NSLocale.currentLocale];
         
@@ -130,25 +137,60 @@
         return [dateFormatter stringFromDate:self];
     }
     
-    NSString*    startFormat    = [NSDateFormatter dateFormatFromTemplate:@"MMM d"
+    NSString*    monthFormat    = [NSDateFormatter dateFormatFromTemplate:@"MMM"
+                                                                  options:0
+                                                                   locale:NSLocale.currentLocale];
+    NSDateFormatter*    monthFormatter = NSDateFormatter.alloc.init;
+    [monthFormatter setDateFormat:monthFormat];
+    
+    NSString*   startFormat     = [NSDateFormatter dateFormatFromTemplate:mdFormatStr
                                                                   options:0
                                                                    locale:NSLocale.currentLocale];
     
-    NSString*    endFormat      = [NSDateFormatter dateFormatFromTemplate:@"d, yyyy"
-                                                                  options:0
-                                                                   locale:NSLocale.currentLocale];
-
-    NSDateFormatter*    startFormatter = [[NSDateFormatter alloc] init];
-    [startFormatter setDateFormat:startFormat];
-
+    NSString*   endFormat;
+    NSString*   separatorStr;
+    
+    NSString*   startMonthStr   = [monthFormatter stringFromDate:self];
+    NSString*   endMonthStr     = [monthFormatter stringFromDate:end];
+    
+    if ([startMonthStr isEqualToString:endMonthStr])
+    {
+        separatorStr    = @"-";
+        endFormat       = [NSDateFormatter dateFormatFromTemplate:dyFormatStr
+                                                          options:0
+                                                           locale:NSLocale.currentLocale];
+    }
+    else
+    {
+        separatorStr    = @" - ";
+        endFormat       = [NSDateFormatter dateFormatFromTemplate:mdyFormatStr
+                                                          options:0
+                                                           locale:NSLocale.currentLocale];
+    }
+    
+    NSDateFormatter*    startFormatter  = NSDateFormatter.alloc.init;   [startFormatter setDateFormat:startFormat];
+    NSDateFormatter*    endFormatter    = NSDateFormatter.alloc.init;   [endFormatter setDateFormat:endFormat];
+    
     NSString*   startStr    = [startFormatter stringFromDate:self];
+    NSString*   endStr      = [endFormatter stringFromDate:end];
     
-    NSDateFormatter*    endFormatter    = [[NSDateFormatter alloc] init];
-    [endFormatter setDateFormat:endFormat];
-    
-    NSString*   endStr  = [endFormatter stringFromDate:end];
-    
-    return [NSString stringWithFormat:@"%@-%@", startStr, endStr];
+    return [NSString stringWithFormat:@"%@%@%@", startStr, separatorStr, endStr];
+}
+
+- (NSString*)simpleDateRange:(NSDate*)end
+{
+    return [self dateRange:end
+           withMonthFormat:@"MMM"
+              andDayFormat:@"d"
+             andYearFormat:@""];
+}
+
+- (NSString*)fullDateRange:(NSDate*)end
+{
+    return [self dateRange:end
+           withMonthFormat:@"MMM"
+              andDayFormat:@"d"
+             andYearFormat:@"yyyy"];
 }
 
 - (NSString*)localizedDate

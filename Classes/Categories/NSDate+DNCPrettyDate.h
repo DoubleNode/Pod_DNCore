@@ -33,11 +33,18 @@
  *
  *  @param end The end date for the date range string.
  *
- *  @warning This function is currently not very robust, and works well only for dates within the same month.  This function should be revisited and expanded upon in the future.
- *
- *  @return A new NSString object, configured with a simple representation of a date range (ie: MMM d-d, yyyy).
+ *  @return A new NSString object, configured with a simple representation of a date range (ie: MMM d-d).
  */
 - (NSString*)simpleDateRange:(NSDate*)end;
+
+/**
+ *  Creates and returns a new NSString object initialized with a full display of a date range, between the source date and the end data parameter.
+ *
+ *  @param end The end date for the date range string.
+ *
+ *  @return A new NSString object, configured with a full representation of a date range (ie: MMM d-d, yyyy).
+ */
+- (NSString*)fullDateRange:(NSDate*)end;
 
 /**
  *  Creates an returns a new NSString object initialized with a localized version of the source date.
