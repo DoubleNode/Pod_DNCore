@@ -22,7 +22,7 @@
                                    serverErrorHandler:(void(^ _Nullable)(NSHTTPURLResponse* _Nullable httpResponse))serverErrorHandler
                                      dataErrorHandler:(void(^ _Nullable)(NSData* _Nullable errorData, NSString* _Nullable errorMessage))dataErrorHandler
                                   unknownErrorHandler:(void(^ _Nullable)(NSError* _Nullable dataError))unknownErrorHandler
-                                noResponseBodyHandler:(void(^ _Nullable)())noResponseBodyHandler
+                                noResponseBodyHandler:(void(^ _Nullable)(void))noResponseBodyHandler
                                     completionHandler:(void(^ _Nullable)(NSURLResponse* _Nonnull response, id _Nullable responseObject))completionHandler;
 
 - (NSURLSessionDataTask* _Nonnull)dataTaskWithRequest:(NSURLRequest* _Nonnull)request
@@ -30,7 +30,7 @@
                                    serverErrorHandler:(void(^ _Nullable)(NSHTTPURLResponse* _Nullable httpResponse))serverErrorHandler
                                      dataErrorHandler:(void(^ _Nullable)(NSData* _Nullable errorData, NSString* _Nullable errorMessage))dataErrorHandler
                                   unknownErrorHandler:(void(^ _Nullable)(NSError* _Nullable dataError))unknownErrorHandler
-                                noResponseBodyHandler:(void(^ _Nullable)())noResponseBodyHandler
+                                noResponseBodyHandler:(void(^ _Nullable)(void))noResponseBodyHandler
                                     completionHandler:(void(^ _Nullable)(NSURLResponse* _Nonnull response, id _Nullable responseObject))completionHandler;
 
 @end

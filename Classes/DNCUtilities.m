@@ -491,7 +491,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
 }
 
 + (void)runOnBackgroundThreadAfterDelay:(CGFloat)delay
-                                  block:(void (^)())block
+                                  block:(void (^)(void))block
 {
     [NSThread detachNewThreadSelector:@selector(runAfterDelayBlock:)
                              toTarget:self
@@ -513,19 +513,19 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
     [DNCUtilities runBlock:arrayBlock[1]];
 }
 
-+ (void)runOnBackgroundThread:(void (^)())block
++ (void)runOnBackgroundThread:(void (^)(void))block
 {
     [NSThread detachNewThreadSelector:@selector(runBlock:)
                              toTarget:self
                            withObject:block];
 }
 
-+ (void)runBlock:(void (^)())block
++ (void)runBlock:(void (^)(void))block
 {
     block();
 }
 
-+ (void)runOnMainThreadAsynchronouslyWithoutDeadlocking:(void (^)())block
++ (void)runOnMainThreadAsynchronouslyWithoutDeadlocking:(void (^)(void))block
 {
     if ([NSThread isMainThread])
     {
@@ -542,7 +542,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
     }
 }
 
-+ (void)runOnMainThreadWithoutDeadlocking:(void (^)())block
++ (void)runOnMainThreadWithoutDeadlocking:(void (^)(void))block
 {
     if ([NSThread isMainThread])
     {
@@ -554,7 +554,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
     }
 }
 
-+ (void)runOnMainThreadBlock:(void (^)())block
++ (void)runOnMainThreadBlock:(void (^)(void))block
 {
     [DNCUtilities runOnMainThreadWithoutDeadlocking:^
      {
@@ -562,15 +562,15 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
      }];
 }
 
-+ (void)runAfterDelay:(CGFloat)delay block:(void (^)())block
++ (void)runAfterDelay:(CGFloat)delay block:(void (^)(void))block
 {
-    void (^block_)() = [block copy];
+    void (^block_)(void) = [block copy];
     [self performSelector:@selector(runBlock:) withObject:block_ afterDelay:delay];
 }
 
-+ (void)runOnMainThreadAfterDelay:(CGFloat)delay block:(void (^)())block
++ (void)runOnMainThreadAfterDelay:(CGFloat)delay block:(void (^)(void))block
 {
-    void (^block_)() = [block copy];
+    void (^block_)(void) = [block copy];
     [self performSelector:@selector(runOnMainThreadBlock:) withObject:block_ afterDelay:delay];
 }
 
@@ -606,27 +606,27 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
 
 - (void)instanceRunBlock:(NSTimer*)timer
 {
-    void (^block)() = timer.userInfo;
+    void (^block)(void) = timer.userInfo;
     
     block();
 }
 
-+ (NSTimer*)repeatRunAfterDelay:(CGFloat)delay block:(void (^)())block
++ (NSTimer*)repeatRunAfterDelay:(CGFloat)delay block:(void (^)(void))block
 {
-    void (^block_)() = [block copy];
+    void (^block_)(void) = [block copy];
     
     return [NSTimer scheduledTimerWithTimeInterval:delay target:[DNCUtilities sharedInstance] selector:@selector(instanceRunBlock:) userInfo:block_ repeats:YES];
 }
 
-+ (NSTimer*)runTimerAfterDelay:(CGFloat)delay block:(void (^)())block
++ (NSTimer*)runTimerAfterDelay:(CGFloat)delay block:(void (^)(void))block
 {
-    void (^block_)() = [block copy];
+    void (^block_)(void) = [block copy];
     
     return [NSTimer scheduledTimerWithTimeInterval:delay target:[DNCUtilities sharedInstance] selector:@selector(instanceRunBlock:) userInfo:block_ repeats:NO];
 }
 
 + (void)runGroupOnBackgroundThread:(void (^)(dispatch_group_t group))block
-                    withCompletion:(void (^)())completionBlock
+                    withCompletion:(void (^)(void))completionBlock
 {
     [self runGroupWithTimeout:DISPATCH_TIME_FOREVER
            onBackgroundThread:block
@@ -635,7 +635,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
 
 + (void)runGroupWithTimeout:(dispatch_time_t)timeout
          onBackgroundThread:(void (^)(dispatch_group_t group))block
-             withCompletion:(void (^)())completionBlock
+             withCompletion:(void (^)(void))completionBlock
 {
     [DNCUtilities runOnBackgroundThread:
      ^()

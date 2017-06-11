@@ -19,7 +19,7 @@
  *
  *  @return A new NSTimer object, configured according to the specified parameters.
  */
-+(id)scheduledTimerWithTimeInterval:(NSTimeInterval)inTimeInterval block:(void (^)())inBlock repeats:(BOOL)inRepeats;
++(id)scheduledTimerWithTimeInterval:(NSTimeInterval)inTimeInterval block:(void (^)(void))inBlock repeats:(BOOL)inRepeats;
 
 /**
  *  Creates and returns a new NSTimer object initialized with the specified object and selector.
@@ -30,6 +30,6 @@
  *
  *  @return A new NSTimer object, configured according to the specified parameters.
  */
-+(id)timerWithTimeInterval:(NSTimeInterval)inTimeInterval block:(void (^)())inBlock repeats:(BOOL)inRepeats;
++(id)timerWithTimeInterval:(NSTimeInterval)inTimeInterval block:(void (^)(void))inBlock repeats:(BOOL)inRepeats;
 
 @end

@@ -147,28 +147,28 @@ extern void LogImageDataF(const char *filename, int lineNumber, const char *func
 + (void)registerCellClass:(NSString*)className forHeaderFooterViewReuseIdentifier:(NSString*)kind withTableView:(UITableView*)tableView;
 
 + (void)runOnBackgroundThreadAfterDelay:(CGFloat)delay
-                                  block:(void (^)())block;
+                                  block:(void (^)(void))block;
 
-+ (void)runOnMainThreadAsynchronouslyWithoutDeadlocking:(void (^)())block;
-+ (void)runOnMainThreadWithoutDeadlocking:(void (^)())block;
-+ (void)runOnBackgroundThread:(void (^)())block;
-+ (void)runBlock:(void (^)())block;
++ (void)runOnMainThreadAsynchronouslyWithoutDeadlocking:(void (^)(void))block;
++ (void)runOnMainThreadWithoutDeadlocking:(void (^)(void))block;
++ (void)runOnBackgroundThread:(void (^)(void))block;
++ (void)runBlock:(void (^)(void))block;
 
-+ (void)runAfterDelay:(CGFloat)delay block:(void (^)())block;
-+ (void)runOnMainThreadAfterDelay:(CGFloat)delay block:(void (^)())block;
++ (void)runAfterDelay:(CGFloat)delay block:(void (^)(void))block;
++ (void)runOnMainThreadAfterDelay:(CGFloat)delay block:(void (^)(void))block;
 
 + (void)runRepeatedlyAfterDelay:(CGFloat)delay block:(void (^)(BOOL* stop))block;
 + (void)runOnMainThreadRepeatedlyAfterDelay:(CGFloat)delay block:(void (^)(BOOL* stop))block;
 
-+ (NSTimer*)repeatRunAfterDelay:(CGFloat)delay block:(void (^)())block;
-+ (NSTimer*)runTimerAfterDelay:(CGFloat)delay block:(void (^)())block;
++ (NSTimer*)repeatRunAfterDelay:(CGFloat)delay block:(void (^)(void))block;
++ (NSTimer*)runTimerAfterDelay:(CGFloat)delay block:(void (^)(void))block;
 
 + (void)runGroupOnBackgroundThread:(void (^)(dispatch_group_t group))block
-                    withCompletion:(void (^)())completionBlock;
+                    withCompletion:(void (^)(void))completionBlock;
 
 + (void)runGroupWithTimeout:(dispatch_time_t)timeout
          onBackgroundThread:(void (^)(dispatch_group_t group))block
-             withCompletion:(void (^)())completionBlock;
+             withCompletion:(void (^)(void))completionBlock;
 
 + (void)enterGroup:(dispatch_group_t)group
 onBackgroundThread:(void (^)(dispatch_group_t group))block;
