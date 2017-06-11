@@ -177,6 +177,29 @@
     return [NSString stringWithFormat:@"%@%@%@", startStr, separatorStr, endStr];
 }
 
+- (BOOL)isSameYearAsNow
+{
+    unsigned        units      = NSCalendarUnitYear;
+    NSCalendar*     calendar   = [NSCalendar.alloc initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    
+    NSDateComponents*   selfComponents  = [calendar components:units
+                                                      fromDate:self];
+    NSDateComponents*   nowComponents   = [calendar components:units
+                                                      fromDate:NSDate.date];
+    
+    return (selfComponents.year == nowComponents.year);
+}
+
+- (NSString*)smartDateRange:(NSDate*)end
+{
+    if (self.isSameYearAsNow)
+    {
+        return [self simpleDateRange:end];
+    }
+    
+    return [self fullDateRange:end];
+}
+
 - (NSString*)simpleDateRange:(NSDate*)end
 {
     return [self dateRange:end
@@ -191,6 +214,16 @@
            withMonthFormat:@"MMM"
               andDayFormat:@"d"
              andYearFormat:@"yyyy"];
+}
+
+- (NSString*)smartDate
+{
+    if (self.isSameYearAsNow)
+    {
+        return self.simpleDate;
+    }
+    
+    return self.fullDate;
 }
 
 - (NSString*)simpleDate
