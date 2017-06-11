@@ -29,6 +29,20 @@
 - (NSString*)shortPrettyDate;
 
 /**
+ *  Creates and returns a new NSString object initialized with a simple display of a date.
+ *
+ *  @return A new NSString object, configured with a simple representation of a date (ie: MMM d).
+ */
+- (NSString*)simpleDate;
+
+/**
+ *  Creates and returns a new NSString object initialized with a full display of a date.
+ *
+ *  @return A new NSString object, configured with a full representation of a date (ie: MMM d, yyyy).
+ */
+- (NSString*)fullDate;
+
+/**
  *  Creates and returns a new NSString object initialized with a simple display of a date range, between the source date and the end data parameter.
  *
  *  @param end The end date for the date range string.

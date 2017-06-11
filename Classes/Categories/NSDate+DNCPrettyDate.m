@@ -193,6 +193,22 @@
              andYearFormat:@"yyyy"];
 }
 
+- (NSString*)simpleDate
+{
+    return [self dateRange:self
+           withMonthFormat:@"MMM"
+              andDayFormat:@"d"
+             andYearFormat:@""];
+}
+
+- (NSString*)fullDate
+{
+    return [self dateRange:self
+           withMonthFormat:@"MMM"
+              andDayFormat:@"d"
+             andYearFormat:@"yyyy"];
+}
+
 - (NSString*)localizedDate
 {
     NSString*   datestr = [NSDateFormatter localizedStringFromDate:self
