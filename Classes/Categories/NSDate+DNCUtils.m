@@ -25,7 +25,7 @@
 }
 
 // Return the first day of the month for the month that 'date' falls in:
-- (NSDate*)firstDayOfMonthForDate:(NSDate*)date
++ (NSDate*)firstDayOfMonthForDate:(NSDate*)date
 {
     NSCalendar*         calendar    = [NSCalendar currentCalendar];
     NSDateComponents*   components  = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay
@@ -34,8 +34,13 @@
     return [calendar dateFromComponents:components];
 }
 
+- (NSDate*)firstDayOfMonth
+{
+    return [NSDate firstDayOfMonthForDate:self];
+}
+
 // Return the last day of the month for the month that 'date' falls in:
-- (NSDate*)lastDayOfMonthForDate:(NSDate*)date
++ (NSDate*)lastDayOfMonthForDate:(NSDate*)date
 {
     NSCalendar*         calendar    = [NSCalendar currentCalendar];
     NSDateComponents*   components  = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay
@@ -43,6 +48,11 @@
     components.month    += 1;
     components.day      = 0;
     return [calendar dateFromComponents:components];
+}
+
+- (NSDate*)lastDayOfMonth
+{
+    return [NSDate lastDayOfMonthForDate:self];
 }
 
 @end

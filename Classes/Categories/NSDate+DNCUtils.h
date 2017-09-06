@@ -14,9 +14,11 @@
 - (NSDate*)dncToGlobalTime;
 
 // Return the first day of the month for the month that 'date' falls in:
-- (NSDate*)firstDayOfMonthForDate:(NSDate*)date;
++ (NSDate*)firstDayOfMonthForDate:(NSDate*)date;
+- (NSDate*)firstDayOfMonth;
 
 // Return the last day of the month for the month that 'date' falls in:
-- (NSDate*)lastDayOfMonthForDate:(NSDate*)date;
++ (NSDate*)lastDayOfMonthForDate:(NSDate*)date;
+- (NSDate*)lastDayOfMonth;
 
 @end
