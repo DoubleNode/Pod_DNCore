@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
 
   s.public_header_files = "Classes/**/*.h"
 
-s.requires_arc = true
+  s.requires_arc = true
 
   s.dependency "AFNetworking", "~> 3.0"
   s.dependency "ColorUtils"
