@@ -13,7 +13,7 @@ pod lib lint --sources=git@github.com:DoubleNode/SpecsPrivateRepo.git,master --p
 pod spec lint --sources=git@github.com:DoubleNode/SpecsPrivateRepo.git,master --private --allow-warnings
 
 4. Final Submit
-pod repo push DoubleNode DNCore.podspec
+pod repo push DoubleNode DNCore.podspec --allow-warnings
 
 
 Steps to Reset Podfile Pods
