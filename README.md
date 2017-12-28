@@ -2,7 +2,7 @@ Steps to Update Pod
 ------------------------
 0. For New Install Only:
 pod repo add DoubleNodeSpecs https://github.com/DoubleNode/SpecsPrivateRepo.git
-pod repo update DoubleNode
+pod repo update DoubleNodeSpecs
 
 1. Check local files
 pod lib lint --sources=git@github.com:DoubleNode/SpecsPrivateRepo.git,master --private --allow-warnings
