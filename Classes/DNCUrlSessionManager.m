@@ -61,8 +61,8 @@
                         }
                         
                         DNCLog(DNCLL_Info, DNCLD_Networking, @"WILLRETRY - %@", response.URL);
-                        [DNCUtilities runOnBackgroundThreadAfterDelay:1.0f
-                                                                block:
+                        [DNCThread afterDelay:1.0f
+                                          run:
                          ^()
                          {
                              serverErrorHandler ? serverErrorHandler(httpResponse) : nil;
@@ -84,8 +84,8 @@
                         if (httpResponse.statusCode == 500)
                         {
                             DNCLog(DNCLL_Info, DNCLD_Networking, @"WILLRETRY - %@", response.URL);
-                            [DNCUtilities runOnBackgroundThreadAfterDelay:1.0f
-                                                                    block:
+                            [DNCThread afterDelay:1.0f
+                                              run:
                              ^()
                              {
                                  serverErrorHandler ? serverErrorHandler(httpResponse) : nil;
@@ -164,8 +164,8 @@
                         }
                         
                         DNCLog(DNCLL_Info, DNCLD_Networking, @"WILLRETRY - %@", response.URL);
-                        [DNCUtilities runOnBackgroundThreadAfterDelay:1.0f
-                                                                block:
+                        [DNCThread afterDelay:1.0f
+                                          run:
                          ^()
                          {
                              serverErrorHandler ? serverErrorHandler(httpResponse) : nil;
@@ -179,8 +179,8 @@
                         if (httpResponse.statusCode == 500)
                         {
                             DNCLog(DNCLL_Info, DNCLD_Networking, @"WILLRETRY - %@", response.URL);
-                            [DNCUtilities runOnBackgroundThreadAfterDelay:1.0f
-                                                                    block:
+                            [DNCThread afterDelay:1.0f
+                                              run:
                              ^()
                              {
                                  serverErrorHandler ? serverErrorHandler(httpResponse) : nil;

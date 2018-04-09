@@ -146,36 +146,6 @@ extern void LogImageDataF(const char *filename, int lineNumber, const char *func
 + (void)registerCellNib:(NSString*)nibName withBundle:(NSBundle*)bundle forHeaderFooterViewReuseIdentifier:(NSString*)kind withTableView:(UITableView*)tableView;
 + (void)registerCellClass:(NSString*)className forHeaderFooterViewReuseIdentifier:(NSString*)kind withTableView:(UITableView*)tableView;
 
-+ (void)runOnBackgroundThreadAfterDelay:(CGFloat)delay
-                                  block:(void (^)(void))block;
-
-+ (void)runOnMainThreadAsynchronouslyWithoutDeadlocking:(void (^)(void))block;
-+ (void)runOnMainThreadWithoutDeadlocking:(void (^)(void))block;
-+ (void)runOnBackgroundThread:(void (^)(void))block;
-+ (void)runBlock:(void (^)(void))block;
-
-+ (void)runAfterDelay:(CGFloat)delay block:(void (^)(void))block;
-+ (void)runOnMainThreadAfterDelay:(CGFloat)delay block:(void (^)(void))block;
-
-+ (void)runRepeatedlyAfterDelay:(CGFloat)delay block:(void (^)(BOOL* stop))block;
-+ (void)runOnMainThreadRepeatedlyAfterDelay:(CGFloat)delay block:(void (^)(BOOL* stop))block;
-
-+ (NSTimer*)repeatRunAfterDelay:(CGFloat)delay block:(void (^)(void))block;
-+ (NSTimer*)runTimerAfterDelay:(CGFloat)delay block:(void (^)(void))block;
-
-+ (void)runGroupOnBackgroundThread:(void (^)(dispatch_group_t group))block
-                    withCompletion:(void (^)(void))completionBlock;
-
-+ (void)runGroupWithTimeout:(dispatch_time_t)timeout
-         onBackgroundThread:(void (^)(dispatch_group_t group))block
-             withCompletion:(void (^)(void))completionBlock;
-
-+ (void)enterGroup:(dispatch_group_t)group
-onBackgroundThread:(void (^)(dispatch_group_t group))block;
-
-+ (void)enterGroup:(dispatch_group_t)group;
-+ (void)leaveGroup:(dispatch_group_t)group;
-
 + (bool)canDevicePlaceAPhoneCall;
 
 + (void)playSound:(NSString*)name;
@@ -237,3 +207,167 @@ onBackgroundThread:(void (^)(dispatch_group_t group))block;
 CGFloat DNCTimeBlock (void (^block)(void));
 
 void DNCLogMessageF(const char *filename, int lineNumber, const char *functionName, NSString *domain, int level, NSString *format, ...);
+
+@class DNCThread;
+@class DNCUIThread;
+@class DNCThreadingGroup;
+
+typedef void(^DNCUtilitiesBlock)(void);
+typedef void(^DNCUtilitiesCompletionBlock)(NSError* error);
+typedef void(^DNCUtilitiesStopBlock)(BOOL* stop);
+typedef void(^DNCUtilitiesGroupBlock)(dispatch_group_t group);
+typedef void(^DNCUtilitiesThreadBlock)(DNCThread* thread);
+typedef void(^DNCUtilitiesUIThreadBlock)(DNCUIThread* thread);
+typedef void(^DNCUtilitiesThreadGroupBlock)(DNCThreadingGroup* threadGroup);
+
+@protocol DNCThreadingGroupProtocol
+
+- (void)runInGroup:(DNCThreadingGroup*)threadGroup;
+- (void)done;
+
+@end
+
+//
+// DNCThread - run code on background thread
+//
+// Example Code:
+//
+//  [DNCThread run:
+//   ^()
+//   {
+//   }];
+//
+// or...
+//
+//  DNCThread* thread = [DNCThread create:
+//   ^(DNCThread* thread)
+//   {
+//   }];
+//
+//  [thread run];
+//
+
+@interface DNCThread : NSObject<DNCThreadingGroupProtocol>
+
++ (id)create:(DNCUtilitiesThreadBlock)block;
++ (void)run:(DNCUtilitiesBlock)block;
++ (NSTimer*)afterDelay:(double)delay
+                   run:(DNCUtilitiesBlock)block;
++ (void)repeatedlyAfterDelay:(double)delay
+                         run:(DNCUtilitiesStopBlock)block;
+
+- (id)init API_UNAVAILABLE(ios);
+- (id)initWithBlock:(DNCUtilitiesThreadBlock)block;
+- (void)run;
+- (void)runAfterDelay:(double)delay;
+
+- (void)runInGroup:(DNCThreadingGroup*)threadGroup;
+- (void)done;
+
+@end
+
+@interface DNCUIThread : DNCThread
+
++ (id)create:(DNCUtilitiesUIThreadBlock)block;
+
+- (id)initWithBlock:(DNCUtilitiesUIThreadBlock)block;
+
+@end
+
+@interface DNCHighThread : DNCThread
+
++ (void)run:(DNCUtilitiesBlock)block;
+
++ (NSTimer*)afterDelay:(double)delay
+                   run:(DNCUtilitiesBlock)block;
+
++ (void)repeatedlyAfterDelay:(double)delay
+                         run:(DNCUtilitiesStopBlock)block;
+
+@end
+
+@interface DNCLowThread : DNCThread
+
++ (void)run:(DNCUtilitiesBlock)block;
+
++ (NSTimer*)afterDelay:(double)delay
+                   run:(DNCUtilitiesBlock)block;
+
++ (void)repeatedlyAfterDelay:(double)delay
+                         run:(DNCUtilitiesStopBlock)block;
+
+@end
+
+//
+// ThreadGroup
+//
+// Example Code:
+//
+//  DNCThread* thread1 = [DNCThread create:
+//   ^(DNCThread* thread)
+//   {
+//       // Do background work here
+//       [thread done];
+//   }];
+//
+//  DNCThread* thread2 = [DNCThread create:
+//   ^(DNCThread* thread)
+//   {
+//       // Do background work here
+//       [thread done];
+//   }];
+//
+//  DNCThread* thread3 = [DNCThread create:
+//   ^(DNCThread* thread)
+//   {
+//       // Do background work here
+//       [thread done];
+//   }];
+//
+//  DNCThread* uiThread = [DNCThread create:
+//   ^(DNCThread* thread)
+//   {
+//       // Do main thread UI work here
+//       [thread done];
+//   }];
+//
+//  [DNCThreadingGroup run:
+//   ^(DNCThreadingGroup* threadGroup)
+//   {
+//       [threadGroup runThread:uiThread];
+//
+//       [threadGroup runThread:thread1];
+//       [threadGroup runThread:thread2];
+//       [threadGroup runThread:thread3];
+//   }
+//               then:
+//   ^()
+//   {
+//       // This runs after all threads are "done" or after timeout
+//   }];
+//
+
+@class DNCThreadingGroup;
+
+@interface DNCThreadingGroup : NSObject
+
++ (DNCThreadingGroup*)run:(DNCUtilitiesThreadGroupBlock)block
+                     then:(DNCUtilitiesCompletionBlock)completionBlock;
+
++ (DNCThreadingGroup*)withTimeout:(dispatch_time_t)timeout
+                              run:(DNCUtilitiesThreadGroupBlock)block
+                             then:(DNCUtilitiesCompletionBlock)completionBlock;
+
+- (void)run:(DNCUtilitiesBlock)block
+       then:(DNCUtilitiesCompletionBlock)completionBlock;
+
+- (void)withTimeout:(dispatch_time_t)timeout
+                run:(DNCUtilitiesBlock)block
+               then:(DNCUtilitiesCompletionBlock)completionBlock;
+
+- (void)runThread:(id<DNCThreadingGroupProtocol>)thread;
+
+- (void)startThread;
+- (void)completeThread;
+
+@end
