@@ -218,11 +218,11 @@ typedef void(^DNCUtilitiesStopBlock)(BOOL* stop);
 typedef void(^DNCUtilitiesGroupBlock)(dispatch_group_t group);
 typedef void(^DNCUtilitiesThreadBlock)(DNCThread* thread);
 typedef void(^DNCUtilitiesUIThreadBlock)(DNCUIThread* thread);
-typedef void(^DNCUtilitiesThreadGroupBlock)(DNCThreadingGroup* threadGroup);
+typedef void(^DNCUtilitiesThreadingGroupBlock)(DNCThreadingGroup* threadingGroup);
 
 @protocol DNCThreadingGroupProtocol
 
-- (void)runInGroup:(DNCThreadingGroup*)threadGroup;
+- (void)runInGroup:(DNCThreadingGroup*)threadingGroup;
 - (void)done;
 
 @end
@@ -261,7 +261,7 @@ typedef void(^DNCUtilitiesThreadGroupBlock)(DNCThreadingGroup* threadGroup);
 - (void)run;
 - (void)runAfterDelay:(double)delay;
 
-- (void)runInGroup:(DNCThreadingGroup*)threadGroup;
+- (void)runInGroup:(DNCThreadingGroup*)threadingGroup;
 - (void)done;
 
 @end
@@ -299,7 +299,7 @@ typedef void(^DNCUtilitiesThreadGroupBlock)(DNCThreadingGroup* threadGroup);
 @end
 
 //
-// ThreadGroup
+// threadingGroup
 //
 // Example Code:
 //
@@ -332,13 +332,13 @@ typedef void(^DNCUtilitiesThreadGroupBlock)(DNCThreadingGroup* threadGroup);
 //   }];
 //
 //  [DNCThreadingGroup run:
-//   ^(DNCThreadingGroup* threadGroup)
+//   ^(DNCThreadingGroup* threadingGroup)
 //   {
-//       [threadGroup runThread:uiThread];
+//       [threadingGroup runThread:uiThread];
 //
-//       [threadGroup runThread:thread1];
-//       [threadGroup runThread:thread2];
-//       [threadGroup runThread:thread3];
+//       [threadingGroup runThread:thread1];
+//       [threadingGroup runThread:thread2];
+//       [threadingGroup runThread:thread3];
 //   }
 //               then:
 //   ^()
@@ -351,11 +351,11 @@ typedef void(^DNCUtilitiesThreadGroupBlock)(DNCThreadingGroup* threadGroup);
 
 @interface DNCThreadingGroup : NSObject
 
-+ (DNCThreadingGroup*)run:(DNCUtilitiesThreadGroupBlock)block
++ (DNCThreadingGroup*)run:(DNCUtilitiesThreadingGroupBlock)block
                      then:(DNCUtilitiesCompletionBlock)completionBlock;
 
 + (DNCThreadingGroup*)withTimeout:(dispatch_time_t)timeout
-                              run:(DNCUtilitiesThreadGroupBlock)block
+                              run:(DNCUtilitiesThreadingGroupBlock)block
                              then:(DNCUtilitiesCompletionBlock)completionBlock;
 
 - (void)run:(DNCUtilitiesBlock)block

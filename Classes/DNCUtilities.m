@@ -735,256 +735,6 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
      }];
 }
 
-#pragma mark - Threading functions
-
-const double    DNCThreadingHelperPriority_Low      = 0.2f;
-const double    DNCThreadingHelperPriority_Default  = 0.5f;
-const double    DNCThreadingHelperPriority_High     = 0.9f;
-
-+ (void)runBlock:(DNCUtilitiesBlock)block
-{
-    [self atPriority:DNCThreadingHelperPriority_Default
-            runBlock:block];
-}
-
-+ (void)runBlockAtHighPriority:(DNCUtilitiesBlock)block
-{
-    [self atPriority:DNCThreadingHelperPriority_High
-            runBlock:block];
-}
-
-+ (void)runBlockAtLowPriority:(DNCUtilitiesBlock)block
-{
-    [self atPriority:DNCThreadingHelperPriority_Low
-            runBlock:block];
-}
-
-+ (void)atPriority:(double)priority
-          runBlock:(DNCUtilitiesBlock)block
-{
-    NSThread.currentThread.threadPriority   = priority;
-    
-    block ? block() : (void)nil;
-}
-
-+ (void)runOnUIThread:(DNCUtilitiesBlock)block
-{
-    if (NSThread.isMainThread)
-    {
-        [self runBlock:block];
-    }
-    else
-    {
-        dispatch_sync(dispatch_get_main_queue(), block);
-    }
-}
-
-+ (void)timerRunInBackground:(NSTimer*)timer
-{
-    DNCUtilitiesBlock block = timer.userInfo;
-    
-    [self runBlock:block];
-}
-
-+ (void)timerRunInHighBackground:(NSTimer*)timer
-{
-    DNCUtilitiesBlock block = timer.userInfo;
-    
-    [self runBlockAtHighPriority:block];
-}
-
-+ (void)timerRunInLowBackground:(NSTimer*)timer
-{
-    DNCUtilitiesBlock block = timer.userInfo;
-    
-    [self runBlockAtLowPriority:block];
-}
-
-+ (void)timerRunOnUIThread:(NSTimer*)timer
-{
-    DNCUtilitiesBlock block = timer.userInfo;
-    
-    [self runOnUIThread:block];
-}
-
-+ (NSTimer*)afterDelay:(double)delay
-         runOnUIThread:(DNCUtilitiesBlock)block
-{
-    DNCUtilitiesBlock block_ = [block copy];
-    
-    return [NSTimer scheduledTimerWithTimeInterval:delay
-                                            target:self
-                                          selector:@selector(timerRunOnUIThread:)
-                                          userInfo:block_
-                                           repeats:NO];
-}
-
-+ (void)repeatedlyAfterDelay:(double)delay
-               runOnUIThread:(DNCUtilitiesStopBlock)block
-{
-    [self.class afterDelay:delay
-             runOnUIThread:^
-     {
-         BOOL   stop = NO;
-         block ? block(&stop) : (void)nil;
-         if (stop == NO)
-         {
-             [self.class repeatedlyAfterDelay:delay
-                                runOnUIThread:block];
-         }
-     }];
-}
-
-+ (void)runInBackground:(DNCUtilitiesBlock)block
-{
-    [NSThread detachNewThreadSelector:@selector(runBlock:)
-                             toTarget:self
-                           withObject:block];
-}
-
-+ (void)runInHighBackground:(DNCUtilitiesBlock)block
-{
-    [NSThread detachNewThreadSelector:@selector(runBlockAtHighPriority:)
-                             toTarget:self
-                           withObject:block];
-}
-
-+ (void)runInLowBackground:(DNCUtilitiesBlock)block
-{
-    [NSThread detachNewThreadSelector:@selector(runBlockAtLowPriority:)
-                             toTarget:self
-                           withObject:block];
-}
-
-+ (NSTimer*)afterDelay:(double)delay
-       runInBackground:(DNCUtilitiesBlock)block
-{
-    DNCUtilitiesBlock block_ = [block copy];
-    
-    return [NSTimer scheduledTimerWithTimeInterval:delay
-                                            target:self
-                                          selector:@selector(timerRunInBackground:)
-                                          userInfo:block_
-                                           repeats:NO];
-}
-
-+ (NSTimer*)afterDelay:(double)delay
-   runInHighBackground:(DNCUtilitiesBlock)block
-{
-    DNCUtilitiesBlock block_ = [block copy];
-    
-    return [NSTimer scheduledTimerWithTimeInterval:delay
-                                            target:self
-                                          selector:@selector(timerRunInHighBackground:)
-                                          userInfo:block_
-                                           repeats:NO];
-}
-
-+ (NSTimer*)afterDelay:(double)delay
-    runInLowBackground:(DNCUtilitiesBlock)block
-{
-    DNCUtilitiesBlock block_ = [block copy];
-    
-    return [NSTimer scheduledTimerWithTimeInterval:delay
-                                            target:self
-                                          selector:@selector(timerRunInLowBackground:)
-                                          userInfo:block_
-                                           repeats:NO];
-}
-
-+ (void)repeatedlyAfterDelay:(double)delay
-             runInBackground:(DNCUtilitiesStopBlock)block
-{
-    [self.class afterDelay:delay
-           runInBackground:^
-     {
-         BOOL   stop = NO;
-         block ? block(&stop) : (void)nil;
-         if (stop == NO)
-         {
-             [self.class repeatedlyAfterDelay:delay
-                              runInBackground:block];
-         }
-     }];
-}
-
-+ (void)repeatedlyAfterDelay:(double)delay
-         runInHighBackground:(DNCUtilitiesStopBlock)block
-{
-    [self.class afterDelay:delay
-       runInHighBackground:^
-     {
-         BOOL   stop = NO;
-         block ? block(&stop) : (void)nil;
-         if (stop == NO)
-         {
-             [self.class repeatedlyAfterDelay:delay
-                          runInHighBackground:block];
-         }
-     }];
-}
-
-+ (void)repeatedlyAfterDelay:(double)delay
-          runInLowBackground:(DNCUtilitiesStopBlock)block
-{
-    [self.class afterDelay:delay
-        runInLowBackground:^
-     {
-         BOOL   stop = NO;
-         block ? block(&stop) : (void)nil;
-         if (stop == NO)
-         {
-             [self.class repeatedlyAfterDelay:delay
-                           runInLowBackground:block];
-         }
-     }];
-}
-
-+ (void)runGroup:(DNCUtilitiesGroupBlock)block
-            then:(DNCUtilitiesCompletionBlock)completionBlock
-{
-    [self withTimeout:DISPATCH_TIME_FOREVER
-             runGroup:block
-                 then:completionBlock];
-}
-
-+ (void)withTimeout:(dispatch_time_t)timeout
-           runGroup:(DNCUtilitiesGroupBlock)block
-               then:(DNCUtilitiesCompletionBlock)completionBlock
-{
-    [self runInBackground:
-     ^()
-     {
-         dispatch_group_t group = dispatch_group_create();
-         
-         block ? block(group) : (void)nil;
-         
-         long   result = dispatch_group_wait(group, timeout);
-         
-         NSError*   error = nil;
-         if (result != 0)
-         {
-             error = [NSError errorWithDomain:ERROR_DOMAIN_CLASS
-                                         code:ERROR_TIMEOUT
-                                     userInfo:@{
-                                                NSLocalizedDescriptionKey : NSLocalizedString(@"Group Timeout has occurred.", nil),
-                                                }];
-         }
-         
-         completionBlock ? completionBlock(error) : (void)nil;
-     }];
-}
-
-+ (void)enterGroup:(dispatch_group_t)group
-{
-    dispatch_group_enter(group);
-}
-
-+ (void)leaveGroup:(dispatch_group_t)group
-{
-    dispatch_group_leave(group);
-}
-
 #pragma mark - Dictionary Translation functions
 
 + (NSNumber*)dictionaryBoolean:(NSDictionary*)dictionary withItem:(NSString*)key andDefault:(NSNumber*)defaultValue
@@ -1687,10 +1437,303 @@ void DNCLogMessageF(const char *filename, int lineNumber, const char *functionNa
     NSLog(@"%@ %@[%@] %@{%@} %@[%@:%d] %@%@%@", levelString(level), otherColor, ([NSThread isMainThread] ? @"MT" : @"BT"), domainColor, domain, otherColor, [NSString stringWithUTF8String:filename].lastPathComponent, lineNumber, mainColor, formattedStr, DNCUtilities.xcodeColorsReset);
 }
 
+@interface DNCThreadingHelper : NSObject
+
++ (void)runOnUIThread:(DNCUtilitiesBlock)block;
++ (NSTimer*)afterDelay:(double)delay
+         runOnUIThread:(DNCUtilitiesBlock)block;
++ (void)repeatedlyAfterDelay:(double)delay
+               runOnUIThread:(DNCUtilitiesStopBlock)block;
+
++ (void)runInBackground:(DNCUtilitiesBlock)block;
++ (void)runInHighBackground:(DNCUtilitiesBlock)block;
++ (void)runInLowBackground:(DNCUtilitiesBlock)block;
++ (NSTimer*)afterDelay:(double)delay
+       runInBackground:(DNCUtilitiesBlock)block;
++ (NSTimer*)afterDelay:(double)delay
+   runInHighBackground:(DNCUtilitiesBlock)block;
++ (NSTimer*)afterDelay:(double)delay
+    runInLowBackground:(DNCUtilitiesBlock)block;
++ (void)repeatedlyAfterDelay:(double)delay
+             runInBackground:(DNCUtilitiesStopBlock)block;
++ (void)repeatedlyAfterDelay:(double)delay
+         runInHighBackground:(DNCUtilitiesStopBlock)block;
++ (void)repeatedlyAfterDelay:(double)delay
+          runInLowBackground:(DNCUtilitiesStopBlock)block;
+
++ (void)runGroup:(DNCUtilitiesGroupBlock)block
+            then:(DNCUtilitiesCompletionBlock)completionBlock;
++ (void)withTimeout:(dispatch_time_t)timeout
+           runGroup:(DNCUtilitiesGroupBlock)block
+               then:(DNCUtilitiesCompletionBlock)completionBlock;
+
++ (void)enterGroup:(dispatch_group_t)group;
++ (void)leaveGroup:(dispatch_group_t)group;
+
+@end
+
+@implementation DNCThreadingHelper
+
+const double    DNCThreadingHelperPriority_Low      = 0.2f;
+const double    DNCThreadingHelperPriority_Default  = 0.5f;
+const double    DNCThreadingHelperPriority_High     = 0.9f;
+
++ (void)runBlock:(DNCUtilitiesBlock)block
+{
+    [self atPriority:DNCThreadingHelperPriority_Default
+            runBlock:block];
+}
+
++ (void)runBlockAtHighPriority:(DNCUtilitiesBlock)block
+{
+    [self atPriority:DNCThreadingHelperPriority_High
+            runBlock:block];
+}
+
++ (void)runBlockAtLowPriority:(DNCUtilitiesBlock)block
+{
+    [self atPriority:DNCThreadingHelperPriority_Low
+            runBlock:block];
+}
+
++ (void)atPriority:(double)priority
+          runBlock:(DNCUtilitiesBlock)block
+{
+    NSThread.currentThread.threadPriority   = priority;
+    
+    block ? block() : (void)nil;
+}
+
++ (void)runOnUIThread:(DNCUtilitiesBlock)block
+{
+    if (NSThread.isMainThread)
+    {
+        [self runBlock:block];
+    }
+    else
+    {
+        dispatch_sync(dispatch_get_main_queue(), block);
+    }
+}
+
++ (void)timerRunInBackground:(NSTimer*)timer
+{
+    DNCUtilitiesBlock block = timer.userInfo;
+    
+    [self runBlock:block];
+}
+
++ (void)timerRunInHighBackground:(NSTimer*)timer
+{
+    DNCUtilitiesBlock block = timer.userInfo;
+    
+    [self runBlockAtHighPriority:block];
+}
+
++ (void)timerRunInLowBackground:(NSTimer*)timer
+{
+    DNCUtilitiesBlock block = timer.userInfo;
+    
+    [self runBlockAtLowPriority:block];
+}
+
++ (void)timerRunOnUIThread:(NSTimer*)timer
+{
+    DNCUtilitiesBlock block = timer.userInfo;
+    
+    [self runOnUIThread:block];
+}
+
++ (NSTimer*)afterDelay:(double)delay
+         runOnUIThread:(DNCUtilitiesBlock)block
+{
+    DNCUtilitiesBlock block_ = [block copy];
+    
+    return [NSTimer scheduledTimerWithTimeInterval:delay
+                                            target:self
+                                          selector:@selector(timerRunOnUIThread:)
+                                          userInfo:block_
+                                           repeats:NO];
+}
+
++ (void)repeatedlyAfterDelay:(double)delay
+               runOnUIThread:(DNCUtilitiesStopBlock)block
+{
+    [self.class afterDelay:delay
+             runOnUIThread:^
+     {
+         BOOL   stop = NO;
+         block ? block(&stop) : (void)nil;
+         if (stop == NO)
+         {
+             [self.class repeatedlyAfterDelay:delay
+                                runOnUIThread:block];
+         }
+     }];
+}
+
++ (void)runInBackground:(DNCUtilitiesBlock)block
+{
+    [NSThread detachNewThreadSelector:@selector(runBlock:)
+                             toTarget:self
+                           withObject:block];
+}
+
++ (void)runInHighBackground:(DNCUtilitiesBlock)block
+{
+    [NSThread detachNewThreadSelector:@selector(runBlockAtHighPriority:)
+                             toTarget:self
+                           withObject:block];
+}
+
++ (void)runInLowBackground:(DNCUtilitiesBlock)block
+{
+    [NSThread detachNewThreadSelector:@selector(runBlockAtLowPriority:)
+                             toTarget:self
+                           withObject:block];
+}
+
++ (NSTimer*)afterDelay:(double)delay
+       runInBackground:(DNCUtilitiesBlock)block
+{
+    DNCUtilitiesBlock block_ = [block copy];
+    
+    return [NSTimer scheduledTimerWithTimeInterval:delay
+                                            target:self
+                                          selector:@selector(timerRunInBackground:)
+                                          userInfo:block_
+                                           repeats:NO];
+}
+
++ (NSTimer*)afterDelay:(double)delay
+   runInHighBackground:(DNCUtilitiesBlock)block
+{
+    DNCUtilitiesBlock block_ = [block copy];
+    
+    return [NSTimer scheduledTimerWithTimeInterval:delay
+                                            target:self
+                                          selector:@selector(timerRunInHighBackground:)
+                                          userInfo:block_
+                                           repeats:NO];
+}
+
++ (NSTimer*)afterDelay:(double)delay
+    runInLowBackground:(DNCUtilitiesBlock)block
+{
+    DNCUtilitiesBlock block_ = [block copy];
+    
+    return [NSTimer scheduledTimerWithTimeInterval:delay
+                                            target:self
+                                          selector:@selector(timerRunInLowBackground:)
+                                          userInfo:block_
+                                           repeats:NO];
+}
+
++ (void)repeatedlyAfterDelay:(double)delay
+             runInBackground:(DNCUtilitiesStopBlock)block
+{
+    [self.class afterDelay:delay
+           runInBackground:^
+     {
+         BOOL   stop = NO;
+         block ? block(&stop) : (void)nil;
+         if (stop == NO)
+         {
+             [self.class repeatedlyAfterDelay:delay
+                              runInBackground:block];
+         }
+     }];
+}
+
++ (void)repeatedlyAfterDelay:(double)delay
+         runInHighBackground:(DNCUtilitiesStopBlock)block
+{
+    [self.class afterDelay:delay
+       runInHighBackground:^
+     {
+         BOOL   stop = NO;
+         block ? block(&stop) : (void)nil;
+         if (stop == NO)
+         {
+             [self.class repeatedlyAfterDelay:delay
+                          runInHighBackground:block];
+         }
+     }];
+}
+
++ (void)repeatedlyAfterDelay:(double)delay
+          runInLowBackground:(DNCUtilitiesStopBlock)block
+{
+    [self.class afterDelay:delay
+        runInLowBackground:^
+     {
+         BOOL   stop = NO;
+         block ? block(&stop) : (void)nil;
+         if (stop == NO)
+         {
+             [self.class repeatedlyAfterDelay:delay
+                           runInLowBackground:block];
+         }
+     }];
+}
+
++ (void)runGroup:(DNCUtilitiesGroupBlock)block
+            then:(DNCUtilitiesCompletionBlock)completionBlock
+{
+    [self withTimeout:DISPATCH_TIME_FOREVER
+             runGroup:block
+                 then:completionBlock];
+}
+
++ (void)withTimeout:(dispatch_time_t)timeout
+           runGroup:(DNCUtilitiesGroupBlock)block
+               then:(DNCUtilitiesCompletionBlock)completionBlock
+{
+    [self runInBackground:
+     ^()
+     {
+         dispatch_group_t group = dispatch_group_create();
+         
+         block ? block(group) : (void)nil;
+         
+         dispatch_time_t    timeoutTime = dispatch_time(DISPATCH_TIME_NOW, timeout * NSEC_PER_SEC);
+         if (timeout == DISPATCH_TIME_FOREVER)
+         {
+             timeoutTime = DISPATCH_TIME_FOREVER;
+         }
+         
+         long   result = dispatch_group_wait(group, timeoutTime);
+         
+         NSError*   error = nil;
+         if (result != 0)
+         {
+             error = [NSError errorWithDomain:ERROR_DOMAIN_CLASS
+                                         code:ERROR_TIMEOUT
+                                     userInfo:@{
+                                                NSLocalizedDescriptionKey : NSLocalizedString(@"Group Timeout has occurred.", nil),
+                                                }];
+         }
+         
+         completionBlock ? completionBlock(error) : (void)nil;
+     }];
+}
+
++ (void)enterGroup:(dispatch_group_t)group
+{
+    dispatch_group_enter(group);
+}
+
++ (void)leaveGroup:(dispatch_group_t)group
+{
+    dispatch_group_leave(group);
+}
+
+@end
+
 @implementation DNCThread
 {
     DNCUtilitiesThreadBlock _block;
-    DNCThreadingGroup*      _threadGroup;
+    DNCThreadingGroup*      _threadingGroup;
 }
 
 + (id)create:(DNCUtilitiesThreadBlock)block
@@ -1700,21 +1743,21 @@ void DNCLogMessageF(const char *filename, int lineNumber, const char *functionNa
 
 + (void)run:(DNCUtilitiesBlock)block
 {
-    [DNCUtilities runInBackground:block];
+    [DNCThreadingHelper runInBackground:block];
 }
 
 + (NSTimer*)afterDelay:(double)delay
                    run:(DNCUtilitiesBlock)block
 {
-    return [DNCUtilities afterDelay:delay
-                    runInBackground:block];
+    return [DNCThreadingHelper afterDelay:delay
+                          runInBackground:block];
 }
 
 + (void)repeatedlyAfterDelay:(double)delay
                          run:(DNCUtilitiesStopBlock)block
 {
-    [DNCUtilities repeatedlyAfterDelay:delay
-                       runInBackground:block];
+    [DNCThreadingHelper repeatedlyAfterDelay:delay
+                             runInBackground:block];
 }
 
 - (id)initWithBlock:(DNCUtilitiesThreadBlock)block
@@ -1747,18 +1790,16 @@ void DNCLogMessageF(const char *filename, int lineNumber, const char *functionNa
      }];
 }
 
-- (void)runInGroup:(DNCThreadingGroup*)threadGroup;
+- (void)runInGroup:(DNCThreadingGroup*)threadingGroup;
 {
-    _threadGroup = threadGroup;
-    
-    [_threadGroup startThread];
+    _threadingGroup = threadingGroup;
     
     [self run];
 }
 
 - (void)done
 {
-    [_threadGroup completeThread];
+    [_threadingGroup completeThread];
 }
 
 @end
@@ -1775,21 +1816,21 @@ void DNCLogMessageF(const char *filename, int lineNumber, const char *functionNa
 
 + (void)run:(DNCUtilitiesBlock)block
 {
-    [DNCUtilities runOnUIThread:block];
+    [DNCThreadingHelper runOnUIThread:block];
 }
 
 + (NSTimer*)afterDelay:(double)delay
                    run:(DNCUtilitiesBlock)block
 {
-    return [DNCUtilities afterDelay:delay
-                      runOnUIThread:block];
+    return [DNCThreadingHelper afterDelay:delay
+                            runOnUIThread:block];
 }
 
 + (void)repeatedlyAfterDelay:(double)delay
                          run:(DNCUtilitiesStopBlock)block
 {
-    [DNCUtilities repeatedlyAfterDelay:delay
-                         runOnUIThread:block];
+    [DNCThreadingHelper repeatedlyAfterDelay:delay
+                               runOnUIThread:block];
 }
 
 - (id)initWithBlock:(DNCUtilitiesUIThreadBlock)block
@@ -1813,21 +1854,21 @@ void DNCLogMessageF(const char *filename, int lineNumber, const char *functionNa
 
 + (void)run:(DNCUtilitiesBlock)block
 {
-    [DNCUtilities runInHighBackground:block];
+    [DNCThreadingHelper runInHighBackground:block];
 }
 
 + (NSTimer*)afterDelay:(double)delay
                    run:(DNCUtilitiesBlock)block
 {
-    return [DNCUtilities afterDelay:delay
-                runInHighBackground:block];
+    return [DNCThreadingHelper afterDelay:delay
+                      runInHighBackground:block];
 }
 
 + (void)repeatedlyAfterDelay:(double)delay
                          run:(DNCUtilitiesStopBlock)block
 {
-    [DNCUtilities repeatedlyAfterDelay:delay
-                   runInHighBackground:block];
+    [DNCThreadingHelper repeatedlyAfterDelay:delay
+                         runInHighBackground:block];
 }
 
 @end
@@ -1836,21 +1877,21 @@ void DNCLogMessageF(const char *filename, int lineNumber, const char *functionNa
 
 + (void)run:(DNCUtilitiesBlock)block
 {
-    [DNCUtilities runInLowBackground:block];
+    [DNCThreadingHelper runInLowBackground:block];
 }
 
 + (NSTimer*)afterDelay:(double)delay
                    run:(DNCUtilitiesBlock)block
 {
-    return [DNCUtilities afterDelay:delay
-                 runInLowBackground:block];
+    return [DNCThreadingHelper afterDelay:delay
+                       runInLowBackground:block];
 }
 
 + (void)repeatedlyAfterDelay:(double)delay
                          run:(DNCUtilitiesStopBlock)block
 {
-    [DNCUtilities repeatedlyAfterDelay:delay
-                    runInLowBackground:block];
+    [DNCThreadingHelper repeatedlyAfterDelay:delay
+                          runInLowBackground:block];
 }
 
 @end
@@ -1858,9 +1899,11 @@ void DNCLogMessageF(const char *filename, int lineNumber, const char *functionNa
 @implementation DNCThreadingGroup
 {
     dispatch_group_t    _group;
+    
+    NSMutableArray<id<DNCThreadingGroupProtocol>>*  _threads;
 }
 
-+ (DNCThreadingGroup*)run:(DNCUtilitiesThreadGroupBlock)block
++ (DNCThreadingGroup*)run:(DNCUtilitiesThreadingGroupBlock)block
                      then:(DNCUtilitiesCompletionBlock)completionBlock
 {
     DNCThreadingGroup* newObject = [self.alloc init];
@@ -1876,7 +1919,7 @@ void DNCLogMessageF(const char *filename, int lineNumber, const char *functionNa
 }
 
 + (DNCThreadingGroup*)withTimeout:(dispatch_time_t)timeout
-                              run:(DNCUtilitiesThreadGroupBlock)block
+                              run:(DNCUtilitiesThreadingGroupBlock)block
                              then:(DNCUtilitiesCompletionBlock)completionBlock
 {
     DNCThreadingGroup* newObject = [self.alloc init];
@@ -1904,30 +1947,38 @@ void DNCLogMessageF(const char *filename, int lineNumber, const char *functionNa
                 run:(DNCUtilitiesBlock)block
                then:(DNCUtilitiesCompletionBlock)completionBlock
 {
-    [DNCUtilities withTimeout:timeout
-                     runGroup:
+    [DNCThreadingHelper withTimeout:timeout
+                           runGroup:
      ^(dispatch_group_t group)
      {
-         self->_group = group;
+         self->_threads = NSMutableArray.array;
+         self->_group   = group;
          
          block ? block() : (void)nil;
+         
+         for (id<DNCThreadingGroupProtocol> thread in self->_threads)
+         {
+             [thread runInGroup:self];
+         }
      }
-                         then:completionBlock];
+                               then:completionBlock];
 }
 
 - (void)runThread:(id<DNCThreadingGroupProtocol>)thread
 {
-    [thread runInGroup:self];
+    [self startThread];
+    
+    [_threads addObject:thread];
 }
 
 - (void)startThread
 {
-    [DNCUtilities enterGroup:_group];
+    [DNCThreadingHelper enterGroup:_group];
 }
 
 - (void)completeThread
 {
-    [DNCUtilities leaveGroup:_group];
+    [DNCThreadingHelper leaveGroup:_group];
 }
 
 @end
