@@ -45,6 +45,14 @@
                            completionHandler:(void(^ _Nullable)(NSURLResponse* _Nonnull response, id _Nullable responseObject))completionHandler
 {
     return [super dataTaskWithRequest:request
+                       uploadProgress:
+            ^(NSProgress* _Nonnull uploadProgress)
+            {
+            }
+                     downloadProgress:
+            ^(NSProgress* _Nonnull downloadProgress)
+            {
+            }
                     completionHandler:
             ^(NSURLResponse* _Nonnull response, id _Nullable responseObject, NSError* _Nullable dataError)
             {

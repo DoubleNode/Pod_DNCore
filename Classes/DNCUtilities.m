@@ -40,37 +40,6 @@
 @property (strong, nonatomic) NSString* xcodeColorsEscape;
 @property (strong, nonatomic) NSString* xcodeColorsReset;
 
-+ (void)runOnUIThread:(DNCUtilitiesBlock)block;
-+ (NSTimer*)afterDelay:(double)delay
-         runOnUIThread:(DNCUtilitiesBlock)block;
-+ (void)repeatedlyAfterDelay:(double)delay
-               runOnUIThread:(DNCUtilitiesStopBlock)block;
-
-+ (void)runInBackground:(DNCUtilitiesBlock)block;
-+ (void)runInHighBackground:(DNCUtilitiesBlock)block;
-+ (void)runInLowBackground:(DNCUtilitiesBlock)block;
-+ (NSTimer*)afterDelay:(double)delay
-       runInBackground:(DNCUtilitiesBlock)block;
-+ (NSTimer*)afterDelay:(double)delay
-   runInHighBackground:(DNCUtilitiesBlock)block;
-+ (NSTimer*)afterDelay:(double)delay
-    runInLowBackground:(DNCUtilitiesBlock)block;
-+ (void)repeatedlyAfterDelay:(double)delay
-             runInBackground:(DNCUtilitiesStopBlock)block;
-+ (void)repeatedlyAfterDelay:(double)delay
-         runInHighBackground:(DNCUtilitiesStopBlock)block;
-+ (void)repeatedlyAfterDelay:(double)delay
-          runInLowBackground:(DNCUtilitiesStopBlock)block;
-
-+ (void)runGroup:(DNCUtilitiesGroupBlock)block
-            then:(DNCUtilitiesCompletionBlock)completionBlock;
-+ (void)withTimeout:(dispatch_time_t)timeout
-           runGroup:(DNCUtilitiesGroupBlock)block
-               then:(DNCUtilitiesCompletionBlock)completionBlock;
-
-+ (void)enterGroup:(dispatch_group_t)group;
-+ (void)leaveGroup:(dispatch_group_t)group;
-
 @end
 
 #define ERROR_DOMAIN_CLASS      [NSString stringWithFormat:@"com.doublenode.dncore.%@", NSStringFromClass([self class])]
