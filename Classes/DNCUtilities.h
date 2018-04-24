@@ -211,6 +211,7 @@ void DNCLogMessageF(const char *filename, int lineNumber, const char *functionNa
 @class DNCThread;
 @class DNCUIThread;
 @class DNCThreadingGroup;
+@class DNCThreadingQueue;
 
 typedef void(^DNCUtilitiesBlock)(void);
 typedef void(^DNCUtilitiesCompletionBlock)(NSError* error);
@@ -219,6 +220,7 @@ typedef void(^DNCUtilitiesGroupBlock)(dispatch_group_t group);
 typedef void(^DNCUtilitiesThreadBlock)(DNCThread* thread);
 typedef void(^DNCUtilitiesUIThreadBlock)(DNCUIThread* thread);
 typedef void(^DNCUtilitiesThreadingGroupBlock)(DNCThreadingGroup* threadingGroup);
+typedef void(^DNCUtilitiesThreadingQueueBlock)(DNCThreadingQueue* threadingQueue);
 
 @protocol DNCThreadingGroupProtocol
 
@@ -369,5 +371,50 @@ typedef void(^DNCUtilitiesThreadingGroupBlock)(DNCThreadingGroup* threadingGroup
 
 - (void)startThread;
 - (void)completeThread;
+
+@end
+
+//
+// threadingQueue
+//
+// Example Code:
+//
+//  DNCThreadingQueue*  threadingQueue = [DNCThreadingQueue queueForLabel:@"com.queue.test"
+//                                                          withAttribute:DISPATCH_QUEUE_SERIAL];
+//
+//  [threadingQueue run:
+//   ^()
+//   {
+//   }];
+//
+
+@class DNCThreadingQueue;
+
+@interface DNCThreadingQueue : NSObject
+
++ (DNCThreadingQueue*)queueForLabel:(NSString*)queueLabel;
++ (DNCThreadingQueue*)queueForLabel:(NSString*)queueLabel
+                      withAttribute:(dispatch_queue_attr_t)attribute;
+
++ (DNCThreadingQueue*)queueForLabel:(NSString*)queueLabel
+                                run:(DNCUtilitiesThreadingQueueBlock)block;
++ (DNCThreadingQueue*)queueForLabel:(NSString*)queueLabel
+                      withAttribute:(dispatch_queue_attr_t)attribute
+                                run:(DNCUtilitiesThreadingQueueBlock)block;
+
+- (void)run:(DNCUtilitiesThreadingQueueBlock)block;
+- (void)runSynchronously:(DNCUtilitiesThreadingQueueBlock)block;
+
+@end
+
+@class DNCSynchronousThreadingQueue;
+
+@interface DNCSynchronousThreadingQueue : DNCThreadingQueue
+
++ (DNCSynchronousThreadingQueue*)queueForLabel:(NSString*)queueLabel;
++ (DNCSynchronousThreadingQueue*)queueForLabel:(NSString*)queueLabel
+                                           run:(DNCUtilitiesThreadingQueueBlock)block;
+
+- (void)run:(DNCUtilitiesThreadingQueueBlock)block;
 
 @end

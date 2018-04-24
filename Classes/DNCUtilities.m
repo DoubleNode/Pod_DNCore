@@ -30,11 +30,12 @@
 
 #import "NSString+DNCHTML.h"
 #import "NSDate+DNCUtils.h"
+#import "GGMutableDictionary.h"
 
 @interface DNCUtilities()
 {
-    DNCLogLevel             logDebugLevel;
-    NSMutableDictionary*    logDebugDomains;
+    DNCLogLevel             _logDebugLevel;
+    GGMutableDictionary*    _logDebugDomains;
 }
 
 @property (strong, nonatomic) NSString* xcodeColorsEscape;
@@ -664,7 +665,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
             if(sa_type == AF_INET || sa_type == AF_INET6) {
                 NSString*   name    = @(temp_addr->ifa_name);
                 NSString*   addr    = [NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr)]; // pdp_ip0
-                //NSLog(@"NAME: \"%@\" addr: %@", name, addr); // see for yourself
+                                                                                                                                        //NSLog(@"NAME: \"%@\" addr: %@", name, addr); // see for yourself
                 
                 if([name isEqualToString:@"en0"]) {
                     // Interface is the wifi connection on the iPhone
@@ -1200,8 +1201,8 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
             self.xcodeColorsReset   = XCODE_COLORS_ESCAPE @"fg;" XCODE_COLORS_ESCAPE @"bg;";
         }
         
-        logDebugLevel   = DNCLL_Everything;
-        logDebugDomains = [NSMutableDictionary dictionary];
+        _logDebugLevel   = DNCLL_Everything;
+        _logDebugDomains = GGMutableDictionary.dictionary;
         
         [DNCThread run:
          ^()
@@ -1292,7 +1293,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
 
 - (void)logSetLevel:(DNCLogLevel)level
 {
-    logDebugLevel   = level;
+    _logDebugLevel   = level;
 }
 
 - (void)logEnableDomain:(NSString*)domain
@@ -1302,9 +1303,9 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
 
 - (void)logEnableDomain:(NSString*)domain forLevel:(DNCLogLevel)level
 {
-    @synchronized(logDebugDomains)
+    @synchronized(_logDebugDomains)
     {
-        logDebugDomains[domain] = @(level);
+        _logDebugDomains[domain] = @(level);
     }
 }
 
@@ -1315,29 +1316,29 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
 
 - (void)logDisableDomain:(NSString*)domain forLevel:(DNCLogLevel)level
 {
-    @synchronized(logDebugDomains)
+    @synchronized(_logDebugDomains)
     {
-        logDebugDomains[domain] = @(level - 1);
+        _logDebugDomains[domain] = @(level - 1);
     }
 }
 
 - (BOOL)isLogEnabledDomain:(NSString*)domain
                   andLevel:(int)level
 {
-    if (level > logDebugLevel)
+    if (level > _logDebugLevel)
     {
         return NO;
     }
     
     __block BOOL    retval = YES;
     
-    @synchronized(logDebugDomains)
+    @synchronized(_logDebugDomains)
     {
-        [logDebugDomains enumerateKeysAndObjectsUsingBlock:^(NSString* key, NSNumber* obj, BOOL* stop)
+        [_logDebugDomains enumerateKeysAndObjectsUsingBlock:^(NSString* key, NSNumber* obj, BOOL* stop)
          {
              if ([key isEqualToString:domain])
              {
-                 retval = (level <= [[self->logDebugDomains objectForKey:domain] intValue]);
+                 retval = (level <= [[self->_logDebugDomains objectForKey:domain] intValue]);
                  *stop = YES;
              }
          }];
@@ -1407,6 +1408,11 @@ void DNCLogMessageF(const char *filename, int lineNumber, const char *functionNa
 }
 
 @interface DNCThreadingHelper : NSObject
+{
+    GGMutableDictionary*    _dispatchQueues;
+}
+
++ (DNCThreadingHelper*)sharedInstance;
 
 + (void)runOnUIThread:(DNCUtilitiesBlock)block;
 + (NSTimer*)afterDelay:(double)delay
@@ -1439,6 +1445,17 @@ void DNCLogMessageF(const char *filename, int lineNumber, const char *functionNa
 + (void)enterGroup:(dispatch_group_t)group;
 + (void)leaveGroup:(dispatch_group_t)group;
 
++ (dispatch_queue_t)queueForLabel:(NSString*)queueLabel;
++ (dispatch_queue_t)queueForLabel:(NSString*)queueLabel
+                    withAttribute:(dispatch_queue_attr_t _Nullable)attribute;
+
++ (void)onQueueForLabel:(NSString*)queueLabel
+                    run:(DNCUtilitiesBlock)block;
++ (void)onQueueForLabel:(NSString*)queueLabel
+         runSynchronous:(DNCUtilitiesBlock)block;
+
+- (id)init;
+
 @end
 
 @implementation DNCThreadingHelper
@@ -1446,6 +1463,18 @@ void DNCLogMessageF(const char *filename, int lineNumber, const char *functionNa
 const double    DNCThreadingHelperPriority_Low      = 0.2f;
 const double    DNCThreadingHelperPriority_Default  = 0.5f;
 const double    DNCThreadingHelperPriority_High     = 0.9f;
+
++ (DNCThreadingHelper*)sharedInstance
+{
+    static dispatch_once_t      once;
+    static DNCThreadingHelper*  instance = nil;
+    
+    dispatch_once(&once, ^{
+        instance = [[DNCThreadingHelper alloc] init];
+    });
+    
+    return instance;
+}
 
 + (void)runBlock:(DNCUtilitiesBlock)block
 {
@@ -1695,6 +1724,53 @@ const double    DNCThreadingHelperPriority_High     = 0.9f;
 + (void)leaveGroup:(dispatch_group_t)group
 {
     dispatch_group_leave(group);
+}
+
++ (dispatch_queue_t)queueForLabel:(NSString*)queueLabel
+{
+    return [self queueForLabel:queueLabel
+                 withAttribute:DISPATCH_QUEUE_CONCURRENT_WITH_AUTORELEASE_POOL];
+}
+
++ (dispatch_queue_t)queueForLabel:(NSString*)queueLabel
+                    withAttribute:(dispatch_queue_attr_t _Nullable)attribute
+{
+    dispatch_queue_t    queue = self.sharedInstance->_dispatchQueues[queueLabel];
+    if (!queue || [queue isKindOfClass:NSNull.class])
+    {
+        queue = dispatch_queue_create(queueLabel.UTF8String, attribute);
+        
+        self.sharedInstance->_dispatchQueues[queueLabel] = queue;
+    }
+    
+    return queue;
+}
+
++ (void)onQueueForLabel:(NSString*)queueLabel
+                    run:(DNCUtilitiesBlock)block
+{
+    dispatch_queue_t    queue = [self queueForLabel:queueLabel];
+    
+    dispatch_async(queue, block);
+}
+
++ (void)onQueueForLabel:(NSString*)queueLabel
+         runSynchronous:(DNCUtilitiesBlock)block
+{
+    dispatch_queue_t    queue = [self queueForLabel:queueLabel];
+    
+    dispatch_sync(queue, block);
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self)
+    {
+        _dispatchQueues = GGMutableDictionary.alloc.init;
+    }
+    
+    return self;
 }
 
 @end
@@ -1951,3 +2027,107 @@ const double    DNCThreadingHelperPriority_High     = 0.9f;
 }
 
 @end
+
+@implementation DNCThreadingQueue
+{
+    NSString*               _label;
+    dispatch_queue_t        _queue;
+    dispatch_queue_attr_t   _attribute;
+}
+
++ (DNCThreadingQueue*)queueForLabel:(NSString*)queueLabel
+{
+    return [self.alloc initWithLabel:queueLabel
+                       withAttribute:DISPATCH_QUEUE_CONCURRENT_WITH_AUTORELEASE_POOL];
+}
+
++ (DNCThreadingQueue*)queueForLabel:(NSString*)queueLabel
+                      withAttribute:(dispatch_queue_attr_t)attribute
+{
+    return [self.alloc initWithLabel:queueLabel
+                       withAttribute:attribute];
+}
+
++ (DNCThreadingQueue*)queueForLabel:(NSString*)queueLabel
+                                run:(DNCUtilitiesThreadingQueueBlock)block
+{
+    DNCThreadingQueue*  queue = [self.alloc initWithLabel:queueLabel
+                                            withAttribute:DISPATCH_QUEUE_CONCURRENT_WITH_AUTORELEASE_POOL];
+    [queue run:block];
+    
+    return queue;
+}
+
++ (DNCThreadingQueue*)queueForLabel:(NSString*)queueLabel
+                      withAttribute:(dispatch_queue_attr_t)attribute
+                                run:(DNCUtilitiesThreadingQueueBlock)block
+{
+    DNCThreadingQueue*  queue = [self.alloc initWithLabel:queueLabel
+                                            withAttribute:attribute];
+    [queue run:block];
+    
+    return queue;
+}
+
+- (id)initWithLabel:(NSString*)queueLabel
+      withAttribute:(dispatch_queue_attr_t)attribute
+{
+    self = [self init];
+    if (self)
+    {
+        _label      = queueLabel;
+        _attribute  = attribute;
+        _queue      = [DNCThreadingHelper queueForLabel:_label
+                                          withAttribute:_attribute];
+    }
+    
+    return self;
+}
+
+- (void)run:(DNCUtilitiesThreadingQueueBlock)block
+{
+    [DNCThreadingHelper onQueueForLabel:_label
+                                    run:
+     ^()
+     {
+         block ? block(self) : (void)nil;
+     }];
+}
+
+- (void)runSynchronously:(DNCUtilitiesThreadingQueueBlock)block
+{
+    [DNCThreadingHelper onQueueForLabel:_label
+                         runSynchronous:
+     ^()
+     {
+         block ? block(self) : (void)nil;
+     }];
+}
+
+@end
+
+@implementation DNCSynchronousThreadingQueue
+
++ (DNCSynchronousThreadingQueue*)queueForLabel:(NSString*)queueLabel
+{
+    return [self.alloc initWithLabel:queueLabel
+                       withAttribute:DISPATCH_QUEUE_SERIAL_WITH_AUTORELEASE_POOL];
+}
+
++ (DNCSynchronousThreadingQueue*)queueForLabel:(NSString*)queueLabel
+                                           run:(DNCUtilitiesThreadingQueueBlock)block
+{
+    DNCSynchronousThreadingQueue*   queue = [self.alloc initWithLabel:queueLabel
+                                                        withAttribute:DISPATCH_QUEUE_SERIAL_WITH_AUTORELEASE_POOL];
+    [queue run:block];
+    
+    return queue;
+}
+
+- (void)run:(DNCUtilitiesThreadingQueueBlock)block
+{
+    [super runSynchronously:block];
+}
+
+@end
+
