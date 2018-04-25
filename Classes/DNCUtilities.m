@@ -624,29 +624,76 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
     return [UIImage imageWithCGImage:[image CGImage] scale:scale orientation:UIImageOrientationUp];
 }
 
+#pragma mark - Global Settings functions
+
++ (NSUserDefaults*)groupDefaults
+{
+    if (self.sharedInstance.userDefaultsSuiteName.length)
+    {
+        return [NSUserDefaults.alloc initWithSuiteName:self.sharedInstance.userDefaultsSuiteName];
+    }
+    
+    return NSUserDefaults.standardUserDefaults;
+}
+
 + (id)settingsItem:(NSString*)item
 {
-    return [[[self class] appDelegate] settingsItem:item];
+    return [self settingsItem:item
+                      default:@""];
 }
 
-+ (id)settingsItem:(NSString*)item default:(id)defaultValue
++ (id)settingsItem:(NSString*)item
+           default:(id)defaultValue
 {
-    return [[[self class] appDelegate] settingsItem:item default:defaultValue];
+    __block id  retval;
+    
+    NSString*   key = [NSString stringWithFormat:@"Setting_%@", item];
+    
+    NSUserDefaults* groupDefaults = self.groupDefaults;
+    
+    if ([groupDefaults objectForKey:key] == nil)
+    {
+        [groupDefaults setObject:defaultValue
+                          forKey:key];
+    }
+    
+    retval = [groupDefaults objectForKey:key];
+    
+    return retval;
 }
 
-+ (BOOL)settingsItem:(NSString*)item boolDefault:(BOOL)defaultValue
++ (BOOL)settingsItem:(NSString*)item
+         boolDefault:(BOOL)defaultValue
 {
-    return [[[self class] appDelegate] settingsItem:item boolDefault:defaultValue];
+    return [[self settingsItem:item
+                       default:(defaultValue ? @"1" : @"0")] boolValue];
 }
 
-+ (void)setSettingsItem:(NSString*)item value:(id)value
++ (void)setSettingsItem:(NSString*)item
+                  value:(id)value
 {
-    [[[self class] appDelegate] setSettingsItem:item value:value];
+    NSString*   key = [NSString stringWithFormat:@"Setting_%@", item];
+    
+    NSUserDefaults* groupDefaults = self.groupDefaults;
+    
+    if (value != nil)
+    {
+        [groupDefaults setObject:value
+                          forKey:key];
+    }
+    else
+    {
+        [groupDefaults removeObjectForKey:key];
+    }
+    
+    [groupDefaults synchronize];
 }
 
-+ (void)setSettingsItem:(NSString*)item boolValue:(BOOL)value
++ (void)setSettingsItem:(NSString*)item
+              boolValue:(BOOL)value
 {
-    [[[self class] appDelegate] setSettingsItem:item boolValue:value];
+    [self setSettingsItem:item
+                    value:(value ? @"1" : @"0")];
 }
 
 + (NSString *)getIPAddress

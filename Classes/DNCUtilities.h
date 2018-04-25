@@ -91,6 +91,8 @@ extern void LogImageDataF(const char *filename, int lineNumber, const char *func
 
 @interface DNCUtilities : NSObject
 
+@property (copy, nonatomic) NSString*   userDefaultsSuiteName;
+
 + (id<DNCApplicationProtocol>)appDelegate;
 + (DNCUtilities*)sharedInstance;
 
