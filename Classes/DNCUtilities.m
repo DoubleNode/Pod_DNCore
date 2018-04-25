@@ -1249,7 +1249,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
         }
         
         _logDebugLevel   = DNCLL_Everything;
-        _logDebugDomains = GGMutableDictionary.dictionary;
+        _logDebugDomains = GGMutableDictionary.alloc.init;
         
         [DNCThread run:
          ^()
