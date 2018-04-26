@@ -216,6 +216,7 @@ void DNCLogMessageF(const char *filename, int lineNumber, const char *functionNa
 @class DNCThreadingQueue;
 
 typedef void(^DNCUtilitiesBlock)(void);
+typedef void(^DNCUtilitiesBoolBlock)(BOOL);
 typedef void(^DNCUtilitiesCompletionBlock)(NSError* error);
 typedef void(^DNCUtilitiesStopBlock)(BOOL* stop);
 typedef void(^DNCUtilitiesGroupBlock)(dispatch_group_t group);

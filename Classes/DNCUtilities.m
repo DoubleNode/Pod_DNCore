@@ -51,7 +51,15 @@
 
 + (id<DNCApplicationProtocol>)appDelegate
 {
-    return (id<DNCApplicationProtocol>)[[UIApplication sharedApplication] delegate];
+    __block id<DNCApplicationProtocol>  retval;
+    
+    [DNCUIThread run:
+     ^()
+     {
+         retval = (id<DNCApplicationProtocol>)UIApplication.sharedApplication.delegate;
+     }];
+    
+    return retval;
 }
 
 + (DNCUtilities*)sharedInstance
