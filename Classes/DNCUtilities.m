@@ -1526,6 +1526,12 @@ void DNCLogMessageF(const char *filename, int lineNumber, const char *functionNa
 + (void)repeatedlyAfterDelay:(double)delay
                runOnUIThread:(DNCUtilitiesStopBlock)block;
 
++ (void)runOnUIAsyncThread:(DNCUtilitiesBlock)block;
++ (NSTimer*)afterDelay:(double)delay
+    runOnUIAsyncThread:(DNCUtilitiesBlock)block;
++ (void)repeatedlyAfterDelay:(double)delay
+          runOnUIAsyncThread:(DNCUtilitiesStopBlock)block;
+
 + (void)runInBackground:(DNCUtilitiesBlock)block;
 + (void)runInHighBackground:(DNCUtilitiesBlock)block;
 + (void)runInLowBackground:(DNCUtilitiesBlock)block;
@@ -1620,6 +1626,11 @@ const double    DNCThreadingHelperPriority_High     = 0.9f;
     }
 }
 
++ (void)runOnUIAsyncThread:(DNCUtilitiesBlock)block
+{
+    dispatch_async(dispatch_get_main_queue(), block);
+}
+
 + (void)timerRunInBackground:(NSTimer*)timer
 {
     DNCUtilitiesBlock block = timer.userInfo;
@@ -1672,6 +1683,41 @@ const double    DNCThreadingHelperPriority_High     = 0.9f;
          {
              [self.class repeatedlyAfterDelay:delay
                                 runOnUIThread:block];
+         }
+     }];
+}
+
++ (void)timerRunOnUIAsyncThread:(NSTimer*)timer
+{
+    DNCUtilitiesBlock block = timer.userInfo;
+    
+    [self runOnUIAsyncThread:block];
+}
+
++ (NSTimer*)afterDelay:(double)delay
+    runOnUIAsyncThread:(DNCUtilitiesBlock)block
+{
+    DNCUtilitiesBlock block_ = [block copy];
+    
+    return [NSTimer scheduledTimerWithTimeInterval:delay
+                                            target:self
+                                          selector:@selector(timerRunOnUIAsyncThread:)
+                                          userInfo:block_
+                                           repeats:NO];
+}
+
++ (void)repeatedlyAfterDelay:(double)delay
+          runOnUIAsyncThread:(DNCUtilitiesStopBlock)block
+{
+    [self.class afterDelay:delay
+        runOnUIAsyncThread:^
+     {
+         BOOL   stop = NO;
+         block ? block(&stop) : (void)nil;
+         if (stop == NO)
+         {
+             [self.class repeatedlyAfterDelay:delay
+                           runOnUIAsyncThread:block];
          }
      }];
 }
@@ -1985,6 +2031,52 @@ const double    DNCThreadingHelperPriority_High     = 0.9f;
 }
 
 - (id)initWithBlock:(DNCUtilitiesUIThreadBlock)block
+{
+    self = [super initWithBlock:
+            ^(DNCThread* thread)
+            {
+                block ? block(self) : (void)nil;
+            }];
+    if (self)
+    {
+        _uiBlock = block;
+    }
+    
+    return self;
+}
+
+@end
+
+@implementation DNCUIAsyncThread
+{
+    DNCUtilitiesUIAsyncThreadBlock   _uiBlock;
+}
+
++ (id)create:(DNCUtilitiesUIAsyncThreadBlock)block
+{
+    return [self.alloc initWithBlock:block];
+}
+
++ (void)run:(DNCUtilitiesBlock)block
+{
+    [DNCThreadingHelper runOnUIAsyncThread:block];
+}
+
++ (NSTimer*)afterDelay:(double)delay
+                   run:(DNCUtilitiesBlock)block
+{
+    return [DNCThreadingHelper afterDelay:delay
+                       runOnUIAsyncThread:block];
+}
+
++ (void)repeatedlyAfterDelay:(double)delay
+                         run:(DNCUtilitiesStopBlock)block
+{
+    [DNCThreadingHelper repeatedlyAfterDelay:delay
+                          runOnUIAsyncThread:block];
+}
+
+- (id)initWithBlock:(DNCUtilitiesUIAsyncThreadBlock)block
 {
     self = [super initWithBlock:
             ^(DNCThread* thread)

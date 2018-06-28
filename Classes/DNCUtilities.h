@@ -221,6 +221,7 @@ void DNCLogMessageF(const char *filename, int lineNumber, const char *functionNa
 @class DNCSynchronize;
 @class DNCThread;
 @class DNCUIThread;
+@class DNCUIAsyncThread;
 @class DNCThreadingGroup;
 @class DNCThreadingQueue;
 
@@ -231,6 +232,7 @@ typedef void(^DNCUtilitiesStopBlock)(BOOL* stop);
 typedef void(^DNCUtilitiesGroupBlock)(dispatch_group_t group);
 typedef void(^DNCUtilitiesThreadBlock)(DNCThread* thread);
 typedef void(^DNCUtilitiesUIThreadBlock)(DNCUIThread* thread);
+typedef void(^DNCUtilitiesUIAsyncThreadBlock)(DNCUIAsyncThread* thread);
 typedef void(^DNCUtilitiesThreadingGroupBlock)(DNCThreadingGroup* threadingGroup);
 typedef void(^DNCUtilitiesThreadingQueueBlock)(DNCThreadingQueue* threadingQueue);
 
@@ -323,6 +325,15 @@ typedef void(^DNCUtilitiesThreadingQueueBlock)(DNCThreadingQueue* threadingQueue
 + (void)run:(DNCUtilitiesBlock)block;
 
 - (id)initWithBlock:(DNCUtilitiesUIThreadBlock)block;
+
+@end
+
+@interface DNCUIAsyncThread : DNCThread
+
++ (id)create:(DNCUtilitiesUIAsyncThreadBlock)block;
++ (void)run:(DNCUtilitiesBlock)block;
+
+- (id)initWithBlock:(DNCUtilitiesUIAsyncThreadBlock)block;
 
 @end
 
