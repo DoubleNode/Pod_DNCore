@@ -234,13 +234,39 @@ typedef void(^DNCUtilitiesUIThreadBlock)(DNCUIThread* thread);
 typedef void(^DNCUtilitiesThreadingGroupBlock)(DNCThreadingGroup* threadingGroup);
 typedef void(^DNCUtilitiesThreadingQueueBlock)(DNCThreadingQueue* threadingQueue);
 
+//
+// DNCSynchronize - run code in synchronize block
+//
+// Example Code:
+//
+//  [DNCSynchronize on:self
+//                 run:
+//   ^()
+//   {
+//   }];
+//
+// or...
+//
+//  DNCSynchronize* sync = [DNCSynchronize createWithObject:self
+//                                                 andBlock:
+//   ^()
+//   {
+//   }];
+//
+//  [sync run];
+//
+
 @interface DNCSynchronize : NSObject
+
++ (instancetype)createWithObject:(id)object
+                        andBlock:(DNCUtilitiesBlock)block;
 
 + (void)on:(id)object
        run:(DNCUtilitiesBlock)block;
 
 - (instancetype)init API_UNAVAILABLE(ios);
-- (instancetype)initWithObject:(id)object andBlock:(DNCUtilitiesBlock)block;
+- (instancetype)initWithObject:(id)object
+                      andBlock:(DNCUtilitiesBlock)block;
 - (void)run;
 
 @end

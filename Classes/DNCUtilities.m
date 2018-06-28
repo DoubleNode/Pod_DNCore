@@ -1472,6 +1472,13 @@ void DNCLogMessageF(const char *filename, int lineNumber, const char *functionNa
 
 @implementation DNCSynchronize
 
++ (instancetype)createWithObject:(id)object
+                        andBlock:(DNCUtilitiesBlock)block
+{
+    return [self.class.alloc initWithObject:object
+                                   andBlock:block];
+}
+
 + (void)on:(id)object
        run:(DNCUtilitiesBlock)block
 {
