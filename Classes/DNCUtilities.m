@@ -1462,6 +1462,50 @@ void DNCLogMessageF(const char *filename, int lineNumber, const char *functionNa
     NSLog(@"%@ %@[%@] %@{%@} %@[%@:%d] %@%@%@", levelString(level), otherColor, ([NSThread isMainThread] ? @"MT" : @"BT"), domainColor, domain, otherColor, [NSString stringWithUTF8String:filename].lastPathComponent, lineNumber, mainColor, formattedStr, DNCUtilities.xcodeColorsReset);
 }
 
+@interface DNCSynchronize()
+{
+    DNCUtilitiesBlock   _block;
+    id                  _object;
+}
+
+@end
+
+@implementation DNCSynchronize
+
++ (void)on:(id)object
+       run:(DNCUtilitiesBlock)block
+{
+    DNCSynchronize* retval = [self.class.alloc initWithObject:object
+                                                     andBlock:block];
+    
+    [retval run];
+}
+
+- (instancetype)initWithObject:(id)object
+                      andBlock:(DNCUtilitiesBlock)block
+{
+    self = [super init];
+    if (self)
+    {
+        _block  = block;
+        _object = object;
+    }
+    
+    return self;
+}
+
+- (void)run
+{
+    DNCAssertIsNotMainThread;
+    
+    @synchronized (_object)
+    {
+        _block ? _block() : (void)nil;
+    }
+}
+
+@end
+
 @interface DNCThreadingHelper : NSObject
 {
     GGMutableDictionary*    _dispatchQueues;

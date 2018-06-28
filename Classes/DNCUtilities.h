@@ -58,6 +58,7 @@ typedef NS_ENUM(NSInteger, DNCLogLevel)
 #define DNCLogImage(...)                          ;
 #define DNCLogTimeBlock(level,domain,title,block) block()
 #define DNCAssertIsMainThread                     ;
+#define DNCAssertIsNotMainThread                  ;
 #else
 #define DNCAssert(condition,domain,...)           if (!(condition)) { DNCLogMessageF(__FILE__,__LINE__,__PRETTY_FUNCTION__,domain,DNCLL_Critical,__VA_ARGS__); } NSAssert(condition, __VA_ARGS__);
 #define DNCLogMarker(marker)                      NSLog(@"%@", marker); LogMessageF(__FILE__,__LINE__,__PRETTY_FUNCTION__,domain,level,@"%@", marker)
@@ -65,12 +66,19 @@ typedef NS_ENUM(NSInteger, DNCLogLevel)
 #define DNCLogData(level,domain,data)             LogDataF(__FILE__,__LINE__,__PRETTY_FUNCTION__,domain,level,data)
 #define DNCLogImage(level,domain,image)           LogImageDataF(__FILE__,__LINE__,__PRETTY_FUNCTION__,domain,level,image.size.width,image.size.height,UIImagePNGRepresentation(image))
 #define DNCLogTimeBlock(level,domain,title,block) DNCLogMessageF(__FILE__,__LINE__,__PRETTY_FUNCTION__,domain,level,@"%@: blockTime: %f",title,DNCTimeBlock(block)); LogMessageF(__FILE__,__LINE__,__PRETTY_FUNCTION__,domain,level,@"%@: blockTime: %f",title,DNCTimeBlock(block))
-#define DNCAssertIsMainThread                     if (![NSThread isMainThread])                                                                         \
-{                                                                                                                                                       \
-NSException* exception = [NSException exceptionWithName:@"DNCUtilities Exception"                                                                   \
-reason:[NSString stringWithFormat:@"Not in Main Thread"]                                           \
-userInfo:@{ @"FILE" : @(__FILE__), @"LINE" : @(__LINE__), @"FUNCTION" : @(__PRETTY_FUNCTION__) }];   \
-@throw exception;                                                                                                                                   \
+#define DNCAssertIsMainThread                     if (![NSThread isMainThread])                     \
+{                                                                                                   \
+NSException* exception = [NSException exceptionWithName:@"DNCUtilities Exception"                   \
+reason:[NSString stringWithFormat:@"Not in Main Thread"]                                            \
+userInfo:@{ @"FILE" : @(__FILE__), @"LINE" : @(__LINE__), @"FUNCTION" : @(__PRETTY_FUNCTION__) }];  \
+@throw exception;                                                                                   \
+}
+#define DNCAssertIsNotMainThread                  if ([NSThread isMainThread])                      \
+{                                                                                                   \
+NSException* exception = [NSException exceptionWithName:@"DNCUtilities Exception"                   \
+reason:[NSString stringWithFormat:@"In Main Thread"]                                                \
+userInfo:@{ @"FILE" : @(__FILE__), @"LINE" : @(__LINE__), @"FUNCTION" : @(__PRETTY_FUNCTION__) }];  \
+@throw exception;                                                                                   \
 }
 
 extern void LogImageDataF(const char *filename, int lineNumber, const char *functionName, NSString *domain, int level, int width, int height, NSData *data);
@@ -210,6 +218,7 @@ CGFloat DNCTimeBlock (void (^block)(void));
 
 void DNCLogMessageF(const char *filename, int lineNumber, const char *functionName, NSString *domain, int level, NSString *format, ...);
 
+@class DNCSynchronize;
 @class DNCThread;
 @class DNCUIThread;
 @class DNCThreadingGroup;
@@ -224,6 +233,17 @@ typedef void(^DNCUtilitiesThreadBlock)(DNCThread* thread);
 typedef void(^DNCUtilitiesUIThreadBlock)(DNCUIThread* thread);
 typedef void(^DNCUtilitiesThreadingGroupBlock)(DNCThreadingGroup* threadingGroup);
 typedef void(^DNCUtilitiesThreadingQueueBlock)(DNCThreadingQueue* threadingQueue);
+
+@interface DNCSynchronize : NSObject
+
++ (void)on:(id)object
+       run:(DNCUtilitiesBlock)block;
+
+- (instancetype)init API_UNAVAILABLE(ios);
+- (instancetype)initWithObject:(id)object andBlock:(DNCUtilitiesBlock)block;
+- (void)run;
+
+@end
 
 @protocol DNCThreadingGroupProtocol
 
@@ -274,6 +294,7 @@ typedef void(^DNCUtilitiesThreadingQueueBlock)(DNCThreadingQueue* threadingQueue
 @interface DNCUIThread : DNCThread
 
 + (id)create:(DNCUtilitiesUIThreadBlock)block;
++ (void)run:(DNCUtilitiesBlock)block;
 
 - (id)initWithBlock:(DNCUtilitiesUIThreadBlock)block;
 
