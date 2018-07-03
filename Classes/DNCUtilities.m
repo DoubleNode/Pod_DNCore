@@ -720,7 +720,7 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
             if(sa_type == AF_INET || sa_type == AF_INET6) {
                 NSString*   name    = @(temp_addr->ifa_name);
                 NSString*   addr    = [NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr)]; // pdp_ip0
-                                                                                                                                        //NSLog(@"NAME: \"%@\" addr: %@", name, addr); // see for yourself
+                //NSLog(@"NAME: \"%@\" addr: %@", name, addr); // see for yourself
                 
                 if([name isEqualToString:@"en0"]) {
                     // Interface is the wifi connection on the iPhone
@@ -1590,28 +1590,10 @@ const double    DNCThreadingHelperPriority_High     = 0.9f;
 
 + (void)runBlock:(DNCUtilitiesBlock)block
 {
-    [self atPriority:DNCThreadingHelperPriority_Default
-            runBlock:block];
-}
-
-+ (void)runBlockAtHighPriority:(DNCUtilitiesBlock)block
-{
-    [self atPriority:DNCThreadingHelperPriority_High
-            runBlock:block];
-}
-
-+ (void)runBlockAtLowPriority:(DNCUtilitiesBlock)block
-{
-    [self atPriority:DNCThreadingHelperPriority_Low
-            runBlock:block];
-}
-
-+ (void)atPriority:(double)priority
-          runBlock:(DNCUtilitiesBlock)block
-{
-    NSThread.currentThread.threadPriority   = priority;
-    
-    block ? block() : (void)nil;
+    @autoreleasepool
+    {
+        block ? block() : (void)nil;
+    }
 }
 
 + (void)runOnUIThread:(DNCUtilitiesBlock)block
@@ -1635,21 +1617,21 @@ const double    DNCThreadingHelperPriority_High     = 0.9f;
 {
     DNCUtilitiesBlock block = timer.userInfo;
     
-    [self runBlock:block];
+    [self runInBackground:block];
 }
 
 + (void)timerRunInHighBackground:(NSTimer*)timer
 {
     DNCUtilitiesBlock block = timer.userInfo;
     
-    [self runBlockAtHighPriority:block];
+    [self runInHighBackground:block];
 }
 
 + (void)timerRunInLowBackground:(NSTimer*)timer
 {
     DNCUtilitiesBlock block = timer.userInfo;
     
-    [self runBlockAtLowPriority:block];
+    [self runInLowBackground:block];
 }
 
 + (void)timerRunOnUIThread:(NSTimer*)timer
@@ -1724,23 +1706,35 @@ const double    DNCThreadingHelperPriority_High     = 0.9f;
 
 + (void)runInBackground:(DNCUtilitiesBlock)block
 {
-    [NSThread detachNewThreadSelector:@selector(runBlock:)
-                             toTarget:self
-                           withObject:block];
+    NSThread*   thread = [NSThread.alloc initWithTarget:self
+                                               selector:@selector(runBlock:)
+                                                 object:block];
+    
+    thread.threadPriority   = DNCThreadingHelperPriority_Default;
+    
+    [thread start];
 }
 
 + (void)runInHighBackground:(DNCUtilitiesBlock)block
 {
-    [NSThread detachNewThreadSelector:@selector(runBlockAtHighPriority:)
-                             toTarget:self
-                           withObject:block];
+    NSThread*   thread = [NSThread.alloc initWithTarget:self
+                                               selector:@selector(runBlock:)
+                                                 object:block];
+    
+    thread.threadPriority   = DNCThreadingHelperPriority_High;
+    
+    [thread start];
 }
 
 + (void)runInLowBackground:(DNCUtilitiesBlock)block
 {
-    [NSThread detachNewThreadSelector:@selector(runBlockAtLowPriority:)
-                             toTarget:self
-                           withObject:block];
+    NSThread*   thread = [NSThread.alloc initWithTarget:self
+                                               selector:@selector(runBlock:)
+                                                 object:block];
+    
+    thread.threadPriority   = DNCThreadingHelperPriority_Low;
+    
+    [thread start];
 }
 
 + (NSTimer*)afterDelay:(double)delay
