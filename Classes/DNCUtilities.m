@@ -6,18 +6,16 @@
 //  Copyright © 2016 Darren Ehlers and DoubleNode, LLC. All rights reserved.
 //
 
+@import AudioToolbox;
+@import AVFoundation;
+@import CommonCrypto;
+@import CoreTelephony;
 @import SDVersion;
+@import UIKit;
 
 #define DEBUGLOGGING
 #import "DNCUtilities.h"
 
-#import <UIKit/UIKit.h>
-#import <CoreTelephony/CTTelephonyNetworkInfo.h>
-#import <CoreTelephony/CTCarrier.h>
-#import <AudioToolbox/AudioServices.h>
-#import <AVFoundation/AVFoundation.h>
-
-#include <CommonCrypto/CommonHMAC.h>
 #import <mach/mach_time.h> // for mach_absolute_time() and friends
 
 #include <sys/types.h>

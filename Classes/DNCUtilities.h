@@ -6,8 +6,7 @@
 //  Copyright © 2016 Darren Ehlers and DoubleNode, LLC. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <NSLogger/LoggerClient.h>
+@import NSLogger;
 
 #import "DNCApplicationProtocol.h"
 

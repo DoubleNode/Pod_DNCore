@@ -11,7 +11,7 @@
 //  https://www.cocoacontrols.com/controls/uiimageview-gravatar
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
 // Rating of Gravatar
 typedef NS_ENUM(NSUInteger, DNCGravatarRating)

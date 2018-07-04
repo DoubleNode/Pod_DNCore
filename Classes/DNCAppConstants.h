@@ -6,8 +6,8 @@
 //  Copyright © 2016 Darren Ehlers and DoubleNode, LLC. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <Foundation/Foundation.h>
+@import Foundation;
+@import UIKit;
 
 /**
  *  Provides access to App-specific constants, specified in a plist file specified by the 'Constants_plist' setting in the App's main *-Info.plst file.

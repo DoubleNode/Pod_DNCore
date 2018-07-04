@@ -11,7 +11,7 @@
 //  https://www.cocoacontrols.com/controls/uiimageview-gravatar
 //
 
-#import <CommonCrypto/CommonDigest.h>
+@import CommonCrypto;
 
 #import "DNCGravatar.h"
 

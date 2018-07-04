@@ -7,7 +7,7 @@
 //  All rights reserved.
 //
 
-#import <ColorUtils/ColorUtils.h>
+@import ColorUtils;
 
 #import "DNCUtilities.h"
 
