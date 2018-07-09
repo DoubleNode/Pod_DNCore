@@ -1644,11 +1644,19 @@ const double    DNCThreadingHelperPriority_High     = 0.9f;
 {
     DNCUtilitiesBlock block_ = [block copy];
     
-    return [NSTimer scheduledTimerWithTimeInterval:delay
-                                            target:self
-                                          selector:@selector(timerRunOnUIThread:)
-                                          userInfo:block_
-                                           repeats:NO];
+    __block NSTimer*    timer;
+    
+    [self runOnUIThread:
+     ^()
+     {
+         timer = [NSTimer scheduledTimerWithTimeInterval:delay
+                                                  target:self
+                                                selector:@selector(timerRunOnUIThread:)
+                                                userInfo:block_
+                                                 repeats:NO];
+     }];
+    
+    return timer;
 }
 
 + (void)repeatedlyAfterDelay:(double)delay
@@ -1679,11 +1687,19 @@ const double    DNCThreadingHelperPriority_High     = 0.9f;
 {
     DNCUtilitiesBlock block_ = [block copy];
     
-    return [NSTimer scheduledTimerWithTimeInterval:delay
-                                            target:self
-                                          selector:@selector(timerRunOnUIAsyncThread:)
-                                          userInfo:block_
-                                           repeats:NO];
+    __block NSTimer*    timer;
+    
+    [self runOnUIThread:
+     ^()
+     {
+         timer = [NSTimer scheduledTimerWithTimeInterval:delay
+                                                  target:self
+                                                selector:@selector(timerRunOnUIAsyncThread:)
+                                                userInfo:block_
+                                                 repeats:NO];
+     }];
+    
+    return timer;
 }
 
 + (void)repeatedlyAfterDelay:(double)delay
@@ -1708,6 +1724,7 @@ const double    DNCThreadingHelperPriority_High     = 0.9f;
                                                selector:@selector(runBlock:)
                                                  object:block];
     
+    thread.name             = @"DNCBackground";
     thread.threadPriority   = DNCThreadingHelperPriority_Default;
     
     [thread start];
@@ -1719,6 +1736,7 @@ const double    DNCThreadingHelperPriority_High     = 0.9f;
                                                selector:@selector(runBlock:)
                                                  object:block];
     
+    thread.name             = @"DNCHighBackground";
     thread.threadPriority   = DNCThreadingHelperPriority_High;
     
     [thread start];
@@ -1730,6 +1748,7 @@ const double    DNCThreadingHelperPriority_High     = 0.9f;
                                                selector:@selector(runBlock:)
                                                  object:block];
     
+    thread.name             = @"DNCLowBackground";
     thread.threadPriority   = DNCThreadingHelperPriority_Low;
     
     [thread start];
@@ -1740,11 +1759,19 @@ const double    DNCThreadingHelperPriority_High     = 0.9f;
 {
     DNCUtilitiesBlock block_ = [block copy];
     
-    return [NSTimer scheduledTimerWithTimeInterval:delay
-                                            target:self
-                                          selector:@selector(timerRunInBackground:)
-                                          userInfo:block_
-                                           repeats:NO];
+    __block NSTimer*    timer;
+    
+    [self runOnUIThread:
+     ^()
+     {
+         timer = [NSTimer scheduledTimerWithTimeInterval:delay
+                                                  target:self
+                                                selector:@selector(timerRunInBackground:)
+                                                userInfo:block_
+                                                 repeats:NO];
+     }];
+    
+    return timer;
 }
 
 + (NSTimer*)afterDelay:(double)delay
@@ -1752,11 +1779,19 @@ const double    DNCThreadingHelperPriority_High     = 0.9f;
 {
     DNCUtilitiesBlock block_ = [block copy];
     
-    return [NSTimer scheduledTimerWithTimeInterval:delay
-                                            target:self
-                                          selector:@selector(timerRunInHighBackground:)
-                                          userInfo:block_
-                                           repeats:NO];
+    __block NSTimer*    timer;
+    
+    [self runOnUIThread:
+     ^()
+     {
+         timer = [NSTimer scheduledTimerWithTimeInterval:delay
+                                                  target:self
+                                                selector:@selector(timerRunInHighBackground:)
+                                                userInfo:block_
+                                                 repeats:NO];
+     }];
+    
+    return timer;
 }
 
 + (NSTimer*)afterDelay:(double)delay
@@ -1764,11 +1799,19 @@ const double    DNCThreadingHelperPriority_High     = 0.9f;
 {
     DNCUtilitiesBlock block_ = [block copy];
     
-    return [NSTimer scheduledTimerWithTimeInterval:delay
-                                            target:self
-                                          selector:@selector(timerRunInLowBackground:)
-                                          userInfo:block_
-                                           repeats:NO];
+    __block NSTimer*    timer;
+    
+    [self runOnUIThread:
+     ^()
+     {
+         timer = [NSTimer scheduledTimerWithTimeInterval:delay
+                                                  target:self
+                                                selector:@selector(timerRunInLowBackground:)
+                                                userInfo:block_
+                                                 repeats:NO];
+     }];
+    
+    return timer;
 }
 
 + (void)repeatedlyAfterDelay:(double)delay
