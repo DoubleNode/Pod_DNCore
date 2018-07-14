@@ -15,6 +15,19 @@
 
 @implementation DNCAppConstants
 
++ (NSURL*)urlConstant:(NSString*)key
+{
+    return [[self class] urlConstant:key filter:nil];
+}
+
++ (NSURL*)urlConstant:(NSString*)key
+               filter:(NSString*)filter
+{
+    NSString*   str = [[self class] constantValue:key filter:filter];
+    
+    return [NSURL URLWithString:str];
+}
+
 + (NSDate*)dateConstant:(NSString*)key
 {
     return [[self class] dateConstant:key filter:nil];

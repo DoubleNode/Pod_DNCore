@@ -17,6 +17,18 @@
 #pragma mark - Constant plist to object functions
 
 /**
+ *  Creates and returns a NSURL object, initialized with the NSString loaded from the Constants plist file for the specified key.
+ *
+ *  @param key The string which specifies the key to the Constants plist file.
+ *
+ *  @return A new NSURL object, configured according to the value in the Constants plist file.
+ */
++ (NSURL*)urlConstant:(NSString*)key;
+
++ (NSURL*)urlConstant:(NSString*)key
+               filter:(NSString*)filter;
+
+/**
  *  Creates and returns a NSDate object, initialized with the NSDate loaded from the Constants plist file for the specified key.
  *
  *  @param key The string which specifies the key to the Constants plist file.
