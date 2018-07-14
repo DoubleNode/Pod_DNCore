@@ -23,7 +23,7 @@
 + (NSURL*)urlConstant:(NSString*)key
                filter:(NSString*)filter
 {
-    NSString*   str = [[self class] constantValue:key filter:filter];
+    NSString*   str = [[self class] constantValue:key filter:filter] ?: @"";
     
     return [NSURL URLWithString:str];
 }
