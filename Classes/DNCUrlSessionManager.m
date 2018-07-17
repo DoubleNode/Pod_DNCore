@@ -78,7 +78,7 @@
                         return;
                     }
                     
-                    NSData*    errorData   = dataError.userInfo[@"com.alamofire.serialization.response.error.data"];
+                    NSData*    errorData   = dataError.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
                     if (errorData.length)
                     {
                         NSString*  errorString = [[NSString alloc] initWithData:errorData
@@ -110,17 +110,21 @@
                         if (jsonData)
                         {
                             NSString*  errorMessage    = jsonData[@"error"];
-                            if (!errorMessage)
+                            if (!errorMessage.length)
                             {
                                 errorMessage    = jsonData[@"data"][@"error"];
                             }
-                            if (!errorMessage)
+                            if (!errorMessage.length)
                             {
                                 errorMessage    = jsonData[@"data"][@"message"];
                             }
-                            if (!errorMessage)
+                            if (!errorMessage.length)
                             {
                                 errorMessage    = jsonData[@"message"];
+                            }
+                            if (!errorMessage.length)
+                            {
+                                errorMessage    = dataError.userInfo[NSLocalizedDescriptionKey];
                             }
                             
                             dataErrorHandler ? dataErrorHandler(errorData, errorMessage) : nil;
