@@ -138,7 +138,7 @@
     if (filter && [value isKindOfClass:[NSDictionary class]])
     {
         NSDictionary*   values  = (NSDictionary*)value;
-
+        
         value   = values[filter];
         if (!value)
         {
@@ -148,6 +148,32 @@
     else if (value)
     {
         value   = [NSString stringWithFormat:@"%@", value];
+    }
+    
+    if ([value isKindOfClass:NSString.class])
+    {
+        NSString*   stringValue = value;
+        
+        while ([stringValue containsString:@"{{"])
+        {
+            NSArray*    stringValues = [stringValue componentsSeparatedByString:@"{{"];
+            if (stringValues.count <= 1)
+            {
+                // Should never occur!!
+                break;
+            }
+            
+            NSString*   tokenFragment   = stringValues[1];
+            NSString*   token           = [tokenFragment componentsSeparatedByString:@"}}"].firstObject;
+            NSString*   tokenString     = [NSString stringWithFormat:@"{{%@}}", token];
+            NSString*   tokenValue      = [self constantValue:token
+                                                       filter:filter];
+            
+            stringValue = [stringValue stringByReplacingOccurrencesOfString:tokenString
+                                                                 withString:tokenValue];
+        }
+        
+        value = stringValue;
     }
     
     return value;
@@ -165,7 +191,7 @@ static NSString*        plistServerCode = nil;
         plistConfigDict = nil;
         plistServerCode = serverCode;
     }
-
+    
     @synchronized( self )
     {
         if (plistConfigDict == nil)
@@ -179,7 +205,7 @@ static NSString*        plistServerCode = nil;
                                                                   userInfo:nil];
                 @throw exception;
             }
-
+            
             plistConfigDict = [[NSDictionary alloc] initWithContentsOfFile:constantsPath];
             if (!plistConfigDict)
             {
@@ -188,7 +214,7 @@ static NSString*        plistServerCode = nil;
                                                                   userInfo:nil];
                 @throw exception;
             }
-
+            
             NSString*   constantsPlist2 = [NSString stringWithFormat:@"Constants%@%@", ((serverCode.length > 0) ? @"_" : @""), serverCode];
             NSString*   constantsPath2  = [[NSBundle mainBundle] pathForResource:constantsPlist2 ofType:@"plist"];
             if (constantsPath2)
