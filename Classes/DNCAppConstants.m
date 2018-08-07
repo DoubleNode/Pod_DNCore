@@ -120,7 +120,7 @@
 
 + (NSDictionary*)dictionaryConstant:(NSString*)key
 {
-    id  value = [self constantValue:key];
+    id  value = [[self class] plistConfig:key];
     
     if (![value isKindOfClass:NSDictionary.class])
     {
@@ -128,7 +128,7 @@
                  @""    : value,
                  };
     }
-
+    
     NSDictionary*   dictionaryValue = value;
     
     return dictionaryValue;
@@ -144,14 +144,17 @@
 {
     id  value   = [[self class] plistConfig:key];
     
-    if (filter && [value isKindOfClass:[NSDictionary class]])
+    if ([value isKindOfClass:NSDictionary.class])
     {
-        NSDictionary*   values  = (NSDictionary*)value;
-        
-        value   = values[filter];
-        if (!value)
+        if (filter)
         {
-            value   = values[@"default"];
+            NSDictionary*   values  = (NSDictionary*)value;
+            
+            value   = values[filter];
+            if (!value)
+            {
+                value   = values[@"default"];
+            }
         }
     }
     else if (value)
@@ -236,10 +239,10 @@ static NSString*        plistServerCode = nil;
                  {
                      id originalObj = newDict[key];
                      
-                     if ([obj isKindOfClass:[NSDictionary class]])
+                     if ([obj isKindOfClass:NSDictionary.class])
                      {
                          NSMutableDictionary*   objMD  = [obj mutableCopy];
-                         if ([originalObj isKindOfClass:[NSDictionary class]])
+                         if ([originalObj isKindOfClass:NSDictionary.class])
                          {
                              [objMD addEntriesFromDictionary:originalObj];
                          }
