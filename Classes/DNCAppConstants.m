@@ -120,9 +120,18 @@
 
 + (NSDictionary*)dictionaryConstant:(NSString*)key
 {
-    NSDictionary*   value   = [[self class] plistConfig:key];
+    id  value = [self constantValue:key];
     
-    return value;
+    if (![value isKindOfClass:NSDictionary.class])
+    {
+        return @{
+                 @""    : value,
+                 };
+    }
+
+    NSDictionary*   dictionaryValue = value;
+    
+    return dictionaryValue;
 }
 
 + (id)constantValue:(NSString*)key
