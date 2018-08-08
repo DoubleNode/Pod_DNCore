@@ -213,6 +213,24 @@ extern void LogImageDataF(const char *filename, int lineNumber, const char *func
 
 @end
 
+@interface DNCSemaphore : NSObject
+
++ (instancetype)semaphoreWithCount:(NSInteger)count;
+
+- (instancetype)initWithCount:(NSInteger)count;
+
+- (NSInteger)done;
+- (NSInteger)wait;
+- (NSInteger)waitUntil:(dispatch_time_t)timeout;
+
+@end
+
+@interface DNCSemaphoreGate : DNCSemaphore
+
++ (instancetype)semaphore;
+
+@end
+
 CGFloat DNCTimeBlock (void (^block)(void));
 
 void DNCLogMessageF(const char *filename, int lineNumber, const char *functionName, NSString *domain, int level, NSString *format, ...);

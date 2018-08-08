@@ -1460,6 +1460,61 @@ void DNCLogMessageF(const char *filename, int lineNumber, const char *functionNa
     NSLog(@"%@ %@[%@] %@{%@} %@[%@:%d] %@%@%@", levelString(level), otherColor, ([NSThread isMainThread] ? @"MT" : @"BT"), domainColor, domain, otherColor, [NSString stringWithUTF8String:filename].lastPathComponent, lineNumber, mainColor, formattedStr, DNCUtilities.xcodeColorsReset);
 }
 
+@interface DNCSemaphore()
+{
+    dispatch_semaphore_t    _semaphore;
+}
+
+@end
+
+@implementation DNCSemaphore
+
++ (instancetype)semaphoreWithCount:(NSInteger)count
+{
+    return [self.alloc initWithCount:count];
+}
+
+- (instancetype)initWithCount:(NSInteger)count
+{
+    self = [super init];
+    if (self)
+    {
+        _semaphore = dispatch_semaphore_create(count);
+    }
+    
+    return self;
+}
+
+- (NSInteger)done
+{
+    return dispatch_semaphore_signal(_semaphore);
+}
+
+- (NSInteger)wait
+{
+    return [self waitUntil:DISPATCH_TIME_FOREVER];
+}
+
+- (NSInteger)waitUntil:(dispatch_time_t)timeout
+{
+    return dispatch_semaphore_wait(_semaphore, timeout);
+}
+
+@end
+
+@interface DNCSemaphoreGate()
+
+@end
+
+@implementation DNCSemaphoreGate
+
++ (instancetype)semaphore
+{
+    return [self.alloc initWithCount:0];
+}
+
+@end
+
 @interface DNCSynchronize()
 {
     DNCUtilitiesBlock   _block;
