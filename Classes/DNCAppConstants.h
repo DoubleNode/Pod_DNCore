@@ -146,7 +146,7 @@
  *
  *  @return A new NSDictionary object, loaded with all of the keys/values in the Constants plist file.
  */
-+ (NSDictionary*)plistDict;
++ (NSMutableDictionary*)plistDict;
 
 /**
  *  Returns a NSObject object, initialized with the object loaded from the Constants plist file for the specified key.  If the specified key doesn't exist, a warning message is logged to the console.

@@ -17,26 +17,26 @@
 
 + (NSURL*)urlConstant:(NSString*)key
 {
-    return [[self class] urlConstant:key filter:nil];
+    return [self urlConstant:key filter:nil];
 }
 
 + (NSURL*)urlConstant:(NSString*)key
                filter:(NSString*)filter
 {
-    NSString*   str = [[self class] constantValue:key filter:filter] ?: @"";
+    NSString*   str = [self constantValue:key filter:filter] ?: @"";
     
     return [NSURL URLWithString:str];
 }
 
 + (NSDate*)dateConstant:(NSString*)key
 {
-    return [[self class] dateConstant:key filter:nil];
+    return [self dateConstant:key filter:nil];
 }
 
 + (NSDate*)dateConstant:(NSString*)key
                  filter:(NSString*)filter
 {
-    NSString*   str = [[self class] constantValue:key filter:filter];
+    NSString*   str = [self constantValue:key filter:filter];
     
     NSDateFormatter*    formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"MM/dd/yyyy HH:mm z"];
@@ -46,58 +46,58 @@
 
 + (UIColor*)colorConstant:(NSString*)key
 {
-    return [[self class] colorConstant:key filter:nil];
+    return [self colorConstant:key filter:nil];
 }
 
 + (UIColor*)colorConstant:(NSString*)key
                    filter:(NSString*)filter
 {
-    return [UIColor colorWithString:[[self class] constantValue:key filter:filter]];
+    return [UIColor colorWithString:[self constantValue:key filter:filter]];
 }
 
 + (BOOL)boolConstant:(NSString*)key
 {
-    return [[self class] boolConstant:key filter:nil];
+    return [self boolConstant:key filter:nil];
 }
 
 + (BOOL)boolConstant:(NSString*)key
               filter:(NSString*)filter
 {
-    return [[[self class] constantValue:key filter:filter] boolValue];
+    return [[self constantValue:key filter:filter] boolValue];
 }
 
 + (double)doubleConstant:(NSString*)key
 {
-    return [[self class] doubleConstant:key filter:nil];
+    return [self doubleConstant:key filter:nil];
 }
 
 + (double)doubleConstant:(NSString*)key
                   filter:(NSString*)filter
 {
-    return [[[self class] constantValue:key filter:filter] doubleValue];
+    return [[self constantValue:key filter:filter] doubleValue];
 }
 
 + (int)intConstant:(NSString*)key
 {
-    return [[self class] intConstant:key filter:nil];
+    return [self intConstant:key filter:nil];
 }
 
 + (int)intConstant:(NSString*)key
             filter:(NSString*)filter
 {
-    return [[[self class] constantValue:key filter:filter] intValue];
+    return [[self constantValue:key filter:filter] intValue];
 }
 
 + (UIFont*)fontConstant:(NSString*)key
 {
-    return [[self class] fontConstant:key filter:nil];
+    return [self fontConstant:key filter:nil];
 }
 
 + (UIFont*)fontConstant:(NSString*)key
                  filter:(NSString*)filter
 {
-    NSString*   fontName    = [[self class] constantValue:[NSString stringWithFormat:@"%@Name", key] filter:filter];
-    NSString*   fontSize    = [[self class] constantValue:[NSString stringWithFormat:@"%@Size", key] filter:filter];
+    NSString*   fontName    = [self constantValue:[NSString stringWithFormat:@"%@Name", key] filter:filter];
+    NSString*   fontSize    = [self constantValue:[NSString stringWithFormat:@"%@Size", key] filter:filter];
     
     UIFont* retFont  = [UIFont fontWithName:fontName size:([fontSize doubleValue] / 2)];
     
@@ -106,21 +106,21 @@
 
 + (CGSize)sizeConstant:(NSString*)key
 {
-    return [[self class] sizeConstant:key filter:nil];
+    return [self sizeConstant:key filter:nil];
 }
 
 + (CGSize)sizeConstant:(NSString*)key
                 filter:(NSString*)filter
 {
-    NSString*   sizeWidth   = [[self class] constantValue:[NSString stringWithFormat:@"%@Width", key] filter:filter];
-    NSString*   sizeHeight  = [[self class] constantValue:[NSString stringWithFormat:@"%@Height", key] filter:filter];
+    NSString*   sizeWidth   = [self constantValue:[NSString stringWithFormat:@"%@Width", key] filter:filter];
+    NSString*   sizeHeight  = [self constantValue:[NSString stringWithFormat:@"%@Height", key] filter:filter];
     
     return CGSizeMake([sizeWidth floatValue], [sizeHeight floatValue]);
 }
 
 + (NSDictionary*)dictionaryConstant:(NSString*)key
 {
-    id  value = [[self class] plistConfig:key];
+    id  value = [self plistConfig:key];
     
     if (![value isKindOfClass:NSDictionary.class])
     {
@@ -139,10 +139,88 @@
     return [self constantValue:key filter:nil];
 }
 
++ (NSDictionary*)dictionaryLookupUI:(NSString*)key
+                          withValue:(NSDictionary*)value
+{
+    DNCAssertIsNotMainThread;
+    
+    __block id  selectedOption;
+    
+    DNCSemaphoreGate*   semaphore = DNCSemaphoreGate.semaphore;
+    
+    [DNCUIThread run:
+     ^()
+     {
+         NSString*   title   = value[@"title"]   ?: [NSString stringWithFormat:@"%@_TITLE_NOT_SPECIFIED", key];
+         NSString*   message = value[@"message"] ?: [NSString stringWithFormat:@"%@_MESSAGE_NOT_SPECIFIED", key];
+         NSArray*    options = value[@"options"];
+         
+         UIAlertController* alertController = [UIAlertController alertControllerWithTitle:title
+                                                                                  message:message
+                                                                           preferredStyle:UIAlertControllerStyleAlert];
+         
+         for (NSDictionary* option in options)
+         {
+             NSString*   label   = option[@"label"] ?: [NSString stringWithFormat:@"%@_OPTION_LABEL_NOT_SPECIFIED", key];
+             
+             UIAlertAction* action = [UIAlertAction actionWithTitle:label
+                                                              style:UIAlertActionStyleDefault
+                                                            handler:
+                                      ^(UIAlertAction* _Nonnull action)
+                                      {
+                                          selectedOption = option;
+                                          
+                                          [semaphore done];
+                                      }];
+             [alertController addAction:action];
+             
+         }
+         
+         [DNCUtilities.appDelegate.rootViewController presentViewController:alertController
+                                                                   animated:YES
+                                                                 completion:nil];
+     }];
+    
+    [semaphore wait];
+    
+    [self plistConfigReplace:key
+                   withValue:selectedOption];
+    
+    return selectedOption;
+}
+
++ (NSDictionary*)dictionarySelection:(NSString*)key
+                           withValue:(NSDictionary*)value
+{
+    NSDictionary*   selectedOption = value;
+    
+    if (value[@"options"])
+    {
+        selectedOption = [self dictionaryLookupUI:key
+                                        withValue:value];
+    }
+    
+    return selectedOption[@"key"] ?: (selectedOption[@"label"] ?: [NSString stringWithFormat:@"%@_OPTION_KEY_NOT_SPECIFIED", key]);
+}
+
++ (id)dictionaryLookupConstant:(NSString*)key
+                     forSubkey:(NSString*)subkey
+{
+    NSDictionary*   selectedOption = [self plistConfig:key];
+    
+    if (selectedOption[@"options"])
+    {
+        selectedOption = [self dictionaryLookupUI:key
+                                        withValue:selectedOption];
+    }
+    
+    return selectedOption[subkey] ?: nil;
+}
+
 + (id)constantValue:(NSString*)key
              filter:(NSString*)filter
 {
-    id  value   = [[self class] plistConfig:key];
+    id  value   = [self plistConfig:key];
     
     if ([value isKindOfClass:NSDictionary.class])
     {
@@ -155,6 +233,11 @@
             {
                 value   = values[@"default"];
             }
+        }
+        else
+        {
+            value = [self dictionarySelection:key
+                                    withValue:value];
         }
     }
     else if (value)
@@ -178,8 +261,24 @@
             NSString*   tokenFragment   = stringValues[1];
             NSString*   token           = [tokenFragment componentsSeparatedByString:@"}}"].firstObject;
             NSString*   tokenString     = [NSString stringWithFormat:@"{{%@}}", token];
-            NSString*   tokenValue      = [self constantValue:token
-                                                       filter:filter];
+            
+            NSString*   tokenValue;
+            
+            if ([token containsString:@":"])
+            {
+                NSArray*    selectionValues = [token componentsSeparatedByString:@":"];
+                NSString*   selectionToken  = selectionValues[0];
+                NSString*   selectionKey    = selectionValues[1];
+                
+                tokenValue = [self dictionaryLookupConstant:selectionToken
+                                                  forSubkey:selectionKey];
+            }
+            
+            if (!tokenValue)
+            {
+                tokenValue  = [self constantValue:token
+                                           filter:filter];
+            }
             
             stringValue = [stringValue stringByReplacingOccurrencesOfString:tokenString
                                                                  withString:tokenValue];
@@ -191,10 +290,10 @@
     return value;
 }
 
-static NSDictionary*    plistConfigDict = nil;
-static NSString*        plistServerCode = nil;
+static NSMutableDictionary* plistConfigDict = nil;
+static NSString*            plistServerCode = nil;
 
-+ (NSDictionary*)plistDict
++ (NSMutableDictionary*)plistDict
 {
     NSString*   serverCode  = [DNCUtilities settingsItem:@"ServerCode"];
     //DLog(LL_Debug, LD_General, @"ServerCode=%@", serverCode);
@@ -218,7 +317,7 @@ static NSString*        plistServerCode = nil;
                 @throw exception;
             }
             
-            plistConfigDict = [[NSDictionary alloc] initWithContentsOfFile:constantsPath];
+            plistConfigDict = [NSMutableDictionary.alloc initWithContentsOfFile:constantsPath];
             if (!plistConfigDict)
             {
                 NSException*    exception = [NSException exceptionWithName:@"DNAppConstants Exception"
@@ -269,7 +368,7 @@ static NSString*        plistServerCode = nil;
 
 + (id)plistConfig:(NSString*)key
 {
-    NSDictionary*   dict = [[self class] plistDict];
+    NSMutableDictionary*    dict = [self plistDict];
     
     id  value = dict[key];
     if ((value == nil) || (value == [NSNull null]))
@@ -278,6 +377,16 @@ static NSString*        plistServerCode = nil;
     }
     
     return value;
+}
+
++ (void)plistConfigReplace:(NSString*)key
+                 withValue:(id)value
+{
+    NSAssert(value, @"value is nil.");
+    
+    NSMutableDictionary*    dict = [self plistDict];
+    
+    dict[key]   = value;
 }
 
 @end

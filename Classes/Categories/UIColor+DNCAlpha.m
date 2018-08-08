@@ -69,10 +69,10 @@
     const CGFloat*  blendComponents = CGColorGetComponents(color.CGColor);
     
     CGFloat redBlendComponent, greenBlendComponent, blueBlendComponent, alphaBlendComponent;
-    redBlendComponent   = components[UIColorDNCAlphaComponentIndicesR];
-    greenBlendComponent = components[UIColorDNCAlphaComponentIndicesG];
-    blueBlendComponent  = components[UIColorDNCAlphaComponentIndicesB];
-    alphaBlendComponent = components[UIColorDNCAlphaComponentIndicesA];
+    redBlendComponent   = blendComponents[UIColorDNCAlphaComponentIndicesR];
+    greenBlendComponent = blendComponents[UIColorDNCAlphaComponentIndicesG];
+    blueBlendComponent  = blendComponents[UIColorDNCAlphaComponentIndicesB];
+    alphaBlendComponent = blendComponents[UIColorDNCAlphaComponentIndicesA];
 
     CGFloat finalAmount         = (fabsf((float)amount) > 1.0f) ? 1.0f : fabsf((float)amount); // Clamp to 0.0 - 1.0
     CGFloat finalBlendAmount    = 1.0f - finalAmount;
