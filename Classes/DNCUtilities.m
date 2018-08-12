@@ -1336,6 +1336,35 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
     return color;
 }
 
++ (void)logSetLevel:(DNCLogLevel)level
+{
+    [self.sharedInstance logSetLevel:level];
+}
+
++ (void)logEnableDomain:(NSString*)domain
+{
+    [self.sharedInstance logEnableDomain:domain];
+}
+
++ (void)logEnableDomain:(NSString*)domain
+               forLevel:(DNCLogLevel)level
+{
+    [self.sharedInstance logEnableDomain:domain
+                                forLevel:level];
+}
+
++ (void)logDisableDomain:(NSString*)domain
+{
+    [self.sharedInstance logDisableDomain:domain];
+}
+
++ (void)logDisableDomain:(NSString*)domain
+                forLevel:(DNCLogLevel)level
+{
+    [self.sharedInstance logDisableDomain:domain
+                                 forLevel:level];
+}
+
 - (void)logResetLogState
 {
     if ([[[self class] appDelegate] respondsToSelector:@selector(resetLogState)] == YES)
@@ -1428,12 +1457,12 @@ levelString(int level)
 {
     switch (level)
     {
-        case DNCLL_Critical:    {   return @"🆘🆘🆘";   }
-        case DNCLL_Error:       {   return @"❤️❤️❤️";   }
-        case DNCLL_Warning:     {   return @"⚠️⚠️⚠️";   }
-        case DNCLL_Debug:       {   return @"🍺🍺🍺";   }
-        case DNCLL_Info:        {   return @"✳️✳️✳️";   }
-        case DNCLL_Everything:  {   return @"🚻🚻🚻";   }
+        case DNCLL_Critical:    {   return @"CRIT"; }   //@"🆘🆘🆘";   }
+        case DNCLL_Error:       {   return @"ERR";  }   //@"❤️❤️❤️";   }
+        case DNCLL_Warning:     {   return @"WARN"; }   //@"⚠️⚠️⚠️";   }
+        case DNCLL_Debug:       {   return @"DBG";  }   //@"🍺🍺🍺";   }
+        case DNCLL_Info:        {   return @"INFO"; }   //@"✳️✳️✳️";   }
+        case DNCLL_Everything:  {   return @"EVRY"; }   //@"🚻🚻🚻";   }
     }
     
     return @"";

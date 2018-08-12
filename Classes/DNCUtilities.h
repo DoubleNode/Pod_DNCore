@@ -205,6 +205,12 @@ extern void LogImageDataF(const char *filename, int lineNumber, const char *func
 + (id)dictionaryObject:(NSDictionary*)dictionary withItem:(NSString*)key andDefault:(id)defaultValue;
 + (id)dictionaryObject:(NSDictionary*)dictionary dirty:(BOOL*)dirtyFlag withItem:(NSString*)key andDefault:(id)defaultValue;
 
++ (void)logSetLevel:(DNCLogLevel)level;
++ (void)logEnableDomain:(NSString*)domain;
++ (void)logEnableDomain:(NSString*)domain forLevel:(DNCLogLevel)level;
++ (void)logDisableDomain:(NSString*)domain;
++ (void)logDisableDomain:(NSString*)domain forLevel:(DNCLogLevel)level;
+
 - (void)logSetLevel:(DNCLogLevel)level;
 - (void)logEnableDomain:(NSString*)domain;
 - (void)logEnableDomain:(NSString*)domain forLevel:(DNCLogLevel)level;
