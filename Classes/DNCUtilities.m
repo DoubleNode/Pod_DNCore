@@ -10,6 +10,7 @@
 @import AVFoundation;
 @import CommonCrypto;
 @import CoreTelephony;
+@import LocalAuthentication;
 @import SDVersion;
 @import UIKit;
 
@@ -201,6 +202,121 @@
     });
     
     return result;
+}
+
++ (BPDeviceType)deviceType
+{
+    NSUInteger  screenHeight = (NSUInteger)UIScreen.mainScreen.bounds.size.height;
+
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        return BPDeviceTypeiPad;
+    }
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        if (@available(iOS 11, *))
+        {
+            UIEdgeInsets insets = UIApplication.sharedApplication.delegate.window.safeAreaInsets;
+            if (insets.top > 0)
+            {
+                return BPDeviceTypeiPhoneX;
+            }
+        }
+        
+        switch (screenHeight)
+        {
+            case 480:   return BPDeviceTypeiPhone4;
+            case 568:   return BPDeviceTypeiPhone5;
+            case 667:   return BPDeviceTypeiPhone6;
+            case 736:   return BPDeviceTypeiPhone6Plus;
+        }
+    }
+    
+    return BPDeviceTypeUnknown;
+}
+
++ (BOOL)isBiometricIDAvailable
+{
+    if (!LAContext.class)
+    {
+        return NO;
+    }
+    
+    LAContext*  myContext = [LAContext.alloc init];
+    NSError*    authError = nil;
+    if (![myContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
+                                error:&authError])
+    {
+        DNCLog(DNCLL_Error, @"%@", authError.localizedDescription);
+        return NO;
+    }
+    
+    return YES;
+}
+
++ (BOOL)isTouchIDAvailable
+{
+    if (!LAContext.class)
+    {
+        return NO;
+    }
+    
+    LAContext*  myContext = [LAContext.alloc init];
+    NSError*    authError = nil;
+    if (![myContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
+                                error:&authError])
+    {
+        DNCLog(DNCLL_Error, @"%@", authError.localizedDescription);
+        return NO;
+        // if (authError.code == LAErrorTouchIDNotAvailable) {}
+    }
+    
+    if (@available(iOS 11.0, *))
+    {
+        if (myContext.biometryType == LABiometryTypeTouchID)
+        {
+            return YES;
+        }
+        
+        return NO;
+    }
+
+    return YES;
+}
+
++ (BOOL)supportFaceID
+{
+    return self.deviceType == BPDeviceTypeiPhoneX;
+}
+
++ (BOOL)isFaceIDAvailable
+{
+    if (!LAContext.class)
+    {
+        return NO;
+    }
+    
+    LAContext*  myContext = [LAContext.alloc init];
+    NSError*    authError = nil;
+    if (![myContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
+                                error:&authError])
+    {
+        DNCLog(DNCLL_Error, @"%@", authError.localizedDescription);
+        return NO;
+    }
+    
+    if (@available(iOS 11.0, *))
+    {
+        if (myContext.biometryType == LABiometryTypeFaceID)
+        {
+            return YES;
+        }
+        
+        return NO;
+    }
+    
+    return NO;
 }
 
 + (NSString*)applicationDocumentsDirectory

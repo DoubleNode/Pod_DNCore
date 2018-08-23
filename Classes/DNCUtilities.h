@@ -119,6 +119,25 @@ extern void LogImageDataF(const char *filename, int lineNumber, const char *func
 + (BOOL)isTall;
 + (BOOL)isDeviceIPad;
 
+typedef NS_ENUM(NSUInteger, BPDeviceType)
+{
+    BPDeviceTypeUnknown,
+    BPDeviceTypeiPhone4,
+    BPDeviceTypeiPhone5,
+    BPDeviceTypeiPhone6,
+    BPDeviceTypeiPhone6Plus,
+    BPDeviceTypeiPhone7,
+    BPDeviceTypeiPhone7Plus,
+    BPDeviceTypeiPhoneX,
+    BPDeviceTypeiPad
+};
+
++ (BPDeviceType)deviceType;
++ (BOOL)isBiometricIDAvailable;
++ (BOOL)isTouchIDAvailable;
++ (BOOL)supportFaceID;
++ (BOOL)isFaceIDAvailable;
+
 + (NSString*)applicationDocumentsDirectory;
 
 + (NSString*)appendNibSuffix:(NSString*)nibNameOrNil;

@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "DNCore"
-  s.version      = "0.2.23"
+  s.version      = "0.2.24"
   s.summary      = "A base collection of DNCore headers and utilities."
 
   s.description  = <<-DESC
@@ -23,6 +23,14 @@ Pod::Spec.new do |s|
   s.public_header_files = "Classes/**/*.h"
 
   s.requires_arc = true
+
+  s.framework    = 'AudioToolbox'
+  s.framework    = 'AVFoundation'
+  s.framework    = 'CommonCrypto'
+  s.framework    = 'CoreTelephony'
+  s.framework    = 'LocalAuthentication'
+  s.framework    = 'SDVersion'
+  s.framework    = 'UIKit'
 
   s.dependency "AFNetworking", "~> 3.0"
   s.dependency "ColorUtils"
