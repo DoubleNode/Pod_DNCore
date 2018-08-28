@@ -242,6 +242,23 @@
              andYearFormat:@"yyyy"];
 }
 
+- (NSString*)expirationDate
+{
+    NSString*    expirationFormat   = [NSDateFormatter dateFormatFromTemplate:@"MMM yyyy"
+                                                                  options:0
+                                                                   locale:NSLocale.currentLocale];
+    NSDateFormatter*    expirationFormatter = NSDateFormatter.alloc.init;
+    [expirationFormatter setDateFormat:expirationFormat];
+    
+    NSString*   datestr = [expirationFormatter stringFromDate:self];
+    if ([datestr isEqualToString:@"(null)"] == YES)
+    {
+        return @"";
+    }
+    
+    return datestr;
+}
+
 - (NSString*)localizedDate
 {
     NSString*   datestr = [NSDateFormatter localizedStringFromDate:self

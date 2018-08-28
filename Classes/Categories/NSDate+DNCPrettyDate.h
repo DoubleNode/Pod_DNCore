@@ -77,6 +77,13 @@
 - (NSString*)fullDateRange:(NSDate*)end;
 
 /**
+ *  Creates an returns a new NSString object initialized with a localized version of the source date (ie: MMM yyyy).
+ *
+ *  @return A new NSString object, configured with a localized version of the source date (ie: MMM yyyy).
+ */
+- (NSString*)expirationDate;
+
+/**
  *  Creates an returns a new NSString object initialized with a localized version of the source date.
  *
  *  @return A new NSString object, configured with a localized version of the source date.
