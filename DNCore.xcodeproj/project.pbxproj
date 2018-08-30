@@ -24,6 +24,8 @@
 		6A3F02EA1DBD8684008849B5 /* DNCDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A3F02E91DBD8684008849B5 /* DNCDate.m */; };
 		6A3F02F01DBD880F008849B5 /* NSDate+DNCUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A3F02ED1DBD880F008849B5 /* NSDate+DNCUtils.m */; };
 		6A3F02F11DBD880F008849B5 /* NSString+DNCHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A3F02EF1DBD880F008849B5 /* NSString+DNCHTML.m */; };
+		6AA6897D213782B80094B6DD /* DNCQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AA6897A213782B70094B6DD /* DNCQueue.m */; };
+		6AA6897E213782B80094B6DD /* DNCStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AA6897C213782B70094B6DD /* DNCStack.m */; };
 		6AACAC0E1DFA59D200E510CF /* DNCNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AACAC0D1DFA59D200E510CF /* DNCNavigationController.m */; };
 		6AB2ED9C1DD813BD004439E6 /* DNCGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AB2ED9B1DD813BD004439E6 /* DNCGradientView.m */; };
 		6AB2ED9F1DD81E2F004439E6 /* UIView+DNCDropShadow.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AB2ED9E1DD81E2F004439E6 /* UIView+DNCDropShadow.m */; };
@@ -86,6 +88,10 @@
 		6A3F02ED1DBD880F008849B5 /* NSDate+DNCUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+DNCUtils.m"; path = "Classes/Categories/NSDate+DNCUtils.m"; sourceTree = "<group>"; };
 		6A3F02EE1DBD880F008849B5 /* NSString+DNCHTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+DNCHTML.h"; path = "Classes/Categories/NSString+DNCHTML.h"; sourceTree = "<group>"; };
 		6A3F02EF1DBD880F008849B5 /* NSString+DNCHTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+DNCHTML.m"; path = "Classes/Categories/NSString+DNCHTML.m"; sourceTree = "<group>"; };
+		6AA68979213782B70094B6DD /* DNCStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DNCStack.h; path = Classes/DNCStack.h; sourceTree = "<group>"; };
+		6AA6897A213782B70094B6DD /* DNCQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DNCQueue.m; path = Classes/DNCQueue.m; sourceTree = "<group>"; };
+		6AA6897B213782B70094B6DD /* DNCQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DNCQueue.h; path = Classes/DNCQueue.h; sourceTree = "<group>"; };
+		6AA6897C213782B70094B6DD /* DNCStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DNCStack.m; path = Classes/DNCStack.m; sourceTree = "<group>"; };
 		6AACAC0C1DFA59D200E510CF /* DNCNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DNCNavigationController.h; path = Classes/DNCNavigationController.h; sourceTree = "<group>"; };
 		6AACAC0D1DFA59D200E510CF /* DNCNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DNCNavigationController.m; path = Classes/DNCNavigationController.m; sourceTree = "<group>"; };
 		6AB2ED9A1DD813BD004439E6 /* DNCGradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DNCGradientView.h; path = Classes/DNCGradientView.h; sourceTree = "<group>"; };
@@ -218,6 +224,10 @@
 				6AD380761DD024E000FFF836 /* DNCGravatar.m */,
 				6AACAC0C1DFA59D200E510CF /* DNCNavigationController.h */,
 				6AACAC0D1DFA59D200E510CF /* DNCNavigationController.m */,
+				6AA6897B213782B70094B6DD /* DNCQueue.h */,
+				6AA6897A213782B70094B6DD /* DNCQueue.m */,
+				6AA68979213782B70094B6DD /* DNCStack.h */,
+				6AA6897C213782B70094B6DD /* DNCStack.m */,
 				6A3F02E11DBD8295008849B5 /* DNCUrlSessionManager.h */,
 				6A3F02E21DBD8295008849B5 /* DNCUrlSessionManager.m */,
 				6A3F02E31DBD8295008849B5 /* DNCUtilities.h */,
@@ -486,10 +496,12 @@
 				6A3F02E51DBD8295008849B5 /* DNCUrlSessionManager.m in Sources */,
 				6A3F02F01DBD880F008849B5 /* NSDate+DNCUtils.m in Sources */,
 				6AE0CF871DF6382F009727C1 /* GGMutableDictionary.m in Sources */,
+				6AA6897D213782B80094B6DD /* DNCQueue.m in Sources */,
 				6ACFB6501DC9A69900CC388F /* UIAlertController+DNCSupportedInterfaceOrientations.m in Sources */,
 				6A19E0D91DE8F62D00946455 /* UIFont+DNCCustom.m in Sources */,
 				6AB2ED9F1DD81E2F004439E6 /* UIView+DNCDropShadow.m in Sources */,
 				6ACACB742108F3BA00DA3F22 /* UIColor+DNCAlpha.m in Sources */,
+				6AA6897E213782B80094B6DD /* DNCStack.m in Sources */,
 				6ACFB64D1DC9A49500CC388F /* UIView+DNCPending.m in Sources */,
 				6A3F02F11DBD880F008849B5 /* NSString+DNCHTML.m in Sources */,
 				6AD380771DD024E100FFF836 /* DNCGravatar.m in Sources */,
