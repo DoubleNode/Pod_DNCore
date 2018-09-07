@@ -118,6 +118,22 @@
     return CGSizeMake([sizeWidth floatValue], [sizeHeight floatValue]);
 }
 
++ (NSArray*)arrayConstant:(NSString*)key
+{
+    id  value = [self plistConfig:key];
+    
+    if (![value isKindOfClass:NSArray.class])
+    {
+        return @[
+                 value
+                 ];
+    }
+    
+    NSArray*   arrayValue = value;
+    
+    return arrayValue;
+}
+
 + (NSDictionary*)dictionaryConstant:(NSString*)key
 {
     id  value = [self plistConfig:key];

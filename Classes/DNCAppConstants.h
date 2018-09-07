@@ -119,6 +119,15 @@
                 filter:(NSString*)filter;
 
 /**
+ *  Returns a NSArray object, initialized with the arrayValue of the NSString objects loaded from the Constants plist file for the specified key.
+ *
+ *  @param key The string which specifies the key to the Constants plist file.
+ *
+ *  @return A new NSArray value, configured according to the value in the Constants plist file.
+ */
++ (NSArray*)arrayConstant:(NSString*)key;
+
+/**
  *  Returns a NSDictionary object, initialized with the dictionartyValue of the NSString objects loaded from the Constants plist file for the specified key.
  *
  *  @param key The string which specifies the key to the Constants plist file.
