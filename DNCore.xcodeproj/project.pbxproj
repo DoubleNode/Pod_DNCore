@@ -12,6 +12,7 @@
 		6A19E0D71DE8F62D00946455 /* NSString+DNCContains.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A19E0D21DE8F62D00946455 /* NSString+DNCContains.m */; };
 		6A19E0D81DE8F62D00946455 /* NSTimer+DNCBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A19E0D41DE8F62D00946455 /* NSTimer+DNCBlocks.m */; };
 		6A19E0D91DE8F62D00946455 /* UIFont+DNCCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A19E0D61DE8F62D00946455 /* UIFont+DNCCustom.m */; };
+		6A225B09214848700026260A /* NSAttributedString+StringFromHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A225B08214848700026260A /* NSAttributedString+StringFromHTML.m */; };
 		6A3F02BA1DBD8228008849B5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A3F02B91DBD8228008849B5 /* main.m */; };
 		6A3F02BD1DBD8228008849B5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A3F02BC1DBD8228008849B5 /* AppDelegate.m */; };
 		6A3F02C01DBD8228008849B5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A3F02BF1DBD8228008849B5 /* ViewController.m */; };
@@ -62,6 +63,8 @@
 		6A19E0D41DE8F62D00946455 /* NSTimer+DNCBlocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSTimer+DNCBlocks.m"; path = "Classes/Categories/NSTimer+DNCBlocks.m"; sourceTree = "<group>"; };
 		6A19E0D51DE8F62D00946455 /* UIFont+DNCCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIFont+DNCCustom.h"; path = "Classes/Categories/UIFont+DNCCustom.h"; sourceTree = "<group>"; };
 		6A19E0D61DE8F62D00946455 /* UIFont+DNCCustom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIFont+DNCCustom.m"; path = "Classes/Categories/UIFont+DNCCustom.m"; sourceTree = "<group>"; };
+		6A225B07214848700026260A /* NSAttributedString+StringFromHTML.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSAttributedString+StringFromHTML.h"; path = "Classes/Categories/NSAttributedString+StringFromHTML.h"; sourceTree = "<group>"; };
+		6A225B08214848700026260A /* NSAttributedString+StringFromHTML.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSAttributedString+StringFromHTML.m"; path = "Classes/Categories/NSAttributedString+StringFromHTML.m"; sourceTree = "<group>"; };
 		6A3F02B51DBD8228008849B5 /* DNCore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DNCore.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A3F02B91DBD8228008849B5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6A3F02BB1DBD8228008849B5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -239,6 +242,8 @@
 		6A3F02EB1DBD8805008849B5 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				6A225B07214848700026260A /* NSAttributedString+StringFromHTML.h */,
+				6A225B08214848700026260A /* NSAttributedString+StringFromHTML.m */,
 				6ACFB6511DC9A85900CC388F /* NSDate+DNCPrettyDate.h */,
 				6ACFB6521DC9A85900CC388F /* NSDate+DNCPrettyDate.m */,
 				6A3F02EC1DBD880F008849B5 /* NSDate+DNCUtils.h */,
@@ -513,6 +518,7 @@
 				6A18446A1DEA747000D3D254 /* YZNameFormatter.swift in Sources */,
 				6ACFB6531DC9A85900CC388F /* NSDate+DNCPrettyDate.m in Sources */,
 				6A19E0D71DE8F62D00946455 /* NSString+DNCContains.m in Sources */,
+				6A225B09214848700026260A /* NSAttributedString+StringFromHTML.m in Sources */,
 				6A3F02E61DBD8295008849B5 /* DNCUtilities.m in Sources */,
 				6A19E0D81DE8F62D00946455 /* NSTimer+DNCBlocks.m in Sources */,
 				6AE0CF821DF6356A009727C1 /* DNCAppConstants.m in Sources */,
