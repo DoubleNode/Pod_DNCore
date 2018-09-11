@@ -1,19 +1,19 @@
 Steps to Update Pod
 ------------------------
 0. For New Install Only:
-pod repo add DoubleNodeSpecs https://github.com/DoubleNode/SpecsPrivateRepo.git
-pod repo update DoubleNodeSpecs
+pod repo add PostablurSpecs https://github.com/postablur/SpecsPrivateRepo.git
+pod repo update PostablurSpecs
 
 1. Check local files
-pod lib lint --sources=git@github.com:DoubleNode/SpecsPrivateRepo.git,master --private --allow-warnings
+pod lib lint --sources=git@github.com:postablur/SpecsPrivateRepo.git,master --private --allow-warnings
 
 2. Create tag and push to github
 
 3. Check repo file
-pod spec lint --sources=git@github.com:DoubleNode/SpecsPrivateRepo.git,master --private --allow-warnings
+pod spec lint --sources=git@github.com:postablur/SpecsPrivateRepo.git,master --private --allow-warnings
 
 4. Final Submit
-pod repo push DoubleNodeSpecs DNCore.podspec --allow-warnings
+pod repo push PostablurSpecs DNCore.podspec --allow-warnings
 
 
 Steps to Reset Podfile Pods
