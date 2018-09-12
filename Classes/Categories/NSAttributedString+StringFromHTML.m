@@ -20,7 +20,7 @@
 
 + (NSString*)_cssStringFromAttributedStringAttributes:(NSDictionary*)dictionary
 {
-    NSMutableString*    cssString = [NSMutableString stringWithString:@"<style> p {"];
+    NSMutableString*    cssString = [NSMutableString stringWithString:@"<style> p { white-space: nowrap; "];
     
     if ([dictionary objectForKey:NSForegroundColorAttributeName])
     {
