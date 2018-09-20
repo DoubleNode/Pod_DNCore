@@ -10,6 +10,29 @@
 
 @implementation NSDate (DNCPrettyDate)
 
+- (NSString*)simpleTime
+{
+    NSString*   dateFormat  = [NSDateFormatter dateFormatFromTemplate:@"h:mma"
+                                                              options:0
+                                                               locale:NSLocale.currentLocale];
+
+    NSDateFormatter*    dateFormatter = NSDateFormatter.alloc.init;
+    [dateFormatter setDateFormat:dateFormat];
+    
+    NSString*   simpleTime = [dateFormatter stringFromDate:self].lowercaseString;
+    
+    simpleTime = [simpleTime stringByReplacingOccurrencesOfString:@":00"
+                                                       withString:@""];
+    return simpleTime;
+}
+
+- (NSString*)simpleTimeRange:(NSDate*)end
+{
+    NSString*   simpleRange = [NSString stringWithFormat:@"%@ - %@", self.simpleTime, end.simpleTime];
+    
+    return simpleRange;
+}
+
 - (NSString*)shortPrettyDate
 {
     NSString*   prettyTimestamp;

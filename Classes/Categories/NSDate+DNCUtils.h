@@ -10,6 +10,9 @@
 
 @interface NSDate (DNCUtils)
 
++ (NSDate*)dncDateWithMilitaryTimeSinceMidnight:(NSUInteger)militaryTime
+                                    forTimeZone:(NSTimeZone*)timeZone;
+
 - (NSDate*)dncToLocalTime;
 - (NSDate*)dncToGlobalTime;
 

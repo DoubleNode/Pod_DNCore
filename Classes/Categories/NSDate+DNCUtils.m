@@ -10,6 +10,21 @@
 
 @implementation NSDate (DNCUtils)
 
++ (NSDate*)dncDateWithMilitaryTimeSinceMidnight:(NSUInteger)militaryTime
+                                    forTimeZone:(NSTimeZone*)timeZone
+{
+    NSString*   dateFormat  = [NSDateFormatter dateFormatFromTemplate:@"hmm"
+                                                              options:0
+                                                               locale:NSLocale.currentLocale];
+    
+    NSDateFormatter*    dateFormatter = NSDateFormatter.alloc.init;
+    [dateFormatter setDateFormat:dateFormat];
+    
+    NSDate* date = [dateFormatter dateFromString:[NSString stringWithFormat:@"%lu", (unsigned long)militaryTime]];
+
+    return date;
+}
+
 - (NSDate*)dncToLocalTime
 {
     NSTimeZone* tz      = [NSTimeZone localTimeZone];

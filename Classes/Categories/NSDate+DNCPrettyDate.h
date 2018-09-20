@@ -10,6 +10,9 @@
 
 @interface NSDate (DNCPrettyDate)
 
+- (NSString*)simpleTime;
+- (NSString*)simpleTimeRange:(NSDate*)end;
+
 /**
  *  Creates and returns a new NSString object initialized with a natural language version of the source date in relation to now.
  *
