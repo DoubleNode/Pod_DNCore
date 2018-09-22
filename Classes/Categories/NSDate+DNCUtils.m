@@ -13,15 +13,13 @@
 + (NSDate*)dncDateWithMilitaryTimeSinceMidnight:(NSUInteger)militaryTime
                                     forTimeZone:(NSTimeZone*)timeZone
 {
-    NSString*   dateFormat  = [NSDateFormatter dateFormatFromTemplate:@"hmm"
-                                                              options:0
-                                                               locale:NSLocale.currentLocale];
-    
     NSDateFormatter*    dateFormatter = NSDateFormatter.alloc.init;
-    [dateFormatter setDateFormat:dateFormat];
+    dateFormatter.dateFormat    = @"HHmm";
+    dateFormatter.timeZone      = timeZone;
     
-    NSDate* date = [dateFormatter dateFromString:[NSString stringWithFormat:@"%lu", (unsigned long)militaryTime]];
-
+    NSString*   dateString  = [NSString stringWithFormat:@"%04lu", (unsigned long)militaryTime];
+    NSDate*     date        = [dateFormatter dateFromString:dateString];
+    
     return date;
 }
 

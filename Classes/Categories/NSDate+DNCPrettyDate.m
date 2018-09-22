@@ -12,12 +12,8 @@
 
 - (NSString*)simpleTime
 {
-    NSString*   dateFormat  = [NSDateFormatter dateFormatFromTemplate:@"h:mma"
-                                                              options:0
-                                                               locale:NSLocale.currentLocale];
-
     NSDateFormatter*    dateFormatter = NSDateFormatter.alloc.init;
-    [dateFormatter setDateFormat:dateFormat];
+    dateFormatter.dateFormat    = @"h:mma";
     
     NSString*   simpleTime = [dateFormatter stringFromDate:self].lowercaseString;
     
@@ -36,7 +32,7 @@
 - (NSString*)shortPrettyDate
 {
     NSString*   prettyTimestamp;
-
+    
     float   delta = [self timeIntervalSinceNow] * -1;
     if (delta < 60)
     {
@@ -79,10 +75,10 @@
     {
         NSDateFormatter*    formatter = [[NSDateFormatter alloc] init];
         [formatter setDateStyle:NSDateFormatterMediumStyle];
-
+        
         prettyTimestamp = [NSString stringWithFormat:NSLocalizedString(@"on %@", nil), [formatter stringFromDate:self]];
     }
-
+    
     return prettyTimestamp;
 }
 
@@ -147,7 +143,7 @@
     NSString*   dyFormatStr     = [NSString stringWithFormat:@"%@%@%@", dayFormatStr, ((dayFormatStr.length && yearFormatStr.length) ? @", " : @""), yearFormatStr];
     NSString*   mdFormatStr     = [NSString stringWithFormat:@"%@%@%@", monthFormatStr, ((monthFormatStr.length && dayFormatStr.length) ? @" " : @""), dayFormatStr];
     NSString*   mdyFormatStr    = [NSString stringWithFormat:@"%@%@%@%@%@", monthFormatStr, ((monthFormatStr.length && (dayFormatStr.length || yearFormatStr.length)) ? @" " : @""), dayFormatStr, ((dayFormatStr.length && yearFormatStr.length) ? @", " : @""), yearFormatStr];
-
+    
     if ([end isEqualToDate:self])
     {
         NSString*   dateFormat      = [NSDateFormatter dateFormatFromTemplate:mdyFormatStr
@@ -268,8 +264,8 @@
 - (NSString*)expirationDate
 {
     NSString*    expirationFormat   = [NSDateFormatter dateFormatFromTemplate:@"MMM yyyy"
-                                                                  options:0
-                                                                   locale:NSLocale.currentLocale];
+                                                                      options:0
+                                                                       locale:NSLocale.currentLocale];
     NSDateFormatter*    expirationFormatter = NSDateFormatter.alloc.init;
     [expirationFormatter setDateFormat:expirationFormat];
     

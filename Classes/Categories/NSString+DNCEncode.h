@@ -1,5 +1,5 @@
 //
-//  NSString+DNCContains.h
+//  NSString+DNCEncode.h
 //  DoubleNode Core
 //
 //  Created by Darren Ehlers on 2016/10/16.
@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSString (DNCContains)
+@interface NSString (DNCEncode)
 
-- (BOOL)contains:(NSString*)subString;
+- (NSString*)urlEncoded;
 
 @end
