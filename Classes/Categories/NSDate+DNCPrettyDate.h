@@ -10,8 +10,16 @@
 
 @interface NSDate (DNCPrettyDate)
 
+- (BOOL)isSameYearAsNow;
+- (BOOL)isSameYearAs:(NSDate*)date;
+- (BOOL)isSameMonthAsNow;
+- (BOOL)isSameMonthAs:(NSDate*)date;
+- (BOOL)isSameDateAsNow;
+- (BOOL)isSameDateAs:(NSDate*)date;
+
 - (NSString*)simpleTime;
 - (NSString*)simpleTimeRange:(NSDate*)end;
+- (NSString*)smartRange:(NSDate*)end;
 
 /**
  *  Creates and returns a new NSString object initialized with a natural language version of the source date in relation to now.
@@ -51,6 +59,15 @@
  *  @return A new NSString object, configured with a full representation of a date (ie: MMM d, yyyy).
  */
 - (NSString*)fullDate;
+
+/**
+ *  Creates and returns a new NSString object initialized with a smart display of a date range, between the source date and the end data parameter (only display year if different).
+ *
+ *  @param end The end date for the date range string.
+ *
+ *  @return A new NSString object, configured with a simple representation of a date range (ie: MMM d-d).
+ */
+- (NSString*)smartRange:(NSDate*)end;
 
 /**
  *  Creates and returns a new NSString object initialized with a smart display of a date range, between the source date and the end data parameter (only display year if different).

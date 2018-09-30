@@ -29,6 +29,18 @@
     return simpleRange;
 }
 
+- (NSString*)smartRange:(NSDate*)end
+{
+    if (![self isSameDateAs:end])
+    {
+        return nil;
+    }
+    
+    NSString*   smartRange  = [NSString stringWithFormat:@"%@ : %@", self.smartDate, [self simpleTimeRange:end]];
+
+    return smartRange;
+}
+
 - (NSString*)shortPrettyDate
 {
     NSString*   prettyTimestamp;
@@ -198,15 +210,66 @@
 
 - (BOOL)isSameYearAsNow
 {
+    return [self isSameYearAs:NSDate.date];
+}
+
+- (BOOL)isSameYearAs:(NSDate*)date
+{
     unsigned        units      = NSCalendarUnitYear;
     NSCalendar*     calendar   = [NSCalendar.alloc initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     
     NSDateComponents*   selfComponents  = [calendar components:units
                                                       fromDate:self];
-    NSDateComponents*   nowComponents   = [calendar components:units
-                                                      fromDate:NSDate.date];
+    NSDateComponents*   dateComponents  = [calendar components:units
+                                                      fromDate:date];
     
-    return (selfComponents.year == nowComponents.year);
+    return (selfComponents.year == dateComponents.year);
+}
+
+- (BOOL)isSameMonthAsNow
+{
+    return [self isSameMonthAs:NSDate.date];
+}
+
+- (BOOL)isSameMonthAs:(NSDate*)date
+{
+    if (![self isSameYearAs:date])
+    {
+        return NO;
+    }
+    
+    unsigned        units      = NSCalendarUnitMonth;
+    NSCalendar*     calendar   = [NSCalendar.alloc initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    
+    NSDateComponents*   selfComponents  = [calendar components:units
+                                                      fromDate:self];
+    NSDateComponents*   dateComponents  = [calendar components:units
+                                                      fromDate:date];
+    
+    return (selfComponents.month == dateComponents.month);
+}
+
+- (BOOL)isSameDateAsNow
+{
+    return [self isSameDateAs:NSDate.date];
+}
+
+- (BOOL)isSameDateAs:(NSDate*)date
+{
+    if (![self isSameMonthAs:date])
+    {
+        return NO;
+    }
+    
+    unsigned        units      = NSCalendarUnitDay;
+    NSCalendar*     calendar   = [NSCalendar.alloc initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    
+    NSDateComponents*   selfComponents  = [calendar components:units
+                                                      fromDate:self];
+    NSDateComponents*   dateComponents  = [calendar components:units
+                                                      fromDate:date];
+    
+    return (selfComponents.day == dateComponents.day);
 }
 
 - (NSString*)smartDateRange:(NSDate*)end
