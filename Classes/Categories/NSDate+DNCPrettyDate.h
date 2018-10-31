@@ -67,15 +67,6 @@
  *
  *  @return A new NSString object, configured with a simple representation of a date range (ie: MMM d-d).
  */
-- (NSString*)smartRange:(NSDate*)end;
-
-/**
- *  Creates and returns a new NSString object initialized with a smart display of a date range, between the source date and the end data parameter (only display year if different).
- *
- *  @param end The end date for the date range string.
- *
- *  @return A new NSString object, configured with a simple representation of a date range (ie: MMM d-d).
- */
 - (NSString*)smartDateRange:(NSDate*)end;
 
 /**

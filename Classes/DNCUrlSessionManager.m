@@ -63,7 +63,7 @@
                     if (dataError.code == NSURLErrorTimedOut)
                     {
                         NSHTTPURLResponse*  httpResponse;
-                        if ([response isKindOfClass:[NSHTTPURLResponse class]])
+                        if ([response isKindOfClass:NSHTTPURLResponse.class])
                         {
                             httpResponse    = (NSHTTPURLResponse*)response;
                         }
@@ -81,12 +81,12 @@
                     NSData*    errorData   = dataError.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
                     if (errorData.length)
                     {
-                        NSString*  errorString = [[NSString alloc] initWithData:errorData
-                                                                       encoding:NSASCIIStringEncoding];
+                        NSString*  errorString = [NSString.alloc initWithData:errorData
+                                                                     encoding:NSASCIIStringEncoding];
                         DNCLog(DNCLL_Debug, DNCLD_General, @"data=%@", errorString);
                     }
                     
-                    if ([response isKindOfClass:[NSHTTPURLResponse class]])
+                    if ([response isKindOfClass:NSHTTPURLResponse.class])
                     {
                         NSHTTPURLResponse*    httpResponse    = (NSHTTPURLResponse*)response;
                         if (httpResponse.statusCode == 500)
@@ -109,22 +109,22 @@
                                                                         error:nil];
                         if (jsonData)
                         {
-                            NSString*  errorMessage    = jsonData[@"error"];
+                            NSString*  errorMessage = [self stringFromString:jsonData[@"error"]];
                             if (!errorMessage.length)
                             {
-                                errorMessage    = jsonData[@"data"][@"error"];
+                                errorMessage    = [self stringFromString:jsonData[@"data"][@"error"]];
                             }
                             if (!errorMessage.length)
                             {
-                                errorMessage    = jsonData[@"data"][@"message"];
+                                errorMessage    = [self stringFromString:jsonData[@"data"][@"message"]];
                             }
                             if (!errorMessage.length)
                             {
-                                errorMessage    = jsonData[@"message"];
+                                errorMessage    = [self stringFromString:jsonData[@"message"]];
                             }
                             if (!errorMessage.length)
                             {
-                                errorMessage    = dataError.userInfo[NSLocalizedDescriptionKey];
+                                errorMessage    = [self stringFromString:dataError.userInfo[NSLocalizedDescriptionKey]];
                             }
                             
                             dataErrorHandler ? dataErrorHandler(errorData, errorMessage) : nil;
@@ -170,7 +170,7 @@
                     if (dataError.code == NSURLErrorTimedOut)
                     {
                         NSHTTPURLResponse*  httpResponse;
-                        if ([response isKindOfClass:[NSHTTPURLResponse class]])
+                        if ([response isKindOfClass:NSHTTPURLResponse.class])
                         {
                             httpResponse    = (NSHTTPURLResponse*)response;
                         }
@@ -185,7 +185,7 @@
                         return;
                     }
                     
-                    if ([response isKindOfClass:[NSHTTPURLResponse class]])
+                    if ([response isKindOfClass:NSHTTPURLResponse.class])
                     {
                         NSHTTPURLResponse*    httpResponse    = (NSHTTPURLResponse*)response;
                         if (httpResponse.statusCode == 500)
@@ -202,8 +202,8 @@
                     }
                     
                     NSData*    errorData   = dataError.userInfo[@"com.alamofire.serialization.response.error.data"];
-                    NSString*  errorString = [[NSString alloc] initWithData:errorData
-                                                                   encoding:NSASCIIStringEncoding];
+                    NSString*  errorString = [NSString.alloc initWithData:errorData
+                                                                 encoding:NSASCIIStringEncoding];
                     DNCLog(DNCLL_Debug, DNCLD_General, @"data=%@", errorString);
                     
                     if (errorData)
@@ -213,7 +213,23 @@
                                                                         error:nil];
                         if (jsonData)
                         {
-                            NSString*  errorMessage    = jsonData[@"error"];
+                            NSString*  errorMessage = [self stringFromString:jsonData[@"error"]];
+                            if (!errorMessage.length)
+                            {
+                                errorMessage    = [self stringFromString:jsonData[@"data"][@"error"]];
+                            }
+                            if (!errorMessage.length)
+                            {
+                                errorMessage    = [self stringFromString:jsonData[@"data"][@"message"]];
+                            }
+                            if (!errorMessage.length)
+                            {
+                                errorMessage    = [self stringFromString:jsonData[@"message"]];
+                            }
+                            if (!errorMessage.length)
+                            {
+                                errorMessage    = [self stringFromString:dataError.userInfo[NSLocalizedDescriptionKey]];
+                            }
                             
                             dataErrorHandler ? dataErrorHandler(errorData, errorMessage) : nil;
                         }
@@ -231,6 +247,35 @@
                 
                 completionHandler ? completionHandler(response, responseObject) : nil;
             }];
+}
+
+#pragma mark - Utility methods
+
+- (NSString*)stringFromString:(NSString*)string
+{
+    if ([string isKindOfClass:NSDictionary.class])
+    {
+        NSData* jsonData    = [NSJSONSerialization dataWithJSONObject:string
+                                                              options:0
+                                                                error:nil];
+        
+        string = [NSString.alloc initWithData:jsonData
+                                     encoding:NSUTF8StringEncoding];
+    }
+    
+    if ([string isKindOfClass:NSString.class])
+    {
+        return string;
+    }
+    
+    if (!string ||
+        ![string isKindOfClass:NSString.class] ||
+        [string isEqualToString:@"<null>"])
+    {
+        return @"";
+    }
+    
+    return [NSString stringWithFormat:@"%@", string];
 }
 
 @end
