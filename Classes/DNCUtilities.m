@@ -715,7 +715,8 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
      }];
 }
 
-+ (NSString*)encodeWithHMAC_SHA1:(NSString*)data withKey:(NSString*)key
++ (NSString*)encodeWithHMAC_SHA1:(NSString*)data
+                         withKey:(NSString*)key
 {
     const char* cKey  = [key cStringUsingEncoding:NSUTF8StringEncoding];    // NSASCIIStringEncoding];
     const char* cData = [data cStringUsingEncoding:NSUTF8StringEncoding];   // NSASCIIStringEncoding];
@@ -730,6 +731,30 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
                           cHMAC[8], cHMAC[9], cHMAC[10], cHMAC[11], cHMAC[12],
                           cHMAC[13], cHMAC[14], cHMAC[15],
                           cHMAC[16], cHMAC[17], cHMAC[18], cHMAC[19]
+                          ];
+    
+    return hexStr;
+}
+
++ (NSString*)encodeWithHMAC_SHA256:(NSString*)data
+                           withKey:(NSString*)key
+{
+    const char* cKey  = [key cStringUsingEncoding:NSUTF8StringEncoding];    // NSASCIIStringEncoding];
+    const char* cData = [data cStringUsingEncoding:NSUTF8StringEncoding];   // NSASCIIStringEncoding];
+    
+    unsigned char cHMAC[CC_SHA256_DIGEST_LENGTH];
+    
+    CCHmac(kCCHmacAlgSHA256, cKey, strlen(cKey), cData, strlen(cData), cHMAC);
+    
+    NSString*   hexStr = [NSString  stringWithFormat:@"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
+                          cHMAC[0], cHMAC[1], cHMAC[2], cHMAC[3], cHMAC[4],
+                          cHMAC[5], cHMAC[6], cHMAC[7],
+                          cHMAC[8], cHMAC[9], cHMAC[10], cHMAC[11], cHMAC[12],
+                          cHMAC[13], cHMAC[14], cHMAC[15],
+                          cHMAC[16], cHMAC[17], cHMAC[18], cHMAC[19],
+                          cHMAC[20], cHMAC[21], cHMAC[22], cHMAC[23], cHMAC[24],
+                          cHMAC[25], cHMAC[26], cHMAC[27],
+                          cHMAC[28], cHMAC[29], cHMAC[30], cHMAC[31]
                           ];
     
     return hexStr;
