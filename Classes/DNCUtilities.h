@@ -181,6 +181,10 @@ typedef NS_ENUM(NSUInteger, BPDeviceType)
                          withKey:(NSString*)key;
 + (NSString*)encodeWithHMAC_SHA256:(NSString*)data
                            withKey:(NSString*)key;
++ (NSData*)encodeDataWithHMAC_SHA1:(NSString*)data
+                           withKey:(NSString*)key;
++ (NSData*)encodeDataWithHMAC_SHA256:(NSString*)data
+                             withKey:(NSString*)key;
 
 + (UIImage*)imageScaledForRetina:(UIImage*)image;
 

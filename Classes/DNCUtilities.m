@@ -760,6 +760,36 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
     return hexStr;
 }
 
++ (NSData*)encodeDataWithHMAC_SHA1:(NSString*)data
+                           withKey:(NSString*)key
+{
+    const char* cKey  = [key cStringUsingEncoding:NSUTF8StringEncoding];    // NSASCIIStringEncoding];
+    const char* cData = [data cStringUsingEncoding:NSUTF8StringEncoding];   // NSASCIIStringEncoding];
+    
+    unsigned char cHMAC[CC_SHA1_DIGEST_LENGTH];
+    
+    CCHmac(kCCHmacAlgSHA1, cKey, strlen(cKey), cData, strlen(cData), cHMAC);
+    
+    NSData* retdata = [NSData dataWithBytes:cHMAC
+                                     length:CC_SHA1_DIGEST_LENGTH];
+    return retdata;
+}
+
++ (NSData*)encodeDataWithHMAC_SHA256:(NSString*)data
+                             withKey:(NSString*)key
+{
+    const char* cKey  = [key cStringUsingEncoding:NSUTF8StringEncoding];    // NSASCIIStringEncoding];
+    const char* cData = [data cStringUsingEncoding:NSUTF8StringEncoding];   // NSASCIIStringEncoding];
+    
+    unsigned char cHMAC[CC_SHA256_DIGEST_LENGTH];
+    
+    CCHmac(kCCHmacAlgSHA256, cKey, strlen(cKey), cData, strlen(cData), cHMAC);
+    
+    NSData* retdata = [NSData dataWithBytes:cHMAC
+                                     length:CC_SHA256_DIGEST_LENGTH];
+    return retdata;
+}
+
 + (UIImage*)imageScaledForRetina:(UIImage*)image
 {
     // [UIImage imageWithCGImage:[newImage CGImage] scale:2.0 orientation:UIImageOrientationUp];
