@@ -118,6 +118,8 @@ extern void LogImageDataF(const char *filename, int lineNumber, const char *func
 + (CGFloat)screenWidth;
 + (BOOL)isTall;
 + (BOOL)isDeviceIPad;
++ (BOOL)isCurrentlyLandscape;
++ (BOOL)isCurrentlyPortrait;
 
 typedef NS_ENUM(NSUInteger, BPDeviceType)
 {

@@ -204,10 +204,46 @@
     return result;
 }
 
++ (BOOL)isCurrentlyLandscape
+{
+    UIInterfaceOrientation  orientation = UIApplication.sharedApplication.statusBarOrientation;
+    
+    BOOL    isLandscape = NO;
+    
+    if (orientation == UIInterfaceOrientationLandscapeLeft)
+    {
+        isLandscape = YES;
+    }
+    if (orientation == UIInterfaceOrientationLandscapeRight)
+    {
+        isLandscape = YES;
+    }
+    
+    return isLandscape;
+}
+
++ (BOOL)isCurrentlyPortrait
+{
+    UIInterfaceOrientation  orientation = UIApplication.sharedApplication.statusBarOrientation;
+    
+    BOOL    isPortrait  = NO;
+    
+    if (orientation == UIDeviceOrientationPortrait)
+    {
+        isPortrait  = YES;
+    }
+    if (orientation == UIDeviceOrientationPortraitUpsideDown)
+    {
+        isPortrait  = YES;
+    }
+    
+    return isPortrait;
+}
+
 + (BPDeviceType)deviceType
 {
     NSUInteger  screenHeight = (NSUInteger)UIScreen.mainScreen.bounds.size.height;
-
+    
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
         return BPDeviceTypeiPad;
@@ -281,7 +317,7 @@
         
         return NO;
     }
-
+    
     return YES;
 }
 

@@ -38,7 +38,7 @@
 }
 
 - (NSURLSessionDataTask*)sendTaskWithRequest:(NSURLRequest*)request
-                          serverErrorHandler:(void(^ _Nullable)(NSHTTPURLResponse* _Nullable httpResponse))serverErrorHandler
+                          serverErrorHandler:(void(^ _Nullable)(NSHTTPURLResponse* _Nullable httpResponse, id _Nullable responseObject))serverErrorHandler
                             dataErrorHandler:(void(^ _Nullable)(NSData* _Nullable errorData, NSString* _Nullable errorMessage))dataErrorHandler
                          unknownErrorHandler:(void(^ _Nullable)(NSError* _Nullable dataError))unknownErrorHandler
                        noResponseBodyHandler:(void(^ _Nullable)(void))noResponseBodyHandler
@@ -73,7 +73,7 @@
                                           run:
                          ^()
                          {
-                             serverErrorHandler ? serverErrorHandler(httpResponse) : nil;
+                             serverErrorHandler ? serverErrorHandler(httpResponse, responseObject) : nil;
                          }];
                         return;
                     }
@@ -96,7 +96,7 @@
                                               run:
                              ^()
                              {
-                                 serverErrorHandler ? serverErrorHandler(httpResponse) : nil;
+                                 serverErrorHandler ? serverErrorHandler(httpResponse, responseObject) : nil;
                              }];
                             return;
                         }
@@ -148,7 +148,7 @@
 
 - (NSURLSessionDataTask*)dataTaskWithRequest:(NSURLRequest*)request
                                     withData:(NSData* _Nonnull)data
-                          serverErrorHandler:(void(^ _Nullable)(NSHTTPURLResponse* _Nullable httpResponse))serverErrorHandler
+                          serverErrorHandler:(void(^ _Nullable)(NSHTTPURLResponse* _Nullable httpResponse, id _Nullable responseObject))serverErrorHandler
                             dataErrorHandler:(void(^ _Nullable)(NSData* _Nullable errorData, NSString* _Nullable errorMessage))dataErrorHandler
                          unknownErrorHandler:(void(^ _Nullable)(NSError* _Nullable dataError))unknownErrorHandler
                        noResponseBodyHandler:(void(^ _Nullable)(void))noResponseBodyHandler
@@ -180,7 +180,7 @@
                                           run:
                          ^()
                          {
-                             serverErrorHandler ? serverErrorHandler(httpResponse) : nil;
+                             serverErrorHandler ? serverErrorHandler(httpResponse, responseObject) : nil;
                          }];
                         return;
                     }
@@ -195,7 +195,7 @@
                                               run:
                              ^()
                              {
-                                 serverErrorHandler ? serverErrorHandler(httpResponse) : nil;
+                                 serverErrorHandler ? serverErrorHandler(httpResponse, responseObject) : nil;
                              }];
                             return;
                         }

@@ -19,7 +19,7 @@
 - (_Nonnull instancetype)initWithSessionConfiguration:(NSURLSessionConfiguration* _Nullable)configuration;
 
 - (NSURLSessionDataTask* _Nonnull)sendTaskWithRequest:(NSURLRequest* _Nonnull)request
-                                   serverErrorHandler:(void(^ _Nullable)(NSHTTPURLResponse* _Nullable httpResponse))serverErrorHandler
+                                   serverErrorHandler:(void(^ _Nullable)(NSHTTPURLResponse* _Nullable httpResponse, id _Nullable responseObject))serverErrorHandler
                                      dataErrorHandler:(void(^ _Nullable)(NSData* _Nullable errorData, NSString* _Nullable errorMessage))dataErrorHandler
                                   unknownErrorHandler:(void(^ _Nullable)(NSError* _Nullable dataError))unknownErrorHandler
                                 noResponseBodyHandler:(void(^ _Nullable)(void))noResponseBodyHandler
@@ -27,7 +27,7 @@
 
 - (NSURLSessionDataTask* _Nonnull)dataTaskWithRequest:(NSURLRequest* _Nonnull)request
                                              withData:(NSData* _Nonnull)data
-                                   serverErrorHandler:(void(^ _Nullable)(NSHTTPURLResponse* _Nullable httpResponse))serverErrorHandler
+                                   serverErrorHandler:(void(^ _Nullable)(NSHTTPURLResponse* _Nullable httpResponse, id _Nullable responseObject))serverErrorHandler
                                      dataErrorHandler:(void(^ _Nullable)(NSData* _Nullable errorData, NSString* _Nullable errorMessage))dataErrorHandler
                                   unknownErrorHandler:(void(^ _Nullable)(NSError* _Nullable dataError))unknownErrorHandler
                                 noResponseBodyHandler:(void(^ _Nullable)(void))noResponseBodyHandler
