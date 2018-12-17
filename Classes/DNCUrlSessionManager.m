@@ -112,6 +112,19 @@
                             NSString*  errorMessage = [self stringFromString:jsonData[@"error"]];
                             if (!errorMessage.length)
                             {
+                                id  jsonDataErrors  = jsonData[@"errors"];
+                                if ([jsonDataErrors isKindOfClass:NSArray.class] &&
+                                    [jsonDataErrors count] > 0)
+                                {
+                                    id  jsonDataErrorsError = jsonDataErrors[0];
+                                    if ([jsonDataErrorsError isKindOfClass:NSDictionary.class])
+                                    {
+                                        errorMessage    = [self stringFromString:jsonDataErrorsError[@"message"]];
+                                    }
+                                }
+                            }
+                            if (!errorMessage.length)
+                            {
                                 errorMessage    = [self stringFromString:jsonData[@"data"][@"error"]];
                             }
                             if (!errorMessage.length)
@@ -214,6 +227,19 @@
                         if (jsonData)
                         {
                             NSString*  errorMessage = [self stringFromString:jsonData[@"error"]];
+                            if (!errorMessage.length)
+                            {
+                                id  jsonDataErrors  = jsonData[@"errors"];
+                                if ([jsonDataErrors isKindOfClass:NSArray.class] &&
+                                    [jsonDataErrors count] > 0)
+                                {
+                                    id  jsonDataErrorsError = jsonDataErrors[0];
+                                    if ([jsonDataErrorsError isKindOfClass:NSDictionary.class])
+                                    {
+                                        errorMessage    = [self stringFromString:jsonDataErrorsError[@"message"]];
+                                    }
+                                }
+                            }
                             if (!errorMessage.length)
                             {
                                 errorMessage    = [self stringFromString:jsonData[@"data"][@"error"]];
