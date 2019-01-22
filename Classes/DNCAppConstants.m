@@ -295,6 +295,10 @@
                 tokenValue  = [self constantValue:token
                                            filter:filter];
             }
+            if (!tokenValue)
+            {
+                tokenValue  = tokenString;
+            }
             
             stringValue = [stringValue stringByReplacingOccurrencesOfString:tokenString
                                                                  withString:tokenValue];
