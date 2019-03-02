@@ -417,7 +417,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-DNCoreTests/Pods-DNCoreTests-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-DNCoreTests/Pods-DNCoreTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Gizou/Gizou.framework",
 				"${BUILT_PRODUCTS_DIR}/OCMock/OCMock.framework",
 			);
@@ -428,7 +428,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DNCoreTests/Pods-DNCoreTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DNCoreTests/Pods-DNCoreTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C15157C203E71C525793D736 /* [CP] Embed Pods Frameworks */ = {
@@ -437,7 +437,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-DNCore/Pods-DNCore-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-DNCore/Pods-DNCore-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
 				"${BUILT_PRODUCTS_DIR}/ColorUtils/ColorUtils.framework",
 				"${BUILT_PRODUCTS_DIR}/NSLogger/NSLogger.framework",
@@ -452,7 +452,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DNCore/Pods-DNCore-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DNCore/Pods-DNCore-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D790A661C235AF08BAA221CA /* [CP] Check Pods Manifest.lock */ = {

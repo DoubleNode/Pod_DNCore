@@ -155,8 +155,8 @@
     return [self constantValue:key filter:nil];
 }
 
-+ (NSDictionary*)dictionaryLookupUI:(NSString*)key
-                          withValue:(NSDictionary*)value
++ (NSDictionary*)dictionaryOptionsLookupUI:(NSString*)key
+                                 withValue:(NSDictionary*)value
 {
     DNCAssertIsNotMainThread;
     
@@ -167,9 +167,9 @@
     [DNCUIThread run:
      ^()
      {
-         NSString*   title   = value[@"title"]   ?: [NSString stringWithFormat:@"%@_TITLE_NOT_SPECIFIED", key];
-         NSString*   message = value[@"message"] ?: [NSString stringWithFormat:@"%@_MESSAGE_NOT_SPECIFIED", key];
-         NSArray*    options = value[@"options"];
+         NSString*   title      = value[@"title"]   ?: [NSString stringWithFormat:@"%@_TITLE_NOT_SPECIFIED", key];
+         NSString*   message    = value[@"message"] ?: [NSString stringWithFormat:@"%@_MESSAGE_NOT_SPECIFIED", key];
+         NSArray*    options    = value[@"options"];
          
          UIAlertController* alertController = [UIAlertController alertControllerWithTitle:title
                                                                                   message:message
@@ -189,7 +189,6 @@
                                           [semaphore done];
                                       }];
              [alertController addAction:action];
-             
          }
          
          [DNCUtilities.appDelegate.rootViewController presentViewController:alertController
@@ -205,6 +204,113 @@
     return selectedOption;
 }
 
++ (NSDictionary*)dictionaryTogglesLookupUI:(NSString*)key
+                                 withValue:(NSDictionary*)value
+{
+    DNCAssertIsNotMainThread;
+    
+    __block NSMutableDictionary*    selectedToggles = NSMutableDictionary.dictionary;
+    
+    DNCSemaphoreGate*   semaphore = DNCSemaphoreGate.semaphore;
+    
+    [DNCUIThread run:
+     ^()
+     {
+         UIViewController*  targetController    = DNCUtilities.appDelegate.rootViewController;
+         
+         NSString*   title      = value[@"title"]   ?: [NSString stringWithFormat:@"%@_TITLE_NOT_SPECIFIED", key];
+         NSString*   message    = value[@"message"] ?: [NSString stringWithFormat:@"%@_MESSAGE_NOT_SPECIFIED", key];
+         NSArray*    toggles    = value[@"toggles"];
+         
+         UIAlertController* alertController = [UIAlertController alertControllerWithTitle:title
+                                                                                  message:message
+                                                                           preferredStyle:UIAlertControllerStyleAlert];
+         
+         for (NSDictionary* toggle in toggles)
+         {
+             NSString*   toggleKey      = toggle[@"key"]   ?: [NSString stringWithFormat:@"%@_TOGGLE_KEY_NOT_SPECIFIED", key];
+             NSString*   toggleLabel    = toggle[@"label"] ?: [NSString stringWithFormat:@"%@_TOGGLE_LABEL_NOT_SPECIFIED", key];
+             
+             BOOL  toggleState = [toggle[@"default"] boolValue];
+             
+             NSMutableDictionary*  stateToggle = toggle.mutableCopy;
+             stateToggle[@"state"]      = (toggleState ? @"1" : @"0");
+             selectedToggles[toggleKey] = stateToggle;
+             
+             [alertController addTextFieldWithConfigurationHandler:
+              ^(UITextField* _Nonnull textField)
+              {
+                  // Create button
+                  UIButton*  checkbox = [UIButton buttonWithType:UIButtonTypeCustom];
+                  [checkbox setFrame:CGRectMake(2 , 2, 18, 18)];  // Not sure about size
+                  [checkbox setTag:1];
+                  [checkbox addTarget:targetController
+                               action:@selector(checkBoxPressed:)
+                     forControlEvents:UIControlEventTouchUpInside];
+                  
+                  checkbox.selected = toggleState;
+                  
+                  // Setup image for button
+                  [checkbox.imageView setContentMode:UIViewContentModeScaleAspectFit];
+                  [checkbox setImage:[UIImage imageNamed:@"iconCheckmarkOff"]
+                            forState:UIControlStateNormal];
+                  [checkbox setImage:[UIImage imageNamed:@"iconCheckmarkOn"]
+                            forState:UIControlStateSelected];
+                  [checkbox setImage:[UIImage imageNamed:@"iconCheckmarkOn"]
+                            forState:UIControlStateHighlighted];
+                  [checkbox setAdjustsImageWhenHighlighted:TRUE];
+                  
+                  stateToggle[@"button"]    = checkbox;
+                  
+                  // Setup the right view in the text field
+                  [textField setClearButtonMode:UITextFieldViewModeAlways];
+                  [textField setRightViewMode:UITextFieldViewModeAlways];
+                  [textField setRightView:checkbox];
+                  
+                  // Setup Tag so the textfield can be identified
+                  [textField setTag:-1];
+                  [textField setDelegate:(id<UITextFieldDelegate>)targetController];
+                  
+                  // Setup textfield
+                  [textField setText:toggleLabel];
+              }];
+         }
+         
+         UIAlertAction* action = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", @"OK")
+                                                          style:UIAlertActionStyleDefault
+                                                        handler:
+                                  ^(UIAlertAction* _Nonnull action)
+                                  {
+                                      [semaphore done];
+                                  }];
+         [alertController addAction:action];
+         
+         [targetController presentViewController:alertController
+                                        animated:YES
+                                      completion:nil];
+     }];
+    
+    [semaphore wait];
+    
+    [DNCUIThread run:
+     ^()
+     {
+         [selectedToggles enumerateKeysAndObjectsUsingBlock:
+          ^(NSString* _Nonnull key, NSMutableDictionary* _Nonnull obj, BOOL* _Nonnull stop)
+          {
+              UIButton*   checkbox    = obj[@"button"];
+              BOOL        toggleState = checkbox.selected;
+              
+              obj[@"state"] = (toggleState ? @"1" : @"0");
+          }];
+     }];
+    
+    [self plistConfigReplace:key
+                   withValue:selectedToggles];
+    
+    return selectedToggles;
+}
+
 + (NSDictionary*)dictionarySelection:(NSString*)key
                            withValue:(NSDictionary*)value
 {
@@ -212,11 +318,20 @@
     
     if (value[@"options"])
     {
-        selectedOption = [self dictionaryLookupUI:key
-                                        withValue:value];
+        selectedOption = [self dictionaryOptionsLookupUI:key
+                                               withValue:value];
+        
+        return selectedOption[@"key"] ?: (selectedOption[@"label"] ?: [NSString stringWithFormat:@"%@_OPTION_KEY_NOT_SPECIFIED", key]);
+    }
+    else if (value[@"toggles"])
+    {
+        selectedOption = [self dictionaryTogglesLookupUI:key
+                                               withValue:value];
+        
+        return selectedOption[@"key"] ?: (selectedOption[@"label"] ?: [NSString stringWithFormat:@"%@_TOGGLE_KEY_NOT_SPECIFIED", key]);
     }
     
-    return selectedOption[@"key"] ?: (selectedOption[@"label"] ?: [NSString stringWithFormat:@"%@_OPTION_KEY_NOT_SPECIFIED", key]);
+    return (value[@"key"] ?: value);
 }
 
 + (id)dictionaryLookupConstant:(NSString*)key
@@ -226,8 +341,24 @@
     
     if (selectedOption[@"options"])
     {
-        selectedOption = [self dictionaryLookupUI:key
-                                        withValue:selectedOption];
+        selectedOption = [self dictionaryOptionsLookupUI:key
+                                               withValue:selectedOption];
+        return selectedOption[subkey] ?: nil;
+    }
+    else if (selectedOption[@"toggles"])
+    {
+        selectedOption = [self dictionaryTogglesLookupUI:key
+                                               withValue:selectedOption];
+        return selectedOption[subkey][@"state"];
+    }
+    else
+    {
+        NSDictionary*   subKeyDictionary = selectedOption[subkey];
+        if (subKeyDictionary &&
+            [subKeyDictionary isKindOfClass:NSDictionary.class])
+        {
+            return subKeyDictionary[@"state"] ?: nil;
+        }
     }
     
     return selectedOption[subkey] ?: nil;
