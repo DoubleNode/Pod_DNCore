@@ -13,11 +13,11 @@
 /**
  *  System Versioning Preprocessor Macros
  */
-#define DNC_SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
-#define DNC_SYSTEM_VERSION_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)
-#define DNC_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
-#define DNC_SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
-#define DNC_SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
+#define DNC_SYSTEM_VERSION_EQUAL_TO(v)                  ([UIDevice.currentDevice.systemVersion compare:v options:NSNumericSearch] == NSOrderedSame)
+#define DNC_SYSTEM_VERSION_GREATER_THAN(v)              ([UIDevice.currentDevice.systemVersion compare:v options:NSNumericSearch] == NSOrderedDescending)
+#define DNC_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([UIDevice.currentDevice.systemVersion compare:v options:NSNumericSearch] != NSOrderedAscending)
+#define DNC_SYSTEM_VERSION_LESS_THAN(v)                 ([UIDevice.currentDevice.systemVersion compare:v options:NSNumericSearch] == NSOrderedAscending)
+#define DNC_SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([UIDevice.currentDevice.systemVersion compare:v options:NSNumericSearch] != NSOrderedDescending)
 
 /**
  *  DLog Logging Items and Macros
