@@ -1677,7 +1677,8 @@ levelString(int level)
 
 void DNCLogMessageF(const char *filename, int lineNumber, const char *functionName, NSString *domain, int level, NSString *format, ...)
 {
-    if ([[DNCUtilities sharedInstance] isLogEnabledDomain:domain andLevel:level] != YES)
+    if ([DNCUtilities.sharedInstance isLogEnabledDomain:domain
+                                               andLevel:level] != YES)
     {
         return;
     }
@@ -1689,11 +1690,17 @@ void DNCLogMessageF(const char *filename, int lineNumber, const char *functionNa
     va_list args;
     va_start(args, format);
     
-    NSString*   formattedStr = [[NSString alloc] initWithFormat:format arguments:args];
+    NSString*   formattedStr = [NSString.alloc initWithFormat:format
+                                                    arguments:args];
     
     va_end(args);
     
     NSLog(@"%@ %@[%@] %@{%@} %@[%@:%d] %@%@%@", levelString(level), otherColor, ([NSThread isMainThread] ? @"MT" : @"BT"), domainColor, domain, otherColor, [NSString stringWithUTF8String:filename].lastPathComponent, lineNumber, mainColor, formattedStr, DNCUtilities.xcodeColorsReset);
+    
+    if (DNCUtilities.sharedInstance.logCallbackBlock)
+    {
+        DNCUtilities.sharedInstance.logCallbackBlock(@"%@ %@[%@] %@{%@} %@[%@:%d] %@%@%@", levelString(level), otherColor, ([NSThread isMainThread] ? @"MT" : @"BT"), domainColor, domain, otherColor, [NSString stringWithUTF8String:filename].lastPathComponent, lineNumber, mainColor, formattedStr, DNCUtilities.xcodeColorsReset);
+    }
 }
 
 @interface DNCSemaphore()

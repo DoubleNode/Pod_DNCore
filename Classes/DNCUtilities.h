@@ -96,7 +96,11 @@ extern void LogImageDataF(const char *filename, int lineNumber, const char *func
 
 @class DNCDate;
 
+typedef void(^DNCLogCallbackBlock)(NSString* format, ...);
+
 @interface DNCUtilities : NSObject
+
+@property (assign, nonatomic) DNCLogCallbackBlock   logCallbackBlock;
 
 @property (copy, nonatomic) NSString*   userDefaultsSuiteName;
 
