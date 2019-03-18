@@ -9,9 +9,10 @@
 
 @import ColorUtils;
 
-#import "DNCUtilities.h"
-
 #import "DNCAppConstants.h"
+
+#import "DNCUtilities.h"
+#import "DNCRootViewController.h"
 
 @implementation DNCAppConstants
 
@@ -216,7 +217,10 @@
     [DNCUIThread run:
      ^()
      {
-         UIViewController*  targetController    = DNCUtilities.appDelegate.rootViewController;
+         id rootViewController  = DNCUtilities.appDelegate.rootViewController;
+         DNCAssert([rootViewController isKindOfClass:DNCRootViewController.class], @"RootViewController is not a DNCRootViewController class");
+
+         DNCRootViewController* targetController    = (DNCRootViewController*)rootViewController;
          
          NSString*   title      = value[@"title"]   ?: [NSString stringWithFormat:@"%@_TITLE_NOT_SPECIFIED", key];
          NSString*   message    = value[@"message"] ?: [NSString stringWithFormat:@"%@_MESSAGE_NOT_SPECIFIED", key];

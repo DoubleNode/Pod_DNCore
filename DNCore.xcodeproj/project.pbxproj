@@ -13,6 +13,7 @@
 		6A19E0D81DE8F62D00946455 /* NSTimer+DNCBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A19E0D41DE8F62D00946455 /* NSTimer+DNCBlocks.m */; };
 		6A19E0D91DE8F62D00946455 /* UIFont+DNCCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A19E0D61DE8F62D00946455 /* UIFont+DNCCustom.m */; };
 		6A225B09214848700026260A /* NSAttributedString+StringFromHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A225B08214848700026260A /* NSAttributedString+StringFromHTML.m */; };
+		6A33BAA22240393600BAB399 /* DNCRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A33BAA12240393600BAB399 /* DNCRootViewController.m */; };
 		6A3F02BA1DBD8228008849B5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A3F02B91DBD8228008849B5 /* main.m */; };
 		6A3F02BD1DBD8228008849B5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A3F02BC1DBD8228008849B5 /* AppDelegate.m */; };
 		6A3F02C01DBD8228008849B5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A3F02BF1DBD8228008849B5 /* ViewController.m */; };
@@ -65,6 +66,8 @@
 		6A19E0D61DE8F62D00946455 /* UIFont+DNCCustom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIFont+DNCCustom.m"; path = "Classes/Categories/UIFont+DNCCustom.m"; sourceTree = "<group>"; };
 		6A225B07214848700026260A /* NSAttributedString+StringFromHTML.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSAttributedString+StringFromHTML.h"; path = "Classes/Categories/NSAttributedString+StringFromHTML.h"; sourceTree = "<group>"; };
 		6A225B08214848700026260A /* NSAttributedString+StringFromHTML.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSAttributedString+StringFromHTML.m"; path = "Classes/Categories/NSAttributedString+StringFromHTML.m"; sourceTree = "<group>"; };
+		6A33BAA02240393600BAB399 /* DNCRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DNCRootViewController.h; path = Classes/DNCRootViewController.h; sourceTree = "<group>"; };
+		6A33BAA12240393600BAB399 /* DNCRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DNCRootViewController.m; path = Classes/DNCRootViewController.m; sourceTree = "<group>"; };
 		6A3F02B51DBD8228008849B5 /* DNCore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DNCore.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A3F02B91DBD8228008849B5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6A3F02BB1DBD8228008849B5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -229,6 +232,8 @@
 				6AACAC0D1DFA59D200E510CF /* DNCNavigationController.m */,
 				6AA6897B213782B70094B6DD /* DNCQueue.h */,
 				6AA6897A213782B70094B6DD /* DNCQueue.m */,
+				6A33BAA02240393600BAB399 /* DNCRootViewController.h */,
+				6A33BAA12240393600BAB399 /* DNCRootViewController.m */,
 				6AA68979213782B70094B6DD /* DNCStack.h */,
 				6AA6897C213782B70094B6DD /* DNCStack.m */,
 				6A3F02E11DBD8295008849B5 /* DNCUrlSessionManager.h */,
@@ -513,6 +518,7 @@
 				6AD380771DD024E100FFF836 /* DNCGravatar.m in Sources */,
 				6A3F02C01DBD8228008849B5 /* ViewController.m in Sources */,
 				6AACAC0E1DFA59D200E510CF /* DNCNavigationController.m in Sources */,
+				6A33BAA22240393600BAB399 /* DNCRootViewController.m in Sources */,
 				6A3F02BD1DBD8228008849B5 /* AppDelegate.m in Sources */,
 				6A3F02EA1DBD8684008849B5 /* DNCDate.m in Sources */,
 				6AB2ED9C1DD813BD004439E6 /* DNCGradientView.m in Sources */,
@@ -618,6 +624,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -670,6 +677,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -690,6 +698,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -707,6 +716,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.DoubleNode.DNCore;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -722,7 +732,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.DoubleNode.DNCoreTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DNCore.app/DNCore";
 			};
 			name = Debug;
@@ -738,7 +747,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.DoubleNode.DNCoreTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DNCore.app/DNCore";
 			};
 			name = Release;
