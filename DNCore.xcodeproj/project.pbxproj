@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		0A9C0E0E5CC54702755CC46D /* Pods_DNCoreTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12F441E349C3EC77238D3E76 /* Pods_DNCoreTests.framework */; };
-		6A18446A1DEA747000D3D254 /* YZNameFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1844691DEA747000D3D254 /* YZNameFormatter.swift */; };
 		6A19E0D71DE8F62D00946455 /* NSString+DNCEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A19E0D21DE8F62D00946455 /* NSString+DNCEncode.m */; };
 		6A19E0D81DE8F62D00946455 /* NSTimer+DNCBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A19E0D41DE8F62D00946455 /* NSTimer+DNCBlocks.m */; };
 		6A19E0D91DE8F62D00946455 /* UIFont+DNCCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A19E0D61DE8F62D00946455 /* UIFont+DNCCustom.m */; };
 		6A225B09214848700026260A /* NSAttributedString+StringFromHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A225B08214848700026260A /* NSAttributedString+StringFromHTML.m */; };
 		6A33BAA22240393600BAB399 /* DNCRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A33BAA12240393600BAB399 /* DNCRootViewController.m */; };
+		6A33BAA5224040A800BAB399 /* YZNameFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A33BAA4224040A800BAB399 /* YZNameFormatter.swift */; };
 		6A3F02BA1DBD8228008849B5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A3F02B91DBD8228008849B5 /* main.m */; };
 		6A3F02BD1DBD8228008849B5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A3F02BC1DBD8228008849B5 /* AppDelegate.m */; };
 		6A3F02C01DBD8228008849B5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A3F02BF1DBD8228008849B5 /* ViewController.m */; };
@@ -57,7 +57,6 @@
 		2E97210F25175F423897C931 /* Pods-DNCore.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DNCore.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DNCore/Pods-DNCore.debug.xcconfig"; sourceTree = "<group>"; };
 		2F6103F65BF8AF95392477FD /* Pods-DNCoreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DNCoreTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DNCoreTests/Pods-DNCoreTests.debug.xcconfig"; sourceTree = "<group>"; };
 		3FE59EFB80FBCEE167540D7D /* Pods-DNCore.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DNCore.release.xcconfig"; path = "Pods/Target Support Files/Pods-DNCore/Pods-DNCore.release.xcconfig"; sourceTree = "<group>"; };
-		6A1844691DEA747000D3D254 /* YZNameFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = YZNameFormatter.swift; path = Classes/Misc/YZNameFormatter.swift; sourceTree = "<group>"; };
 		6A19E0D11DE8F62D00946455 /* NSString+DNCEncode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+DNCEncode.h"; path = "Classes/Categories/NSString+DNCEncode.h"; sourceTree = "<group>"; };
 		6A19E0D21DE8F62D00946455 /* NSString+DNCEncode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+DNCEncode.m"; path = "Classes/Categories/NSString+DNCEncode.m"; sourceTree = "<group>"; };
 		6A19E0D31DE8F62D00946455 /* NSTimer+DNCBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSTimer+DNCBlocks.h"; path = "Classes/Categories/NSTimer+DNCBlocks.h"; sourceTree = "<group>"; };
@@ -68,6 +67,8 @@
 		6A225B08214848700026260A /* NSAttributedString+StringFromHTML.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSAttributedString+StringFromHTML.m"; path = "Classes/Categories/NSAttributedString+StringFromHTML.m"; sourceTree = "<group>"; };
 		6A33BAA02240393600BAB399 /* DNCRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DNCRootViewController.h; path = Classes/DNCRootViewController.h; sourceTree = "<group>"; };
 		6A33BAA12240393600BAB399 /* DNCRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DNCRootViewController.m; path = Classes/DNCRootViewController.m; sourceTree = "<group>"; };
+		6A33BAA3224040A700BAB399 /* DNCore-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DNCore-Bridging-Header.h"; sourceTree = "<group>"; };
+		6A33BAA4224040A800BAB399 /* YZNameFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = YZNameFormatter.swift; path = Classes/Misc/YZNameFormatter.swift; sourceTree = "<group>"; };
 		6A3F02B51DBD8228008849B5 /* DNCore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DNCore.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A3F02B91DBD8228008849B5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6A3F02BB1DBD8228008849B5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -144,7 +145,8 @@
 		6A1844651DEA736700D3D254 /* Misc */ = {
 			isa = PBXGroup;
 			children = (
-				6A1844691DEA747000D3D254 /* YZNameFormatter.swift */,
+				6A33BAA4224040A800BAB399 /* YZNameFormatter.swift */,
+				6A33BAA3224040A700BAB399 /* DNCore-Bridging-Header.h */,
 			);
 			name = Misc;
 			sourceTree = "<group>";
@@ -233,10 +235,10 @@
 				6AA6897B213782B70094B6DD /* DNCQueue.h */,
 				6AA6897A213782B70094B6DD /* DNCQueue.m */,
 				6A33BAA02240393600BAB399 /* DNCRootViewController.h */,
+				6A3F02E11DBD8295008849B5 /* DNCUrlSessionManager.h */,
 				6A33BAA12240393600BAB399 /* DNCRootViewController.m */,
 				6AA68979213782B70094B6DD /* DNCStack.h */,
 				6AA6897C213782B70094B6DD /* DNCStack.m */,
-				6A3F02E11DBD8295008849B5 /* DNCUrlSessionManager.h */,
 				6A3F02E21DBD8295008849B5 /* DNCUrlSessionManager.m */,
 				6A3F02E31DBD8295008849B5 /* DNCUtilities.h */,
 				6A3F02E41DBD8295008849B5 /* DNCUtilities.m */,
@@ -358,13 +360,13 @@
 		6A3F02AD1DBD8228008849B5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = DoubleNode.com;
 				TargetAttributes = {
 					6A3F02B41DBD8228008849B5 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = T864D3RXRZ;
-						LastSwiftMigration = 1020;
+						LastSwiftMigration = "";
 						ProvisioningStyle = Automatic;
 					};
 					6A3F02CD1DBD8228008849B5 = {
@@ -378,10 +380,9 @@
 			};
 			buildConfigurationList = 6A3F02B01DBD8228008849B5 /* Build configuration list for PBXProject "DNCore" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
@@ -504,6 +505,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A33BAA5224040A800BAB399 /* YZNameFormatter.swift in Sources */,
 				6A3F02E51DBD8295008849B5 /* DNCUrlSessionManager.m in Sources */,
 				6A3F02F01DBD880F008849B5 /* NSDate+DNCUtils.m in Sources */,
 				6AE0CF871DF6382F009727C1 /* GGMutableDictionary.m in Sources */,
@@ -522,7 +524,6 @@
 				6A3F02BD1DBD8228008849B5 /* AppDelegate.m in Sources */,
 				6A3F02EA1DBD8684008849B5 /* DNCDate.m in Sources */,
 				6AB2ED9C1DD813BD004439E6 /* DNCGradientView.m in Sources */,
-				6A18446A1DEA747000D3D254 /* YZNameFormatter.swift in Sources */,
 				6ACFB6531DC9A85900CC388F /* NSDate+DNCPrettyDate.m in Sources */,
 				6A19E0D71DE8F62D00946455 /* NSString+DNCEncode.m in Sources */,
 				6A225B09214848700026260A /* NSAttributedString+StringFromHTML.m in Sources */,
@@ -575,6 +576,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -634,6 +636,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -696,9 +699,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.DoubleNode.DNCore;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "DNCore-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -715,8 +717,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.DoubleNode.DNCore;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_OBJC_BRIDGING_HEADER = "DNCore-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -725,7 +726,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2F6103F65BF8AF95392477FD /* Pods-DNCoreTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = T864D3RXRZ;
 				INFOPLIST_FILE = DNCoreTests/Info.plist;
@@ -740,7 +741,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1455BC317CC197CE94B64FEF /* Pods-DNCoreTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = T864D3RXRZ;
 				INFOPLIST_FILE = DNCoreTests/Info.plist;

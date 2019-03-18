@@ -6,7 +6,7 @@ use_frameworks!
 
 inhibit_all_warnings!
 
-platform :ios, '10.0'
+platform :ios, '11.0'
 
 target 'DNCore' do
   # Pods for DNCore

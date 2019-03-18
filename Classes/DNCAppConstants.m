@@ -218,7 +218,7 @@
      ^()
      {
          id rootViewController  = DNCUtilities.appDelegate.rootViewController;
-         DNCAssert([rootViewController isKindOfClass:DNCRootViewController.class], @"RootViewController is not a DNCRootViewController class");
+         DNCAssert([rootViewController isKindOfClass:DNCRootViewController.class], DNCLD_API, @"RootViewController is not a DNCRootViewController class");
 
          DNCRootViewController* targetController    = (DNCRootViewController*)rootViewController;
          
