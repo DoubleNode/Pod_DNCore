@@ -9,6 +9,17 @@
 @import Foundation;
 @import UIKit;
 
+typedef enum : NSInteger
+{
+    DNCAppConstantsStatusUnknown = 0,
+    DNCAppConstantsStatusGreen,
+    DNCAppConstantsStatusYellow,
+    DNCAppConstantsStatusRed,
+    
+    DNCAppConstantsStatus_Count
+}
+DNCAppConstantsStatus;
+
 /**
  *  Provides access to App-specific constants, specified in a plist file specified by the 'Constants_plist' setting in the App's main *-Info.plst file.
  */
