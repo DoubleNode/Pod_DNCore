@@ -20,10 +20,25 @@ typedef enum : NSInteger
 }
 DNCAppConstantsStatus;
 
+typedef enum : NSInteger
+{
+    DNCAppConstantsBuildTypeUnknown = 0,
+    DNCAppConstantsBuildTypeDEV,
+    DNCAppConstantsBuildTypeQA,
+    DNCAppConstantsBuildTypeALPHA,
+    DNCAppConstantsBuildTypeBETA,
+    DNCAppConstantsBuildTypePROD,
+    
+    DNCAppConstantsBuildType_Count
+}
+DNCAppConstantsBuildType;
+
 /**
  *  Provides access to App-specific constants, specified in a plist file specified by the 'Constants_plist' setting in the App's main *-Info.plst file.
  */
 @interface DNCAppConstants : NSObject
+
++ (DNCAppConstantsBuildType)appBuildType;
 
 #pragma mark - Constant plist to object functions
 

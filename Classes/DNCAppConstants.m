@@ -16,6 +16,11 @@
 
 @implementation DNCAppConstants
 
++ (DNCAppConstantsBuildType)appBuildType
+{
+    return DNCAppConstantsBuildTypeUnknown;
+}
+
 + (NSURL*)urlConstant:(NSString*)key
 {
     return [self urlConstant:key filter:nil];
