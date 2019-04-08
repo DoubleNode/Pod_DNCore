@@ -3,7 +3,7 @@
 //  DNCore
 //
 //  Created by Darren Ehlers on 10/23/16.
-//  Copyright © 2016 DoubleNode.com. All rights reserved.
+//  Copyright © 2019 - 2016 DoubleNode.com. All rights reserved.
 //
 
 #import "AppDelegate.h"

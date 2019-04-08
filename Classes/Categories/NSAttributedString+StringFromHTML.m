@@ -3,7 +3,7 @@
 //  DoubleNode Core
 //
 //  Created by Darren Ehlers on 2016/10/16.
-//  Copyright © 2016 Darren Ehlers and DoubleNode, LLC. All rights reserved.
+//  Copyright © 2019 - 2016 Darren Ehlers and DoubleNode, LLC. All rights reserved.
 //
 //  Derived from work originally created by
 //  Created by Orta on 06/08/2013.
