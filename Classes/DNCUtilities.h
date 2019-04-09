@@ -183,14 +183,24 @@ typedef NS_ENUM(NSUInteger, BPDeviceType)
 + (bool)canDevicePlaceAPhoneCall;
 
 + (void)playSound:(NSString*)name;
-+ (NSString*)encodeWithHMAC_SHA1:(NSString*)data
-                         withKey:(NSString*)key;
-+ (NSString*)encodeWithHMAC_SHA256:(NSString*)data
-                           withKey:(NSString*)key;
-+ (NSData*)encodeDataWithHMAC_SHA1:(NSString*)data
-                           withKey:(NSString*)key;
-+ (NSData*)encodeDataWithHMAC_SHA256:(NSString*)data
-                             withKey:(NSString*)key;
+
++ (NSString*)encodedHMACSHA1StringForString:(NSString*)string
+                                    withKey:(NSString*)key;
++ (NSString*)encodedHMACSHA1StringForData:(NSData*)data
+                                  withKey:(NSString*)key;
++ (NSData*)encodedHMACSHA1DataForString:(NSString*)string
+                                withKey:(NSString*)key;
++ (NSData*)encodedHMACSHA1DataForData:(NSData*)data
+                              withKey:(NSString*)key;
+
++ (NSString*)encodedHMACSHA256StringForString:(NSString*)string
+                                      withKey:(NSString*)key;
++ (NSString*)encodedHMACSHA256StringForData:(NSData*)data
+                                    withKey:(NSString*)key;
++ (NSData*)encodedHMACSHA256DataForString:(NSString*)string
+                                  withKey:(NSString*)key;
++ (NSData*)encodedHMACSHA256DataForData:(NSData*)data
+                                withKey:(NSString*)key;
 
 + (UIImage*)imageScaledForRetina:(UIImage*)image;
 
