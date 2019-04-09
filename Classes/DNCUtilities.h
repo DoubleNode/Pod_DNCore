@@ -185,22 +185,22 @@ typedef NS_ENUM(NSUInteger, BPDeviceType)
 + (void)playSound:(NSString*)name;
 
 + (NSString*)encodedHMACSHA1StringForString:(NSString*)string
-                                    withKey:(NSString*)key;
+                                    withKey:(NSData*)key;
 + (NSString*)encodedHMACSHA1StringForData:(NSData*)data
-                                  withKey:(NSString*)key;
+                                  withKey:(NSData*)key;
 + (NSData*)encodedHMACSHA1DataForString:(NSString*)string
-                                withKey:(NSString*)key;
+                                withKey:(NSData*)key;
 + (NSData*)encodedHMACSHA1DataForData:(NSData*)data
-                              withKey:(NSString*)key;
+                              withKey:(NSData*)key;
 
 + (NSString*)encodedHMACSHA256StringForString:(NSString*)string
-                                      withKey:(NSString*)key;
+                                      withKey:(NSData*)key;
 + (NSString*)encodedHMACSHA256StringForData:(NSData*)data
-                                    withKey:(NSString*)key;
+                                    withKey:(NSData*)key;
 + (NSData*)encodedHMACSHA256DataForString:(NSString*)string
-                                  withKey:(NSString*)key;
+                                  withKey:(NSData*)key;
 + (NSData*)encodedHMACSHA256DataForData:(NSData*)data
-                                withKey:(NSString*)key;
+                                withKey:(NSData*)key;
 
 + (UIImage*)imageScaledForRetina:(UIImage*)image;
 

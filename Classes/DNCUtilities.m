@@ -752,14 +752,14 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
 }
 
 + (NSString*)encodedHMACSHA1StringForString:(NSString*)string
-                                    withKey:(NSString*)key
+                                    withKey:(NSData*)key
 {
     return [self encodedHMACSHA1StringForData:[string dataUsingEncoding:NSUTF8StringEncoding]
                                       withKey:key];
 }
 
 + (NSString*)encodedHMACSHA1StringForData:(NSData*)data
-                                  withKey:(NSString*)key
+                                  withKey:(NSData*)key
 {
     NSData* hmacData    = [self encodedHMACSHA1DataForData:data
                                                    withKey:key];
@@ -778,35 +778,35 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
 }
 
 + (NSData*)encodedHMACSHA1DataForString:(NSString*)string
-                                withKey:(NSString*)key
+                                withKey:(NSData*)key
 {
     return [self encodedHMACSHA1DataForData:[string dataUsingEncoding:NSUTF8StringEncoding]
                                     withKey:key];
 }
 
 + (NSData*)encodedHMACSHA1DataForData:(NSData*)data
-                              withKey:(NSString*)key
+                              withKey:(NSData*)key
 {
-    const char* cKey  = [key cStringUsingEncoding:NSUTF8StringEncoding];    // NSASCIIStringEncoding];
+    const void* cKey  = key.bytes;
     const void* cData = data.bytes;
     
     unsigned char cHMAC[CC_SHA1_DIGEST_LENGTH];
     
-    CCHmac(kCCHmacAlgSHA1, cKey, strlen(cKey), cData, data.length, cHMAC);
+    CCHmac(kCCHmacAlgSHA1, cKey, key.length, cData, data.length, cHMAC);
     
     return [NSData dataWithBytes:cHMAC
                           length:CC_SHA1_DIGEST_LENGTH];
 }
 
 + (NSString*)encodedHMACSHA256StringForString:(NSString*)string
-                                      withKey:(NSString*)key
+                                      withKey:(NSData*)key
 {
     return [self encodedHMACSHA256StringForData:[string dataUsingEncoding:NSUTF8StringEncoding]
                                         withKey:key];
 }
 
 + (NSString*)encodedHMACSHA256StringForData:(NSData*)data
-                                    withKey:(NSString*)key
+                                    withKey:(NSData*)key
 {
     NSData* hmacData    = [self encodedHMACSHA256DataForData:data
                                                      withKey:key];
@@ -828,48 +828,24 @@ forHeaderFooterViewReuseIdentifier:(NSString*)kind
 }
 
 + (NSData*)encodedHMACSHA256DataForString:(NSString*)string
-                                  withKey:(NSString*)key
+                                  withKey:(NSData*)key
 {
     return [self encodedHMACSHA256DataForData:[string dataUsingEncoding:NSUTF8StringEncoding]
                                       withKey:key];
 }
 
 + (NSData*)encodedHMACSHA256DataForData:(NSData*)data
-                                withKey:(NSString*)key
+                                withKey:(NSData*)key
 {
-    const char* cKey  = [key cStringUsingEncoding:NSUTF8StringEncoding];    // NSASCIIStringEncoding];
+    const void* cKey  = key.bytes;
     const void* cData = data.bytes;
     
     unsigned char cHMAC[CC_SHA256_DIGEST_LENGTH];
     
-    CCHmac(kCCHmacAlgSHA256, cKey, strlen(cKey), cData, data.length, cHMAC);
+    CCHmac(kCCHmacAlgSHA256, cKey, key.length, cData, data.length, cHMAC);
     
     return [NSData dataWithBytes:cHMAC
                           length:CC_SHA256_DIGEST_LENGTH];
-}
-
-+ (NSString*)encodeWithHMAC_SHA256:(NSString*)data
-                           withKey:(NSString*)key
-{
-    const char* cKey  = [key cStringUsingEncoding:NSUTF8StringEncoding];    // NSASCIIStringEncoding];
-    const char* cData = [data cStringUsingEncoding:NSUTF8StringEncoding];   // NSASCIIStringEncoding];
-    
-    unsigned char cHMAC[CC_SHA256_DIGEST_LENGTH];
-    
-    CCHmac(kCCHmacAlgSHA256, cKey, strlen(cKey), cData, strlen(cData), cHMAC);
-    
-    NSString*   hexStr = [NSString  stringWithFormat:@"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
-                          cHMAC[0], cHMAC[1], cHMAC[2], cHMAC[3], cHMAC[4],
-                          cHMAC[5], cHMAC[6], cHMAC[7],
-                          cHMAC[8], cHMAC[9], cHMAC[10], cHMAC[11], cHMAC[12],
-                          cHMAC[13], cHMAC[14], cHMAC[15],
-                          cHMAC[16], cHMAC[17], cHMAC[18], cHMAC[19],
-                          cHMAC[20], cHMAC[21], cHMAC[22], cHMAC[23], cHMAC[24],
-                          cHMAC[25], cHMAC[26], cHMAC[27],
-                          cHMAC[28], cHMAC[29], cHMAC[30], cHMAC[31]
-                          ];
-    
-    return hexStr;
 }
 
 + (UIImage*)imageScaledForRetina:(UIImage*)image
