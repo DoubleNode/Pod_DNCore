@@ -294,7 +294,7 @@ char*   DNCNewBase64Encode(const void* buffer,
 // base64EncodedString
 //
 // Creates an NSString object that contains the base 64 encoding of the
-// receiver's data. Lines are broken at 64 characters long.
+// receiver's data.
 //
 // returns an autoreleased NSString being the base 64 representation of the
 //    receiver.
@@ -302,7 +302,7 @@ char*   DNCNewBase64Encode(const void* buffer,
 - (NSString*)dncBase64EncodedString
 {
     size_t  outputLength;
-    char*   outputBuffer    = DNCNewBase64Encode(self.bytes, self.length, true, &outputLength);
+    char*   outputBuffer    = DNCNewBase64Encode(self.bytes, self.length, false, &outputLength);
     
     NSString*   result = [NSString.alloc initWithBytes:outputBuffer
                                                 length:outputLength
