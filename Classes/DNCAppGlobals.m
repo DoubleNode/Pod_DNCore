@@ -21,9 +21,6 @@ NSString* const kDNCAppGlobalsParameterAppLaunchFirstTime       = @"appLaunchFir
 NSString* const kDNCAppGlobalsParameterAppLaunchLastTime        = @"appLaunchLastTime";
 NSString* const kDNCAppGlobalsParameterAppLaunchCount           = @"appLaunchCount";
 NSString* const kDNCAppGlobalsParameterAppReviewRequestLastTime = @"appReviewRequestLastTime";
-NSString* const kDNCAppGlobalsParameterSelectedAccountNumber    = @"selectedAccountNumber";
-NSString* const kDNCAppGlobalsParameterSelectedAccountType      = @"selectedAccountType";
-NSString* const kDNCAppGlobalsParameterSelectedPhoneNumber      = @"selectedPhoneNumber";
 
 @interface DNCAppGlobals()
 
