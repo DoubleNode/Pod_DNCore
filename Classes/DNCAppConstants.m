@@ -21,6 +21,15 @@
     return DNCAppConstantsBuildTypeUnknown;
 }
 
+// App Request Review Constants
++ (BOOL)requestReviews                          {   return [self intConstant:@"requestReviews"];                    }
++ (NSUInteger)requestReviewFirstMinimumLaunches {   return [self intConstant:@"requestReviewFirstMinimumLaunches"]; }
++ (NSUInteger)requestReviewFirstMaximumLaunches {   return [self intConstant:@"requestReviewFirstMaximumLaunches"]; }
++ (NSUInteger)requestReviewFrequency            {   return [self intConstant:@"requestReviewFrequency"];            }
++ (NSUInteger)requestReviewDaysSinceFirstLaunch {   return [self intConstant:@"requestReviewDaysSinceFirstLaunch"]; }
++ (NSUInteger)requestReviewHoursSinceLastLaunch {   return [self intConstant:@"requestReviewHoursSinceLastLaunch"]; }
++ (NSUInteger)requestReviewDaysSinceLastReview  {   return [self intConstant:@"requestReviewDaysSinceLastReview"];  }
+
 + (NSURL*)urlConstant:(NSString*)key
 {
     return [self urlConstant:key filter:nil];

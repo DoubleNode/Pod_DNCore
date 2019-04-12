@@ -40,6 +40,15 @@ DNCAppConstantsBuildType;
 
 + (DNCAppConstantsBuildType)appBuildType;
 
+// App Request Review Constants
++ (BOOL)requestReviews;
++ (NSUInteger)requestReviewFirstMinimumLaunches;
++ (NSUInteger)requestReviewFirstMaximumLaunches;
++ (NSUInteger)requestReviewFrequency;
++ (NSUInteger)requestReviewDaysSinceFirstLaunch;
++ (NSUInteger)requestReviewHoursSinceLastLaunch;
++ (NSUInteger)requestReviewDaysSinceLastReview;
+
 #pragma mark - Constant plist to object functions
 
 /**
