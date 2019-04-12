@@ -50,6 +50,15 @@ NSString* const kDNCAppGlobalsParameterAppReviewRequestLastTime = @"appReviewReq
     return [instance checkAndAskForReview];
 }
 
+// App Request Review Constants
+- (BOOL)appConstantRequestReviews                           {   return DNCAppConstants.requestReviews;                      }
+- (NSUInteger)appConstantRequestReviewFirstMinimumLaunches  {   return DNCAppConstants.requestReviewFirstMinimumLaunches;   }
+- (NSUInteger)appConstantRequestReviewFirstMaximumLaunches  {   return DNCAppConstants.requestReviewFirstMaximumLaunches;   }
+- (NSUInteger)appConstantRequestReviewFrequency             {   return DNCAppConstants.requestReviewFrequency;              }
+- (NSUInteger)appConstantRequestReviewDaysSinceFirstLaunch  {   return DNCAppConstants.requestReviewDaysSinceFirstLaunch;   }
+- (NSUInteger)appConstantRequestReviewHoursSinceLastLaunch  {   return DNCAppConstants.requestReviewHoursSinceLastLaunch;   }
+- (NSUInteger)appConstantRequestReviewDaysSinceLastReview   {   return DNCAppConstants.requestReviewDaysSinceLastReview;    }
+
 - (id)init
 {
     self = [super init];
@@ -108,7 +117,7 @@ NSString* const kDNCAppGlobalsParameterAppReviewRequestLastTime = @"appReviewReq
 - (BOOL)shouldAskForReview
 {
     // If disabled
-    if (!DNCAppConstants.requestReviews)
+    if (!self.appConstantRequestReviews)
     {
         return NO;
     }
@@ -120,28 +129,28 @@ NSString* const kDNCAppGlobalsParameterAppReviewRequestLastTime = @"appReviewReq
     }
     
     // If launched less than 10 times...
-    if (self.appLaunchCount < DNCAppConstants.requestReviewFirstMinimumLaunches)
+    if (self.appLaunchCount < self.appConstantRequestReviewFirstMinimumLaunches)
     {
         return NO;
     }
     
     // If first launch less than 60 days...
-    if ([NSDate.date timeIntervalSinceDate:self.appLaunchFirstTime] < (86400.0f * DNCAppConstants.requestReviewDaysSinceFirstLaunch))
+    if ([NSDate.date timeIntervalSinceDate:self.appLaunchFirstTime] < (86400.0f * self.appConstantRequestReviewDaysSinceFirstLaunch))
     {
         return NO;
     }
     
     // If last launch less than 1 hour...
-    if ([NSDate.date timeIntervalSinceDate:self.appLaunchLastTime] < (3600.0f * DNCAppConstants.requestReviewHoursSinceLastLaunch))
+    if ([NSDate.date timeIntervalSinceDate:self.appLaunchLastTime] < (3600.0f * self.appConstantRequestReviewHoursSinceLastLaunch))
     {
         return NO;
     }
     
     // If launched greater than 50 times...
-    if (self.appLaunchCount > DNCAppConstants.requestReviewFirstMaximumLaunches)
+    if (self.appLaunchCount > self.appConstantRequestReviewFirstMaximumLaunches)
     {
         // ...and not once every 100 times...
-        if (self.appLaunchCount % DNCAppConstants.requestReviewFrequency)
+        if (self.appLaunchCount % self.appConstantRequestReviewFrequency)
         {
             return NO;
         }
@@ -149,7 +158,7 @@ NSString* const kDNCAppGlobalsParameterAppReviewRequestLastTime = @"appReviewReq
     
     // If previously reviewed less than 60 days...
     if (self.appReviewRequestLastTime &&
-        ([NSDate.date timeIntervalSinceDate:self.appReviewRequestLastTime] < (86400.0f * DNCAppConstants.requestReviewDaysSinceLastReview)))
+        ([NSDate.date timeIntervalSinceDate:self.appReviewRequestLastTime] < (86400.0f * self.appConstantRequestReviewDaysSinceLastReview)))
     {
         return NO;
     }

@@ -233,7 +233,7 @@
      {
          id rootViewController  = DNCUtilities.appDelegate.rootViewController;
          DNCAssert([rootViewController isKindOfClass:DNCRootViewController.class], DNCLD_API, @"RootViewController is not a DNCRootViewController class");
-
+         
          DNCRootViewController* targetController    = (DNCRootViewController*)rootViewController;
          
          NSString*   title      = value[@"title"]   ?: [NSString stringWithFormat:@"%@_TITLE_NOT_SPECIFIED", key];

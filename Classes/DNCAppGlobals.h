@@ -38,6 +38,15 @@ typedef NS_ENUM(NSInteger, DNCAppGlobalsReachabilityStatus)
 
 + (BOOL)checkAndAskForReview;
 
+// App Request Review Constants
+- (BOOL)appConstantRequestReviews;
+- (NSUInteger)appConstantRequestReviewFirstMinimumLaunches;
+- (NSUInteger)appConstantRequestReviewFirstMaximumLaunches;
+- (NSUInteger)appConstantRequestReviewFrequency;
+- (NSUInteger)appConstantRequestReviewDaysSinceFirstLaunch;
+- (NSUInteger)appConstantRequestReviewHoursSinceLastLaunch;
+- (NSUInteger)appConstantRequestReviewDaysSinceLastReview;
+
 - (BOOL)checkAndAskForReview;
 
 - (void)applicationDidBecomeActive;
