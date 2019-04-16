@@ -461,6 +461,12 @@
 
 static NSMutableDictionary* plistConfigDict = nil;
 static NSString*            plistServerCode = nil;
+static NSString*            plistFilename   = @"Constants";
+
++ (void)overridePlistFilename:(NSString*)filename
+{
+    plistFilename = filename;
+}
 
 + (NSMutableDictionary*)plistDict
 {
@@ -476,7 +482,7 @@ static NSString*            plistServerCode = nil;
     {
         if (plistConfigDict == nil)
         {
-            NSString*   constantsPlist  = @"Constants";
+            NSString*   constantsPlist  = plistFilename;
             NSString*   constantsPath   = [[NSBundle mainBundle] pathForResource:constantsPlist ofType:@"plist"];
             if (!constantsPath)
             {

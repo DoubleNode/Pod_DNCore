@@ -38,6 +38,8 @@ DNCAppConstantsBuildType;
  */
 @interface DNCAppConstants : NSObject
 
++ (void)overridePlistFilename:(NSString*)filename;
+
 + (DNCAppConstantsBuildType)appBuildType;
 
 // App Request Review Constants
