@@ -501,7 +501,7 @@ static NSString*            plistFilename   = @"Constants";
                 @throw exception;
             }
             
-            NSString*   constantsPlist2 = [NSString stringWithFormat:@"Constants%@%@", ((serverCode.length > 0) ? @"_" : @""), serverCode];
+            NSString*   constantsPlist2 = [NSString stringWithFormat:@"%@%@%@", plistFilename, ((serverCode.length > 0) ? @"_" : @""), serverCode];
             NSString*   constantsPath2  = [[NSBundle mainBundle] pathForResource:constantsPlist2 ofType:@"plist"];
             if (constantsPath2)
             {
