@@ -461,12 +461,6 @@
 
 static NSMutableDictionary* plistConfigDict = nil;
 static NSString*            plistServerCode = nil;
-static NSString*            plistFilename   = @"Constants";
-
-+ (void)overridePlistFilename:(NSString*)filename
-{
-    plistFilename = filename;
-}
 
 + (NSMutableDictionary*)plistDict
 {
@@ -482,7 +476,12 @@ static NSString*            plistFilename   = @"Constants";
     {
         if (plistConfigDict == nil)
         {
-            NSString*   constantsPlist  = plistFilename;
+            NSString*   constantsPlist  = [NSUserDefaults.standardUserDefaults stringForKey:@"AppConstantsFilenameOverride"];
+            if (!constantsPlist)
+            {
+                constantsPlist = @"Constants";
+            }
+            
             NSString*   constantsPath   = [[NSBundle mainBundle] pathForResource:constantsPlist ofType:@"plist"];
             if (!constantsPath)
             {
@@ -501,7 +500,7 @@ static NSString*            plistFilename   = @"Constants";
                 @throw exception;
             }
             
-            NSString*   constantsPlist2 = [NSString stringWithFormat:@"%@%@%@", plistFilename, ((serverCode.length > 0) ? @"_" : @""), serverCode];
+            NSString*   constantsPlist2 = [NSString stringWithFormat:@"%@%@%@", constantsPlist, ((serverCode.length > 0) ? @"_" : @""), serverCode];
             NSString*   constantsPath2  = [[NSBundle mainBundle] pathForResource:constantsPlist2 ofType:@"plist"];
             if (constantsPath2)
             {
