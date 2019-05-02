@@ -28,6 +28,7 @@
 		6A3F02F01DBD880F008849B5 /* NSDate+DNCUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A3F02ED1DBD880F008849B5 /* NSDate+DNCUtils.m */; };
 		6A3F02F11DBD880F008849B5 /* NSString+DNCHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A3F02EF1DBD880F008849B5 /* NSString+DNCHTML.m */; };
 		6A44D358225BE57600CB3CEF /* NSData+DNCBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A44D356225BE57600CB3CEF /* NSData+DNCBase64.m */; };
+		6A5A6201227B8D900080C8B5 /* NSString+DNCBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A5A6200227B8D900080C8B5 /* NSString+DNCBase64.m */; };
 		6AA6897D213782B80094B6DD /* DNCQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AA6897A213782B70094B6DD /* DNCQueue.m */; };
 		6AA6897E213782B80094B6DD /* DNCStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AA6897C213782B70094B6DD /* DNCStack.m */; };
 		6AACAC0E1DFA59D200E510CF /* DNCNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AACAC0D1DFA59D200E510CF /* DNCNavigationController.m */; };
@@ -101,6 +102,8 @@
 		6A3F02EF1DBD880F008849B5 /* NSString+DNCHTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+DNCHTML.m"; path = "Classes/Categories/NSString+DNCHTML.m"; sourceTree = "<group>"; };
 		6A44D356225BE57600CB3CEF /* NSData+DNCBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+DNCBase64.m"; path = "Classes/Categories/NSData+DNCBase64.m"; sourceTree = "<group>"; };
 		6A44D357225BE57600CB3CEF /* NSData+DNCBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+DNCBase64.h"; path = "Classes/Categories/NSData+DNCBase64.h"; sourceTree = "<group>"; };
+		6A5A61FF227B8D900080C8B5 /* NSString+DNCBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+DNCBase64.h"; path = "Classes/Categories/NSString+DNCBase64.h"; sourceTree = "<group>"; };
+		6A5A6200227B8D900080C8B5 /* NSString+DNCBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+DNCBase64.m"; path = "Classes/Categories/NSString+DNCBase64.m"; sourceTree = "<group>"; };
 		6AA68979213782B70094B6DD /* DNCStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DNCStack.h; path = Classes/DNCStack.h; sourceTree = "<group>"; };
 		6AA6897A213782B70094B6DD /* DNCQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DNCQueue.m; path = Classes/DNCQueue.m; sourceTree = "<group>"; };
 		6AA6897B213782B70094B6DD /* DNCQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DNCQueue.h; path = Classes/DNCQueue.h; sourceTree = "<group>"; };
@@ -265,6 +268,8 @@
 				6ACFB6521DC9A85900CC388F /* NSDate+DNCPrettyDate.m */,
 				6A3F02EC1DBD880F008849B5 /* NSDate+DNCUtils.h */,
 				6A3F02ED1DBD880F008849B5 /* NSDate+DNCUtils.m */,
+				6A5A61FF227B8D900080C8B5 /* NSString+DNCBase64.h */,
+				6A5A6200227B8D900080C8B5 /* NSString+DNCBase64.m */,
 				6A19E0D11DE8F62D00946455 /* NSString+DNCEncode.h */,
 				6A19E0D21DE8F62D00946455 /* NSString+DNCEncode.m */,
 				6A3F02EE1DBD880F008849B5 /* NSString+DNCHTML.h */,
@@ -524,6 +529,7 @@
 				6A19E0D91DE8F62D00946455 /* UIFont+DNCCustom.m in Sources */,
 				6AB2ED9F1DD81E2F004439E6 /* UIView+DNCDropShadow.m in Sources */,
 				6ACACB742108F3BA00DA3F22 /* UIColor+DNCAlpha.m in Sources */,
+				6A5A6201227B8D900080C8B5 /* NSString+DNCBase64.m in Sources */,
 				6AA6897E213782B80094B6DD /* DNCStack.m in Sources */,
 				6ACFB64D1DC9A49500CC388F /* UIView+DNCPending.m in Sources */,
 				6A3F02F11DBD880F008849B5 /* NSString+DNCHTML.m in Sources */,
