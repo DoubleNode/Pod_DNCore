@@ -125,6 +125,14 @@
                             }
                             if (!errorMessage.length)
                             {
+                                errorMessage    = [self stringFromString:jsonData[@"errorDetails"]];
+                            }
+                            if (!errorMessage.length)
+                            {
+                                errorMessage    = [self stringFromString:jsonData[@"errorMessage"]];
+                            }
+                            if (!errorMessage.length)
+                            {
                                 errorMessage    = [self stringFromString:jsonData[@"data"][@"error"]];
                             }
                             if (!errorMessage.length)
@@ -140,7 +148,7 @@
                                 errorMessage    = [self stringFromString:dataError.userInfo[NSLocalizedDescriptionKey]];
                             }
                             
-                            dataErrorHandler ? dataErrorHandler(errorData, errorMessage) : nil;
+                            dataErrorHandler ? dataErrorHandler((jsonData ?: errorData), errorMessage) : nil;
                             return;
                         }
                     }

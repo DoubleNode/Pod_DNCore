@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "DNCore"
-  s.version      = "0.3.32"
+  s.version      = "0.3.33"
   s.summary      = "A base collection of DNCore headers and utilities."
 
   s.description  = <<-DESC
