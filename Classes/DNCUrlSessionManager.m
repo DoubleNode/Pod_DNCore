@@ -68,8 +68,13 @@
                             httpResponse    = (NSHTTPURLResponse*)response;
                         }
                         
+                        if (!responseObject)
+                        {
+                            responseObject  = [NSString stringWithFormat:@"{ \"error\" : \"%@\", \"url\" : \"%@\" }", dataError.localizedDescription, dataError.userInfo[NSURLErrorFailingURLStringErrorKey]];
+                        }
+                        
                         DNCLog(DNCLL_Info, DNCLD_Networking, @"WILLRETRY - %@", response.URL);
-                        [DNCThread afterDelay:1.0f
+                        [DNCThread afterDelay:0.2f
                                           run:
                          ^()
                          {
@@ -92,7 +97,7 @@
                         if (httpResponse.statusCode == 500)
                         {
                             DNCLog(DNCLL_Info, DNCLD_Networking, @"WILLRETRY - %@", response.URL);
-                            [DNCThread afterDelay:1.0f
+                            [DNCThread afterDelay:0.2f
                                               run:
                              ^()
                              {
@@ -196,8 +201,13 @@
                             httpResponse    = (NSHTTPURLResponse*)response;
                         }
                         
+                        if (!responseObject)
+                        {
+                            responseObject  = [NSString stringWithFormat:@"{ \"error\" : \"%@\", \"url\" : \"%@\" }", dataError.localizedDescription, dataError.userInfo[NSURLErrorFailingURLStringErrorKey]];
+                        }
+                        
                         DNCLog(DNCLL_Info, DNCLD_Networking, @"WILLRETRY - %@", response.URL);
-                        [DNCThread afterDelay:1.0f
+                        [DNCThread afterDelay:0.2f
                                           run:
                          ^()
                          {
@@ -212,7 +222,7 @@
                         if (httpResponse.statusCode == 500)
                         {
                             DNCLog(DNCLL_Info, DNCLD_Networking, @"WILLRETRY - %@", response.URL);
-                            [DNCThread afterDelay:1.0f
+                            [DNCThread afterDelay:0.2f
                                               run:
                              ^()
                              {
