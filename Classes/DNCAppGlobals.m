@@ -290,10 +290,11 @@ NSString* const kDNCAppGlobalsParameterAppReviewRequestLastTime = @"appReviewReq
                                                                   @"www.apple.com",
                                                                   @"apple.com",
                                                                   @"www.appleiphonecell.com",
-                                                                  @"www.itools.info",
-                                                                  @"www.ibook.info",
-                                                                  @"www.airport.us",
-                                                                  @"www.thinkdifferent.us",
+                                                                  // Following fails on https:
+                                                                  // @"www.itools.info",
+                                                                  // @"www.ibook.info",
+                                                                  // @"www.airport.us",
+                                                                  // @"www.thinkdifferent.us",
                                                                   ];
             
             [DNCThreadingGroup run:
@@ -310,7 +311,7 @@ NSString* const kDNCAppGlobalsParameterAppReviewRequestLastTime = @"appReviewReq
                           
                           manager.responseSerializer    = AFHTTPResponseSerializer.serializer;;
                           
-                          NSString*       urlString = [NSString stringWithFormat:@"http://%@/library/test/success.html", domain];
+                          NSString*       urlString = [NSString stringWithFormat:@"https://%@/library/test/success.html", domain];
                           NSURL*          URL       = [NSURL URLWithString:urlString];
                           NSURLRequest*   request   = [NSURLRequest requestWithURL:URL];
                           
