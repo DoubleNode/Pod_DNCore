@@ -247,9 +247,9 @@
     
     for (NSDictionary* option in options)
     {
-        NSString*   key = option[@"key"] ?: [NSString stringWithFormat:@"%@_OPTION_LABEL_NOT_SPECIFIED", key];
+        NSString*   optionKey = option[@"key"] ?: [NSString stringWithFormat:@"%@_OPTION_LABEL_NOT_SPECIFIED", key];
         
-        if ([key isEqualToString:defaultKey])
+        if ([optionKey isEqualToString:defaultKey])
         {
             selectedOption = option;
         }
@@ -398,8 +398,7 @@
     
     for (NSDictionary* toggle in toggles)
     {
-        NSString*   toggleKey      = toggle[@"key"]   ?: [NSString stringWithFormat:@"%@_TOGGLE_KEY_NOT_SPECIFIED", key];
-        NSString*   toggleLabel    = toggle[@"label"] ?: [NSString stringWithFormat:@"%@_TOGGLE_LABEL_NOT_SPECIFIED", key];
+        NSString*   toggleKey   = toggle[@"key"]   ?: [NSString stringWithFormat:@"%@_TOGGLE_KEY_NOT_SPECIFIED", key];
         
         BOOL  toggleState = [toggle[@"default"] boolValue];
         
