@@ -173,7 +173,25 @@
 + (NSDictionary*)dictionaryOptionsLookupUI:(NSString*)key
                                  withValue:(NSDictionary*)value
 {
-    DNCAssertIsNotMainThread;
+    NSString*   noUIString  = [NSUserDefaults.standardUserDefaults stringForKey:@"AppConstantsNoUI"];
+    BOOL        noUI        = noUIString.boolValue;
+    
+    if ([NSThread isMainThread])
+    {
+        noUI    = YES;
+    }
+    
+    NSString*   noUIValue   = value[@"noUI"] ?: @"NO";
+    if (noUIValue.boolValue)
+    {
+        noUI    = YES;
+    }
+    
+    if (noUI)
+    {
+        return [self dictionaryOptionsWithoutUI:key
+                                      withValue:value];
+    }
     
     __block id  selectedOption;
     
@@ -219,10 +237,52 @@
     return selectedOption;
 }
 
++ (NSDictionary*)dictionaryOptionsWithoutUI:(NSString*)key
+                                  withValue:(NSDictionary*)value
+{
+    NSString*   defaultKey  = value[@"default"] ?: @"";
+    NSArray*    options     = value[@"options"];
+    
+    __block id  selectedOption;
+    
+    for (NSDictionary* option in options)
+    {
+        NSString*   key = option[@"key"] ?: [NSString stringWithFormat:@"%@_OPTION_LABEL_NOT_SPECIFIED", key];
+        
+        if ([key isEqualToString:defaultKey])
+        {
+            selectedOption = option;
+        }
+    }
+    
+    [self plistConfigReplace:key
+                   withValue:selectedOption];
+    
+    return selectedOption;
+}
+
 + (NSDictionary*)dictionaryTogglesLookupUI:(NSString*)key
                                  withValue:(NSDictionary*)value
 {
-    DNCAssertIsNotMainThread;
+    NSString*   noUIString  = [NSUserDefaults.standardUserDefaults stringForKey:@"AppConstantsNoUI"];
+    BOOL        noUI        = noUIString.boolValue;
+    
+    if ([NSThread isMainThread])
+    {
+        noUI    = YES;
+    }
+    
+    NSString*   noUIValue   = value[@"noUI"] ?: @"NO";
+    if (noUIValue.boolValue)
+    {
+        noUI    = YES;
+    }
+    
+    if (noUI)
+    {
+        return [self dictionaryTogglesWithoutUI:key
+                                      withValue:value];
+    }
     
     __block NSMutableDictionary*    selectedToggles = NSMutableDictionary.dictionary;
     
@@ -322,6 +382,31 @@
               obj[@"state"] = (toggleState ? @"1" : @"0");
           }];
      }];
+    
+    [self plistConfigReplace:key
+                   withValue:selectedToggles];
+    
+    return selectedToggles;
+}
+
++ (NSDictionary*)dictionaryTogglesWithoutUI:(NSString*)key
+                                  withValue:(NSDictionary*)value
+{
+    __block NSMutableDictionary*    selectedToggles = NSMutableDictionary.dictionary;
+    
+    NSArray*    toggles    = value[@"toggles"];
+    
+    for (NSDictionary* toggle in toggles)
+    {
+        NSString*   toggleKey      = toggle[@"key"]   ?: [NSString stringWithFormat:@"%@_TOGGLE_KEY_NOT_SPECIFIED", key];
+        NSString*   toggleLabel    = toggle[@"label"] ?: [NSString stringWithFormat:@"%@_TOGGLE_LABEL_NOT_SPECIFIED", key];
+        
+        BOOL  toggleState = [toggle[@"default"] boolValue];
+        
+        NSMutableDictionary*  stateToggle = toggle.mutableCopy;
+        stateToggle[@"state"]      = (toggleState ? @"1" : @"0");
+        selectedToggles[toggleKey] = stateToggle;
+    }
     
     [self plistConfigReplace:key
                    withValue:selectedToggles];
