@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "DNCore"
-  s.version      = "0.3.37"
+  s.version      = "0.3.38"
   s.summary      = "A base collection of DNCore headers and utilities."
 
   s.description  = <<-DESC
@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
 
   s.platform        = :ios, "11.0"
   s.source          = { :git => "https://github.com/DoubleNode/Pod_DNCore.git", :tag => "#{s.version}" }
-  s.swift_version   = '4.2'
+  s.swift_version   = '5.0'
 
   s.source_files  = "Classes", "Classes/**/*.{h,m,swift}"
   s.exclude_files = "Classes/Exclude"
