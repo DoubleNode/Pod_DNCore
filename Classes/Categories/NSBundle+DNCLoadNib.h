@@ -10,6 +10,6 @@
 
 @interface NSBundle (DNCLoadNib)
 
-- (id)dncLoadNibForClass:(Class)itemClass;
++ (id)dncLoadNibForClass:(Class)itemClass;
 
 @end

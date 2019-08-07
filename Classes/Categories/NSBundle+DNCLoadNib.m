@@ -12,7 +12,7 @@
 
 @implementation NSBundle (DNCLoadNib)
 
-- (id)dncLoadNibForClass:(Class)itemClass
++ (id)dncLoadNibForClass:(Class)itemClass
 {
     NSString*   itemClassName   = NSStringFromClass(itemClass);
     NSBundle*   itemBundle      = [PodAsset bundleForPod:itemClassName];
