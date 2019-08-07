@@ -13,6 +13,7 @@ target 'DNCore' do
   pod 'AFNetworking', '~> 3.0'
   pod 'ColorUtils'
   pod 'NSLogger'
+  pod 'PodAsset'
   pod 'SDVersion'
 
   target 'DNCoreTests' do
