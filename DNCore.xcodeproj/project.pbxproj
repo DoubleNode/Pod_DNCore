@@ -42,6 +42,7 @@
 		6AD3B14622FB26E80063CE1D /* NSBundle+DNCLoadNib.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AD3B14522FB26E80063CE1D /* NSBundle+DNCLoadNib.m */; };
 		6AE0CF821DF6356A009727C1 /* DNCAppConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AE0CF811DF6356A009727C1 /* DNCAppConstants.m */; };
 		6AE0CF871DF6382F009727C1 /* GGMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AE0CF861DF6382F009727C1 /* GGMutableDictionary.m */; };
+		6AFB300C22FDE646005E5E37 /* DNCDataTranslation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AFB300B22FDE646005E5E37 /* DNCDataTranslation.m */; };
 		7E8F08D88FDB84E17995E8DB /* Pods_DNCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B04CED1F06CBA1BCC7339D9A /* Pods_DNCore.framework */; };
 /* End PBXBuildFile section */
 
@@ -131,6 +132,8 @@
 		6AE0CF811DF6356A009727C1 /* DNCAppConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DNCAppConstants.m; path = Classes/DNCAppConstants.m; sourceTree = "<group>"; };
 		6AE0CF851DF6382F009727C1 /* GGMutableDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GGMutableDictionary.h; path = Classes/Vendors/GGMutableDictionary/GGMutableDictionary.h; sourceTree = "<group>"; };
 		6AE0CF861DF6382F009727C1 /* GGMutableDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GGMutableDictionary.m; path = Classes/Vendors/GGMutableDictionary/GGMutableDictionary.m; sourceTree = "<group>"; };
+		6AFB300A22FDE646005E5E37 /* DNCDataTranslation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DNCDataTranslation.h; path = Classes/DNCDataTranslation.h; sourceTree = "<group>"; };
+		6AFB300B22FDE646005E5E37 /* DNCDataTranslation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DNCDataTranslation.m; path = Classes/DNCDataTranslation.m; sourceTree = "<group>"; };
 		B04CED1F06CBA1BCC7339D9A /* Pods_DNCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DNCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -238,6 +241,8 @@
 				6AE0CF811DF6356A009727C1 /* DNCAppConstants.m */,
 				6A30E9182260F33300E9F93F /* DNCAppGlobals.h */,
 				6A30E9192260F33300E9F93F /* DNCAppGlobals.m */,
+				6AFB300A22FDE646005E5E37 /* DNCDataTranslation.h */,
+				6AFB300B22FDE646005E5E37 /* DNCDataTranslation.m */,
 				6A3F02E81DBD8684008849B5 /* DNCDate.h */,
 				6A3F02E91DBD8684008849B5 /* DNCDate.m */,
 				6AB2ED9A1DD813BD004439E6 /* DNCGradientView.h */,
@@ -542,6 +547,7 @@
 				6ACFB64D1DC9A49500CC388F /* UIView+DNCPending.m in Sources */,
 				6A3F02F11DBD880F008849B5 /* NSString+DNCHTML.m in Sources */,
 				6AD380771DD024E100FFF836 /* DNCGravatar.m in Sources */,
+				6AFB300C22FDE646005E5E37 /* DNCDataTranslation.m in Sources */,
 				6A3F02C01DBD8228008849B5 /* ViewController.m in Sources */,
 				6AACAC0E1DFA59D200E510CF /* DNCNavigationController.m in Sources */,
 				6A33BAA22240393600BAB399 /* DNCRootViewController.m in Sources */,
