@@ -116,6 +116,7 @@
 		6AB2ED9B1DD813BD004439E6 /* DNCGradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DNCGradientView.m; path = Classes/DNCGradientView.m; sourceTree = "<group>"; };
 		6AB2ED9D1DD81E2F004439E6 /* UIView+DNCDropShadow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+DNCDropShadow.h"; path = "Classes/Categories/UIView+DNCDropShadow.h"; sourceTree = "<group>"; };
 		6AB2ED9E1DD81E2F004439E6 /* UIView+DNCDropShadow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+DNCDropShadow.m"; path = "Classes/Categories/UIView+DNCDropShadow.m"; sourceTree = "<group>"; };
+		6AC77C6423186312004EF336 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		6ACACB722108F3B900DA3F22 /* UIColor+DNCAlpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+DNCAlpha.h"; path = "Classes/Categories/UIColor+DNCAlpha.h"; sourceTree = "<group>"; };
 		6ACACB732108F3BA00DA3F22 /* UIColor+DNCAlpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+DNCAlpha.m"; path = "Classes/Categories/UIColor+DNCAlpha.m"; sourceTree = "<group>"; };
 		6ACFB64B1DC9A49500CC388F /* UIView+DNCPending.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+DNCPending.h"; path = "Classes/Categories/UIView+DNCPending.h"; sourceTree = "<group>"; };
@@ -223,6 +224,7 @@
 		6A3F02DD1DBD8274008849B5 /* Pod */ = {
 			isa = PBXGroup;
 			children = (
+				6AC77C6423186312004EF336 /* LICENSE */,
 				6A3F02E01DBD8288008849B5 /* README.md */,
 				6A3F02DF1DBD8288008849B5 /* DNCore.podspec */,
 				6A3F02DE1DBD8279008849B5 /* Classes */,

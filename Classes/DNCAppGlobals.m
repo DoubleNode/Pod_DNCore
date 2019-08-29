@@ -1,10 +1,11 @@
 //
 //  DNCAppGlobals.m
-//  DoubleNode.com
+//  DoubleNode Core
 //
-//  Derived from work originally created by Darren Ehlers
-//  Portions Copyright (c) 2012 DoubleNode.com and Darren Ehlers.
-//  All rights reserved.
+//  Created by Darren Ehlers on 2016/10/16.
+//  Copyright © 2016 Darren Ehlers and DoubleNode, LLC.
+//
+//  DNCore is released under the MIT license. See LICENSE for details.
 //
 
 @import AFNetworking;

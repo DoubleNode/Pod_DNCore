@@ -2,8 +2,10 @@
 //  NSBundle+DNCLoadNib.m
 //  DoubleNode Core
 //
-//  Created by Darren Ehlers on 2019/08/07.
-//  Copyright © 2019 - 2016 Darren Ehlers and DoubleNode, LLC. All rights reserved.
+//  Created by Darren Ehlers on 2016/10/16.
+//  Copyright © 2016 Darren Ehlers and DoubleNode, LLC.
+//
+//  DNCore is released under the MIT license. See LICENSE for details.
 //
 
 @import PodAsset;
