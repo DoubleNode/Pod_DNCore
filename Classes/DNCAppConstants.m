@@ -324,7 +324,7 @@
                   [checkbox setFrame:CGRectMake(2 , 2, 18, 18)];  // Not sure about size
                   [checkbox setTag:1];
                   [checkbox addTarget:targetController
-                               action:@selector(checkBoxPressed:)
+                               action:@selector(checkBoxPressedWithSender:)
                      forControlEvents:UIControlEventTouchUpInside];
                   
                   checkbox.selected = toggleState;

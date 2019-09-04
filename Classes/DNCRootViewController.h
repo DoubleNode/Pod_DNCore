@@ -12,7 +12,7 @@
 
 @interface DNCRootViewController : UIViewController<UITextFieldDelegate>
 
-- (void)checkBoxPressed:(UIButton*)sender;
+- (void)checkBoxPressedWithSender:(UIButton*)sender;
 
 #pragma mark - UITextFieldDelegate
 

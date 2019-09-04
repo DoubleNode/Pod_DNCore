@@ -12,7 +12,7 @@
 
 @implementation DNCRootViewController
 
-- (void)checkBoxPressed:(UIButton*)sender
+- (void)checkBoxPressedWithSender:(UIButton*)sender
 {
     [sender setSelected:!sender.selected];
 }
