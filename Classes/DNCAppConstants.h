@@ -51,6 +51,10 @@ DNCAppConstantsBuildType;
 + (NSUInteger)requestReviewHoursSinceLastLaunch;
 + (NSUInteger)requestReviewDaysSinceLastReview;
 
+// App Upgrade Constants
++ (NSString*)appUpdateVersionMinimum;
++ (NSString*)appUpdateVersionRecommended;
+
 #pragma mark - Constant plist to object functions
 
 /**

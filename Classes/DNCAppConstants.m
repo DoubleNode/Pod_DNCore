@@ -31,6 +31,11 @@
 + (NSUInteger)requestReviewHoursSinceLastLaunch {   return [self intConstant:@"requestReviewHoursSinceLastLaunch"]; }
 + (NSUInteger)requestReviewDaysSinceLastReview  {   return [self intConstant:@"requestReviewDaysSinceLastReview"];  }
 
+// App Upgrade Constants
++ (NSString*)appUpdateVersionMinimum        {   return [self constantValue:@"appUpdateVersionMinimum"];         }
++ (NSString*)appUpdateVersionRecommended    {   return [self constantValue:@"appUpdateVersionRecommended"];     }
+
+// Typecast Methods
 + (NSURL*)urlConstant:(NSString*)key
 {
     return [self urlConstant:key filter:nil];
