@@ -326,7 +326,7 @@
               {
                   // Create button
                   UIButton*  checkbox = [UIButton buttonWithType:UIButtonTypeCustom];
-                  [checkbox setFrame:CGRectMake(2 , 2, 18, 18)];  // Not sure about size
+                  //[checkbox setFrame:CGRectMake(2 , 2, 18, 18)];  // Not sure about size
                   [checkbox setTag:1];
                   [checkbox addTarget:targetController
                                action:@selector(checkBoxPressedWithSender:)
@@ -336,14 +336,15 @@
                   
                   // Setup image for button
                   [checkbox.imageView setContentMode:UIViewContentModeScaleAspectFit];
-                  [checkbox setImage:[UIImage imageNamed:@"iconCheckmarkOff"]
+                  [checkbox setImage:[UIImage imageNamed:@"dncCoreCheckboxOff"]
                             forState:UIControlStateNormal];
-                  [checkbox setImage:[UIImage imageNamed:@"iconCheckmarkOn"]
+                  [checkbox setImage:[UIImage imageNamed:@"dncCoreCheckboxOn"]
                             forState:UIControlStateSelected];
-                  [checkbox setImage:[UIImage imageNamed:@"iconCheckmarkOn"]
+                  [checkbox setImage:[UIImage imageNamed:@"dncCoreCheckboxSelected"]
                             forState:UIControlStateHighlighted];
                   [checkbox setAdjustsImageWhenHighlighted:TRUE];
-                  
+                  [checkbox setFrame:CGRectMake(2 , 2, 18, 18)];  // Not sure about size
+
                   stateToggle[@"button"]    = checkbox;
                   
                   // Setup the right view in the text field
